@@ -54,24 +54,6 @@ webpage <- read_html(url)
 
 #### C. Extracting data from the HTML file
 
-<br>
-Before going further, let's define what we want.<br>
-The output should be **a dataframe with the following columns**:
-
-* _id_: our id
-* _brand_
-* _modele_
-* _year_
-* _mileage_
-* _price_
-* _address_
-* _zipcode_
-* _city_
-* _street_
-* _id_listing_: the id used by the website
-* _website_: the website where we found the listing
-* _url_: the url of the listing
-
 Note that we will have some NAs, as some information are not always available.
 
 ```{r Finding paths}
