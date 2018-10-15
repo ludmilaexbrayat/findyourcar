@@ -44,7 +44,7 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # To see the currencies
 
 ```{r Downloading webpage}
 # Specifying the url of the listing to be scrapped
-url <- "https://www.paruvendu.fr/a/voiture-occasion/ford/ka/1229807279A1KVVOFOKA"
+url <- "https://www.paruvendu.fr/a/voiture-occasion/audi/a1/1229829590A1KVVOAUA1"
 
 # Reading the HTML code from the website
 webpage <- read_html(url)
@@ -101,14 +101,6 @@ street <- address %>%
 
 city <- address %>% 
   substr(regexpr(zipcode, address)+6,nchar(address)) # Finding position of the zipcode, and extracting everything that is *after*
-
-tableinfo %>% 
-  filter(X1 == "Transmission") %>% 
-  select(X2) %>% 
-  as.character() %>% 
-  gsub("\n", "", .) %>% 
-  gsub("km", "", .) %>% 
-  gsub(" ", "", .)
 ```
 
 
@@ -123,7 +115,8 @@ table <- data.frame(id = 1,
                       filter(X1 == "Année") %>% 
                       select(X2) %>% 
                       as.character() %>% 
-                      substr(1,4),
+                      substr(regexpr("\\d{4}", .), regexpr("\\d{4}", .)+4) %>% 
+                      as.integer(),
                     
                     mileage = tableinfo %>% 
                       filter(X1 == "Kilométrage") %>% 
@@ -131,7 +124,8 @@ table <- data.frame(id = 1,
                       as.character() %>% 
                       gsub("\n", "", .) %>% 
                       gsub("km", "", .) %>% 
-                      gsub(" ", "", .),
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
                     
                     energy = tableinfo %>% 
                       filter(X1 == "Energie") %>% 
@@ -143,28 +137,71 @@ table <- data.frame(id = 1,
                       select(X2) %>% 
                       as.character(),
                     
+                    n_doors = tableinfo %>% 
+                      filter(X1 == "Nb de portes") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(1,1) %>% 
+                      as.integer(),
+                    
                     zipcode = zipcode,
                     
                     city = city,
                     
                     street = street,
                     
+                    tax_horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance fiscale") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("CV", "", .) %>% 
+                      as.integer(),
+                    
+                    horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance réelle") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("Ch", "", .) %>% 
+                      as.integer(),
+                    
+                    body_work = tableinfo %>% 
+                      filter(X1 == "Carrosserie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                   n_seats = tableinfo %>% 
+                      filter(X1 == "Nombre de places") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                     substr(1,1) %>% 
+                     as.integer(),
+                    
                     price = tableinfo %>% 
                       filter(X1 == "Prix") %>% 
                       select(X2) %>% 
                       as.character() %>% 
                       gsub("€", "", .) %>% 
-                      gsub(" ", "", .),
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
                     
                     currency = tableinfo %>% 
                       filter(X1 == "Prix") %>% 
                       select(X2) %>% 
                       as.character() %>% 
-                      substr(nchar(.), nchar(.))
+                      substr(nchar(.), nchar(.)),
+                   
+                   website = "ParuVendu",
+                   
+                   url = url
                     )
+```
+
+What happens with another listing?
+```{r}
 table
 ```
 
-Next steps:
-- Extract the rest of the information from this listing (URL of pictures, etc)
-- Repeat the operation with another listing, and add the new row to the dataframe. Is some information missing? Is there any error with this script when running it with a new URL?
+
+Next step: Extract the rest of the information from this listing (color, URL of pictures, etc)
