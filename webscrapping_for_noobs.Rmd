@@ -165,3 +165,6 @@ table <- data.frame(id = 1,
 table
 ```
 
+Next steps:
+- Extract the rest of the information from this listing (URL of pictures, etc)
+- Repeat the operation with another listing, and add the new row to the dataframe. Is some information missing? Is there any error with this script when running it with a new URL?
