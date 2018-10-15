@@ -1,0 +1,185 @@
+---
+title: "Web scrapping for Noobs"
+author: "Ludmila"
+date: "10/14/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+<br>
+The purpose of this notebook is to understand **how to scrap Paru Vendu's cars listings**.<br>
+<br>
+This involves understanding:<br>
+
+1. **How to gather data from a specific listing**: brand, price, zipcode, km, etc.<br>
+2. **How to repeat this operation on every listing** (i.e. how to automate web scrapping).
+<br>
+<br>
+
+## Part 1: Gathering data from a specific listing
+Litterature:<br>
+
+* <a href= "https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">_Beginner’s Guide on Web Scraping in R_</a> by Saurav Kaushik 
+* <a href= "http://www.endmemo.com/program/R/regexpr.php">_R regexpr Function_</a> by EndMemo 
+<br>
+<br>
+
+#### A. Preparing our environment
+
+```{r prerequisites, message=FALSE, warning=FALSE}
+# Let's prepare our environment
+library(rvest)
+library(magrittr)
+library(dplyr)
+Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # To see the currencies
+```
+<br>
+<br>
+
+#### B. Downloading the webpage
+
+```{r Downloading webpage}
+# Specifying the url of the listing to be scrapped
+url <- "https://www.paruvendu.fr/a/voiture-occasion/ford/ka/1229807279A1KVVOFOKA"
+
+# Reading the HTML code from the website
+webpage <- read_html(url)
+```
+<br>
+<br>
+
+#### C. Extracting data from the HTML file
+
+<br>
+Before going further, let's define what we want.<br>
+The output should be **a dataframe with the following columns**:
+
+* _id_: our id
+* _brand_
+* _modele_
+* _year_
+* _mileage_
+* _price_
+* _address_
+* _zipcode_
+* _city_
+* _street_
+* _id_listing_: the id used by the website
+* _website_: the website where we found the listing
+* _url_: the url of the listing
+
+Note that we will have some NAs, as some information are not always available.
+
+```{r Finding paths}
+# Defining the xpath of every element we want to extract
+xpath_brand <- '(//*[@itemprop="name"])[2]'
+xpath_modele <- '(//*[@itemprop="name"])[3]'
+xpath_address <- '(//*[contains(concat( " ", @class, " " ), concat( " ", "parttel_coordagence", " " ))])[2]'
+node_tableinfo <- 'table.tabcar15'
+```
+
+
+```{r Extracting raw data}
+# Extracting the raw info
+brand <- webpage %>% 
+  html_nodes(xpath = xpath_brand)  %>% 
+  html_text()
+
+modele <- webpage %>% 
+  html_node(xpath = xpath_modele) %>% 
+  html_text()
+
+address <- webpage %>% 
+  html_nodes(xpath = xpath_address) %>% 
+  html_text()
+
+tableinfo <- webpage %>%
+  html_node(node_tableinfo) %>%
+  html_table(header = FALSE)
+```
+
+```{r Cleaning raw data}
+# Cleaning raw data
+brand <- brand %>%
+  gsub(" occasion", "", .) # ! Verify that every listing has "occasion" (not "new" for instance)
+
+address <- address %>%
+  gsub("\r", "", .) %>% 
+  gsub("\n", "", .)
+
+zipcode <- address %>% 
+  substr(regexpr("\\d{5}", address), regexpr("\\d{5}", address)+4) # Finding position of the five-digit number in the string (i.e. of the zipcode) and extracting it
+
+street <- address %>% 
+  substr(0,regexpr(zipcode, address)-1) # Finding position of the zipcode, and extracting everything that is *before*
+
+city <- address %>% 
+  substr(regexpr(zipcode, address)+6,nchar(address)) # Finding position of the zipcode, and extracting everything that is *after*
+
+tableinfo %>% 
+  filter(X1 == "Transmission") %>% 
+  select(X2) %>% 
+  as.character() %>% 
+  gsub("\n", "", .) %>% 
+  gsub("km", "", .) %>% 
+  gsub(" ", "", .)
+```
+
+
+```{r Storing results}
+table <- data.frame(id = 1, 
+                    
+                    brand = brand,
+                    
+                    modele = modele,
+                    
+                    year = tableinfo %>% 
+                      filter(X1 == "Année") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(1,4),
+                    
+                    mileage = tableinfo %>% 
+                      filter(X1 == "Kilométrage") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>% 
+                      gsub("km", "", .) %>% 
+                      gsub(" ", "", .),
+                    
+                    energy = tableinfo %>% 
+                      filter(X1 == "Energie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    transmission = tableinfo %>% 
+                      filter(X1 == "Transmission") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    zipcode = zipcode,
+                    
+                    city = city,
+                    
+                    street = street,
+                    
+                    price = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("€", "", .) %>% 
+                      gsub(" ", "", .),
+                    
+                    currency = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(nchar(.), nchar(.))
+                    )
+table
+```
+
