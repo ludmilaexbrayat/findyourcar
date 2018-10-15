@@ -54,7 +54,7 @@ webpage <- read_html(url)
 
 #### C. Extracting data from the HTML file
 
-Note that we will have some NAs, as some information are not always available.
+Note that we will have some NAs, as some information is not always available.
 
 ```{r Finding paths}
 # Defining the xpath of every element we want to extract
