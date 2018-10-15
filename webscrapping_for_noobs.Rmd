@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 <br>
-The purpose of this notebook is to understand **how to scrap Paru Vendu's cars listings** .<br>
+The purpose of this notebook is to understand <b>how to scrap Paru Vendu's cars listings</b>.<br>
 <br>
 This involves understanding:<br>
 
