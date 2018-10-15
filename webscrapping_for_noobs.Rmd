@@ -17,15 +17,18 @@ This involves understanding:<br>
 
 1. **How to gather data from a specific listing**: brand, price, zipcode, km, etc.<br>
 2. **How to repeat this operation on every listing** (i.e. how to automate web scrapping).
+
+
+Litterature that we used:<br>
+
+* <a href= "https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">Beginner’s Guide on Web Scraping in R</a> by Saurav Kaushik 
+* <a href= "http://www.endmemo.com/program/R/regexpr.php">R regexpr Function</a> by EndMemo 
+* <a href = "https://www.r-bloggers.com/using-rvest-to-scrape-an-html-table/">Using rvest to Scrape an HTML Table</a> by Cory Nissen
+<br>
 <br>
 <br>
 
 ## Part 1: Gathering data from a specific listing
-Litterature:<br>
-
-* <a href= "https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">_Beginner’s Guide on Web Scraping in R_</a> by Saurav Kaushik 
-* <a href= "http://www.endmemo.com/program/R/regexpr.php">_R regexpr Function_</a> by EndMemo 
-<br>
 <br>
 
 #### A. Preparing our environment
