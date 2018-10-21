@@ -200,11 +200,20 @@ table <- data.frame(id = 1,
                    url = url
                     )
 ```
+<br>
+**Before moving on to the next step:**<br>
 
-What happens with another listing?
-```{r}
-table
-```
+* Check that the columns are **correctly filled** when testing the script with another listing
+* Check that the columns are **correctly defined** (e.g. no space at the end of the strings, the type is the right one, etc.)
+* Check that we have scrapped **all the data we wanted** (or if not the case, scrap them)
+<br>
 
 
-Next step: Extract the rest of the information from this listing (color, URL of pictures, etc)
+## Part 2: Gathering data from all webpages
+<br>
+How we may proceed:<br>
+
+1. Create a list of the URLs of the results of the search engine of Paru Vendu
+2. Scrap and store the URLs of the listings that are displayed on every of these pages
+3. Use the list of URL from 2. and scrap the pages using the script of Part 1.
+
