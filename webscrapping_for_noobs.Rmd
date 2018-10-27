@@ -28,7 +28,7 @@ Litterature that we used:<br>
 <br>
 <br>
 
-## Part 1: Gathering data from a specific listing
+## Part 1: Gathering data from a specific listing ☑️
 <br>
 
 #### A. Preparing our environment
@@ -39,6 +39,7 @@ library(rvest)
 library(magrittr)
 library(dplyr)
 library(plyr)
+library(tidyr)
 Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # To see the currencies
 ```
 <br>
@@ -68,10 +69,6 @@ xpath_address <- '(//*[contains(concat( " ", @class, " " ), concat( " ", "partte
 node_tableinfo <- 'table.tabcar15'
 ```
 
-
-#### C. Extracting data from the HTML file
-
-
 ```{r Extracting raw data}
 # Extracting the raw info
 brand <- webpage %>% 
@@ -90,6 +87,138 @@ tableinfo <- webpage %>%
   html_node(node_tableinfo) %>%
   html_table(header = FALSE)
 ```
+<br>
+**Conclusion: we've managed to scrap the information we needed from one specific listing.**<br>
+
+<br>
+<br>
+
+## Part 2: Automating scraping
+<br>
+To automate scraping (ie scrap all listings on Paru Vendu), we need to:<br>
+
+1. Get the list of the URLs of all listings on Paru Vendu ...
+2. ... and for that the list of the URLs of all the results of the search engine (e.g. <a href= "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p=1"> this one</a>)
+<br>
+<br>
+
+####A. Scrapping the results of the search engine
+
+```{r Preparing search engine scrapping}
+# Building a list of URLs of the engine search
+searchengine_url <- "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p="
+list_searchengine_urls <- paste0(searchengine_url, c(1:3)) # Let's just focus on the first 3 pages for now
+
+
+# Specifying where to find the links of the listings on the page
+xpath_url <- "//*[@class='ergov3-voirann']"
+
+
+# Building a function that scraps the links from the search engine results
+scrap_searchengine <- function(url) {
+  # Extracting a raw list of URL
+  list_links <- url %>% 
+    read_html() %>% 
+    html_nodes(xpath = xpath_url) %>% 
+    html_nodes("a") %>% 
+    html_attr("href")
+  
+  # Cleaning the list
+  list_links <- list_links[which(regexpr('https',list_links) >= 1)]        # Removing all elements that don't contain "https"
+  list_links <- list_links[-which(regexpr('pubcommunfo',list_links) >= 1)] # Removing all elements that contain "pubcommunfo"
+  
+  # Setting some random waiting time before each read_html to look more human
+  Sys.sleep(sample(10,1)*0.1)
+  
+  return(list_links)
+}
+```
+
+```{r Scrapping search engine}
+# Scrapping the links from the list of URLs
+list_links <- list_searchengine_urls %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+head(list_links)
+```
+
+
+**Conclusion: we've managed to scrap and store the links of the URLs of the listings on the search engine.**
+<br>
+<br>
+
+```{r Preparing scrapping of multiple listings}
+scrap_listing <- function(url) {
+  
+  webpage = read_html(url)
+  
+  brand <- webpage %>% 
+    html_nodes(xpath = xpath_brand)  %>% 
+    html_text()
+
+  modele <- webpage %>% 
+    html_node(xpath = xpath_modele) %>% 
+    html_text()
+
+  address <- webpage %>%  # NOT WORKING
+    html_nodes(xpath = xpath_address) %>% 
+    html_text()
+
+  tableinfo <- webpage %>% 
+    html_node(node_tableinfo) %>%
+    html_table(header = FALSE) %>% 
+    spread(X1, X2) %>% 
+    mutate(url = url)
+  
+  # Setting some random waiting time before each read_html to look more human
+  Sys.sleep(sample(10,1)*0.1)
+  
+  return(data.frame("url" = paste0(url, ""), # If we don't add "", and if the variable url is empty, we have an error
+             "brand" = paste0(brand, ""),
+             "modele" = paste0(modele, ""), 
+             "address" = paste0(address, "")) %>% 
+    merge(tableinfo, by = "url"))
+}
+```
+
+```{r Scrapping multiple listings}
+# Scrapping multiple listings
+scrapped_listings <- rbind.fill(lapply(list_links[1:10], scrap_listing))
+head(scrapped_listings)
+```
+
+
+**Conclusions: we now have two functions, one that creates a list of URLs to scrap (from the search engine results), and one that scraps these URLs.**<br>
+<br>
+Next steps include:<br>
+
+* Imbricate these two functions
+* Test if the imbrication works for a high number of listings (~ let's do first 50 pages of the search engine)
+* Even if it works, anticipate the cases when we will have "Nos systèmes ont détecté un trafic inhabituel depuis votre accès internet" (error message in RStudio: "Error in UseMethod("html_table") : no applicable method for 'html_table' applied to an object of class "xml_missing"")
+* Clean the resulting dataframe
+
+<br>
+And then... we're done! We'll have a clean dataset.
+
+
+## Graveyard
+<br>
+To be included later on in the analysis
+```{r Security check, eval=FALSE, include=FALSE}
+# Lets make a test of what woudl happend if one of the url we were to scrap wasnt right
+listingpageURL[3] <- "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p=3"
+#Lets run the function
+urldata <- lapply( listingpageURL, listingurlscrapper) %>% 
+  unlist() %>%
+```
+
+
+
+
+
+
+
 
 ```{r Cleaning raw data}
 # Cleaning raw data
@@ -368,7 +497,7 @@ return(table)
 
 ```
 
-```{r Function Test}
+```{r Function Test, eval=FALSE}
 #Lets Test the function we have just created
 urltest <- list("https://www.paruvendu.fr/a/voiture-occasion/bmw/x5/1229965754A1KVVOBMX5",
 "https://www.paruvendu.fr/a/voiture-occasion/bmw/x5/1228374123A1KVVOBMX5", "https://www.paruvendu.fr/a/voiture-occasion/audi/q3/1230053461A1KVVOAUQ3", "https://www.paruvendu.fr/a/voiture-occasion/volkswagen/passat/1229883997A1KVVOVWPAS", 
