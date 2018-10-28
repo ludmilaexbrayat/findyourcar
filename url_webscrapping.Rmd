@@ -22,7 +22,7 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # To see the currencies
 
 
 
-Objective: Get a list of URL of all the individual annonces on paru vendu
+Objective: Get a list of URL of all the individual listings on paru vendu
 
 1) Get the list of url on which listings are
 2) Scrap each of this page to get the listings url
@@ -30,10 +30,7 @@ Objective: Get a list of URL of all the individual annonces on paru vendu
 
 
 ```{r List of URL to scrap, echo=FALSE}
-
 listingpageURL <- paste0( "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p=", c(1:1))
-  
-
 ```
 
 
@@ -76,7 +73,7 @@ URLtest
 
 #### C. Automating the process
 
-```{r function for scrapping paru-vendu}
+```{r function for scrapping paru-vendu, eval=FALSE}
 #Creating a function for Paru-Vendu that scraps the URL of all individual listing
 
 listingurlscrapper <- function(url){
