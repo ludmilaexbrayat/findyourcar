@@ -107,7 +107,7 @@ To automate scraping (ie scrap all listings on Paru Vendu), we need to:<br>
 ```{r Preparing search engine scrapping}
 # Building a list of URLs of the engine search
 searchengine_url <- "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p="
-list_searchengine_urls <- paste0(searchengine_url, c(1:3)) # Let's just focus on the first 3 pages for now
+list_searchengine_urls <- paste0(searchengine_url, c(1:10900)) # Let's just focus on the first 1000 pages for now
 
 
 # Specifying where to find the links of the listings on the page
@@ -136,11 +136,54 @@ scrap_searchengine <- function(url) {
 
 ```{r Scrapping search engine}
 # Scrapping the links from the list of URLs
-list_links <- list_searchengine_urls %>% 
+## We can't scrap in one shot the 10,900 listings. We need to split the work.
+
+# Loop 1: 1 to 2,000
+list_links_1 <- list_searchengine_urls[1:2000] %>% 
   lapply(scrap_searchengine) %>% 
   unlist(use.names = FALSE)
 
-head(list_links)
+list_links_1 %>% write.csv("datasets/list_links_searchengine_1.csv")
+
+
+# Loop 2: 2,001 to 4,000
+list_links_2 <- list_searchengine_urls[2001:4000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_2 %>% write.csv("datasets/list_links_searchengine_2.csv")
+
+
+# Loop 3: 4,001 to 6,000
+list_links_3 <- list_searchengine_urls[4001/6000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_3 %>% write.csv("datasets/list_links_searchengine_3.csv")
+
+
+# Loop 4: 6,001 to 8,000
+list_links_4 <- list_searchengine_urls[6001/8000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_4 %>% write.csv("datasets/list_links_searchengine_4.csv")
+
+
+# Loop 5: 8,001 to 10,000
+list_links_5 <- list_searchengine_urls[8001/10000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_5 %>% write.csv("datasets/list_links_searchengine_5.csv")
+
+
+# Loop 6: 10,001 to 10,900
+list_links_6 <- list_searchengine_urls[10001/10900] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_6 %>% write.csv("datasets/list_links_searchengine_6.csv")
 ```
 
 
@@ -149,32 +192,40 @@ head(list_links)
 <br>
 
 ```{r Preparing scrapping of multiple listings}
+xpath_brand <- '(//*[@itemprop="name"])[2]'
+xpath_modele <- '(//*[@itemprop="name"])[3]'
+node_address <- '.contact_infospart'
+node_tableinfo <- 'table.tabcar15'
+
+
+# Defining a function that scraps a URL
 scrap_listing <- function(url) {
-  
+
   webpage = read_html(url)
-  
+    
   brand <- webpage %>% 
     html_nodes(xpath = xpath_brand)  %>% 
     html_text()
 
   modele <- webpage %>% 
-    html_node(xpath = xpath_modele) %>% 
+    html_nodes(xpath = xpath_modele) %>% 
     html_text()
 
   address <- webpage %>%  # NOT WORKING
-    html_nodes(xpath = xpath_address) %>% 
+    html_nodes(node_address) %>% 
     html_text()
 
   tableinfo <- webpage %>% 
-    html_node(node_tableinfo) %>%
+    html_nodes(node_tableinfo) %>%
     html_table(header = FALSE) %>% 
+    data.frame() %>% 
     spread(X1, X2) %>% 
     mutate(url = url)
   
-  # Setting some random waiting time before each read_html to look more human
-  Sys.sleep(sample(10,1)*0.1)
+  ## Setting some random waiting time before each read_html to look more human
+  #Sys.sleep(sample(10,1)*0.5)
   
-  return(data.frame("url" = paste0(url, ""), # If we don't add "", and if the variable url is empty, we have an error
+  return(data.frame("url" = paste0(url, ""), ## If we don't add "", and if the variable is empty, we have an error
              "brand" = paste0(brand, ""),
              "modele" = paste0(modele, ""), 
              "address" = paste0(address, "")) %>% 
@@ -182,10 +233,12 @@ scrap_listing <- function(url) {
 }
 ```
 
-```{r Scrapping multiple listings}
+```{r}
 # Scrapping multiple listings
-scrapped_listings <- rbind.fill(lapply(list_links[1:10], scrap_listing))
-head(scrapped_listings)
+scrapped_listings <- rbind.fill(lapply(list_links[1:1000], scrap_listing))
+
+scrapped_listings %>% dim()
+scrapped_listings %>% write.csv("datasets/scrapped_listings_1.csv")
 ```
 
 
@@ -516,5 +569,44 @@ ldply(formatingprocess, data.frame)
 
 
 
+```{r Scrapping multiple listings}
+# Scrapping multiple listings
+scrapped_listings <- rbind.fill(lapply(list_links, scrap_listing))
 
-Next step: Extract the rest of the information from this listing (color, URL of pictures, etc)
+scrapped_listings %>% dim()
+scrapped_listings %>% write.csv("datasets/scrapped_listings_1.csv")
+```
+
+```{r}
+# Re-scrapping listings that were blocked by "I am not a robot"
+
+#   Step 1: Count the number of listings that were not scrapped
+scrapped_listings %>%
+  filter(iamnotarobot = 1) %>% 
+  count() %>% 
+  paste0(., " listings were not correctly scrapped") %>% 
+  print()
+
+
+#   Step 2: Unlock the "I am not a robot" page
+print(list_links[1]) # Open this link in your browser, and click the box "I am not a robot".
+
+
+#   Step 3: Re-scrapp the listings
+list_links_to_rescrap_1 <- scrapped_listings %>% 
+  filter(iamnotarobot = 1) %>% # Taking listings that were blocked
+  select(url) %>% 
+  list()
+
+rescrapped_listings_1 <- rbind.fill(lapply(list_links_to_rescrap_1, scrap_listing))
+rescrapped_listings_1 %>% write.csv("rescrapped_listings_1.csv")
+
+
+#   Step 4: Count the numbe of listings that were not scrapped
+rescrapped_listings_1 %>%
+  filter(iamnotarobot = 1) %>% 
+  count() %>% 
+  paste0(., " listings were not correctly scrapped") %>% 
+  print()
+## -> Do we need to scrap them again?
+```
