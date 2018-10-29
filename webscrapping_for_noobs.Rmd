@@ -155,35 +155,35 @@ list_links_2 %>% write.csv("datasets/list_links_searchengine_2.csv")
 
 
 # Loop 3: 3,001 to 5,000
-list_links_2 <- list_searchengine_urls[3001:5000] %>% 
-  lapply(scrap_searchengine) %>% 
-  unlist(use.names = FALSE)
-
-list_links_2 %>% write.csv("datasets/list_links_searchengine_2.csv")
-
-
-# Loop 3: 5,001 to 7,000
-list_links_3 <- list_searchengine_urls[5001/7000] %>% 
+list_links_3 <- list_searchengine_urls[3001:5000] %>% 
   lapply(scrap_searchengine) %>% 
   unlist(use.names = FALSE)
 
 list_links_3 %>% write.csv("datasets/list_links_searchengine_3.csv")
 
 
-# Loop 4: 7,001 to 9,000
-list_links_4 <- list_searchengine_urls[7001/9000] %>% 
+# Loop 4: 5,001 to 7,000
+list_links_4 <- list_searchengine_urls[5001/7000] %>% 
   lapply(scrap_searchengine) %>% 
   unlist(use.names = FALSE)
 
 list_links_4 %>% write.csv("datasets/list_links_searchengine_4.csv")
 
 
-# Loop 5: 9,001 to 10,900
-list_links_5 <- list_searchengine_urls[9001/10900] %>% 
+# Loop 5: 7,001 to 9,000
+list_links_5 <- list_searchengine_urls[7001/9000] %>% 
   lapply(scrap_searchengine) %>% 
   unlist(use.names = FALSE)
 
 list_links_5 %>% write.csv("datasets/list_links_searchengine_5.csv")
+
+
+# Loop 6: 9,001 to 10,900
+list_links_6 <- list_searchengine_urls[9001/10900] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_6 %>% write.csv("datasets/list_links_searchengine_6.csv")
 ```
 
 
