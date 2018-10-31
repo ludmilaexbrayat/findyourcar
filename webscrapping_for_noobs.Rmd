@@ -128,7 +128,7 @@ scrap_searchengine <- function(url) {
   list_links <- list_links[-which(regexpr('pubcommunfo',list_links) >= 1)] # Removing all elements that contain "pubcommunfo"
   
   # Setting some random waiting time before each read_html to look more human
-  Sys.sleep(sample(10,1)*0.1)
+  #Sys.sleep(sample(10,1)*0.1)
   
   return(list_links)
 }
