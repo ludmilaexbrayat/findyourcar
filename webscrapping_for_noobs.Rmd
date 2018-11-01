@@ -134,7 +134,7 @@ scrap_searchengine <- function(url) {
 }
 ```
 
-```{r Scrapping search engine}
+```{r Scrapping search engine, eval=FALSE, include=FALSE}
 # Scrapping the links from the list of URLs
 ## We can't scrap in one shot the 10,900 listings. We need to split the work.
 
@@ -192,17 +192,32 @@ list_links_6 %>% write.csv("datasets/list_links_searchengine_6.csv")
 <br>
 
 ```{r Preparing scrapping of multiple listings}
+# Defining the variables we'll need for scrapping the webpages
 xpath_brand <- '(//*[@itemprop="name"])[2]'
 xpath_modele <- '(//*[@itemprop="name"])[3]'
-node_address <- '.contact_infospart'
+node_address_particulier <- '.contact_infospart' # Depending on the type of seller (pro or particulier), the address is not located in the same position
+xpath_name_pro <- '(//*[@class="parttel_coordagence"])[1]'
+xpath_address_pro <- '(//*[@class="parttel_coordagence"])[2]'
 node_tableinfo <- 'table.tabcar15'
+pattern_when_error <- 'annonces achat, vente de voitures'
 
 
-# Defining a function that scraps a URL
+# Defining a function that scraps an URL
 scrap_listing <- function(url) {
 
-  webpage = read_html(url)
-    
+  webpage <- read_html(url)
+  
+  ## Setting some random waiting time before each read_html to look more human
+  Sys.sleep(sample(10,1)*0.5)
+  
+  ## Checking that the listing was not deleted
+  is_page_available <- webpage %>% 
+    html_nodes('title') %>% 
+    html_text() %>% 
+    regexpr(pattern_when_error, .) == -1
+  
+  if (is_page_available) { ### If the listing was not deleted, let's scrap it
+  
   brand <- webpage %>% 
     html_nodes(xpath = xpath_brand)  %>% 
     html_text()
@@ -211,8 +226,16 @@ scrap_listing <- function(url) {
     html_nodes(xpath = xpath_modele) %>% 
     html_text()
 
-  address <- webpage %>%  # NOT WORKING
-    html_nodes(node_address) %>% 
+  address_particulier <- webpage %>%
+    html_nodes(node_address_particulier) %>% 
+    html_text()
+  
+  address_pro <- webpage %>% 
+    html_nodes(xpath = xpath_address_pro) %>% 
+    html_text()
+  
+  name_pro <- webpage %>% 
+    html_nodes(xpath = xpath_name_pro) %>% 
     html_text()
 
   tableinfo <- webpage %>% 
@@ -221,23 +244,35 @@ scrap_listing <- function(url) {
     data.frame() %>% 
     spread(X1, X2) %>% 
     mutate(url = url)
-  
-  ## Setting some random waiting time before each read_html to look more human
-  #Sys.sleep(sample(10,1)*0.5)
-  
-  return(data.frame("url" = paste0(url, ""), ## If we don't add "", and if the variable is empty, we have an error
-             "brand" = paste0(brand, ""),
-             "modele" = paste0(modele, ""), 
-             "address" = paste0(address, "")) %>% 
+
+  ## Why did we add "paste0" everywhere below?
+  ##  If the variable is NA (for instance, if there wasn't an address in the listing), paste0(., "") converts the NA into an empty character. This way, we avoid errors due to NAs when building the table.
+  return(data.frame("url" = paste0(url, ""),
+                    "is_listing_deleted" = 0,
+                    "brand" = paste0(brand, ""),
+                    "modele" = paste0(modele, ""), 
+                    "address_particulier" = paste0(address_particulier, ""),
+                    "address_pro" = paste0(address_pro, ""),
+                    "name_pro" = paste0(name_pro, "")) %>% 
     merge(tableinfo, by = "url"))
+  
+  } else { ### If the listing was  deleted, let's scrap it
+    
+    return(data.frame("url" = paste0(url, ""),
+                      "is_listing_deleted" = 1))
+    
+  }
 }
 ```
 
 ```{r}
 # Scrapping multiple listings
-scrapped_listings <- rbind.fill(lapply(list_links[1:1000], scrap_listing))
+## Loading the list of URLs to scarp
+list_searchengine_urls_1 <- read.csv("Datasets/list_links_searchengine_1.csv", stringsAsFactors = FALSE)
 
-scrapped_listings %>% dim()
+## Scrapping the list
+scrapped_listings <- rbind.fill(lapply(list_searchengine_urls_1$x[1:500], scrap_listing))
+
 scrapped_listings %>% write.csv("datasets/scrapped_listings_1.csv")
 ```
 
