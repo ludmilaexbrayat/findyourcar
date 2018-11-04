@@ -268,12 +268,12 @@ scrap_listing <- function(url) {
 ```{r}
 # Scrapping multiple listings
 ## Loading the list of URLs to scarp
-list_searchengine_urls_1 <- read.csv("Datasets/list_links_searchengine_1.csv", stringsAsFactors = FALSE)
+list_searchengine_urls_3 <- read.csv("Datasets/list_links_searchengine_3.csv", stringsAsFactors = FALSE)
 
 ## Scrapping the list
-scrapped_listings <- rbind.fill(lapply(list_searchengine_urls_1$x[1:500], scrap_listing))
+scrapped_listings_3_251_500 <- rbind.fill(lapply(list_searchengine_urls_3$x[251:500], scrap_listing))
 
-scrapped_listings %>% write.csv("datasets/scrapped_listings_1.csv")
+scrapped_listings_3_251_500 %>% write.csv("datasets/scrapped_listings_3_251_500.csv")
 ```
 
 
