@@ -16,6 +16,110 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(magrittr)
 library(readr)
+library(stringr)
+
+#Sys.setlocale(locale="en_US.UTF-8")
 ```
 
+#### Read data and primary data cleaning
+
+Read the data (in the future, we will have to rbind all the scrapped listings - a function should do):
+
+```{r}
+mapping_villes <- data.frame(read_csv2("datasets/mapping_villes.csv"))
+
+data <- read_csv("datasets/scrapped_listings_1_1_500.csv")
+
+#todo:
+
+#function that reads and rowbinds the list of csv
+
+#assign all to data
+```
+
+Remove the deleted listings, and the useless column that is X1:
+
+```{r}
+data <- data %>% 
+  filter(is_listing_deleted == 0) %>% 
+  select(-X1, -is_listing_deleted)
+
+data <- data.frame(data)
+```
+
+```{r}
+View(data)
+```
+
+#### URL
+
+We keep URL.
+
+#### Brand
+
+```{r}
+
+# To check over other datasets, but for now it seems occasion is mentioned every time, so let's just remove it
+
+sum(sapply(data$brand, function(x) str_detect(x, "occasion"))) / length(data$brand)
+
+# Actual cleaning
+
+data$brand <- sapply(data$brand, function(x) str_remove(x, " occasion")[1], USE.NAMES = F)
+
+# Check
+
+data %>% 
+  distinct(brand)
+
+# Good, we reduced the brand column to their actual brand names
+```
+
+#### Modèle
+
+For now, let's just consider that the modèle is an additional information but not a category, as in one we would use in our filtering or models.
+
+#### Adresse pro / particulier
+
+For now, we will focus on retrieving the postal code from the adress and the city from mapping_villes.csv (source : http://www.nosdonnees.fr/wiki/index.php/Fichier:EUCircos_Regions_departements_circonscriptions_communes_gps.csv.gz)
+
+We'll use a regular expression to find the postal code : "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}"
+
+
+```{r}
+# Combine adress particulier and pro : coalesce takes the first value, but if null, imputes the second value
+
+data$all_adress <- coalesce(data$address_particulier, data$address_pro)
+
+get_postal_code <- function(address) {
+  str_match(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[1]
+}
+
+# Ca marchait avant mais plus mtn...
+
+sapply(data$all_address, get_postal_code)
+
+# Test
+
+#get_postal_code <- function(address) {
+#  poss_postal_codes <- str_match_all(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]][,1]
+#  if (dim(poss_postal_codes)[1] == 1) {
+#     poss_postal_codes[1]
+#  } else {
+#    print(poss_postal_codes)
+#  }
+#}
+#
+#get_postal_code("AVENUE LOUIS ARMAND Z I NORD BP 2151587000 LI")
+#
+#test_match <- str_match_all("AVENUE LOUIS ARMAND Z I NORD BP 2151587000 LI", #"(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")
+#
+## if that
+#dim(test_match[[1]])[1]
+## is equal to 1
+## then return
+#test_match[[1]][1]
+## else
+#print(test_match[[1]][,1])
+```
 
