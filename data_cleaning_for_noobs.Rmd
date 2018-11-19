@@ -1,0 +1,21 @@
+---
+title: "data_cleaning_for_noobs"
+author: "gg"
+date: "11/19/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Cleaning
+
+#### Libraries import
+```{r}
+library(tidyverse)
+library(magrittr)
+library(readr)
+```
+
+
