@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Warning : built over one dataset. Surely other datasets will pose many problems but it's the beginning of a solution here.
+
 ## Data Cleaning
 
 #### Libraries import
@@ -18,7 +20,7 @@ library(magrittr)
 library(readr)
 library(stringr)
 
-#Sys.setlocale(locale="en_US.UTF-8")
+Sys.setlocale(locale="en_US.UTF-8")
 ```
 
 #### Read data and primary data cleaning
@@ -89,37 +91,43 @@ We'll use a regular expression to find the postal code : "(([0-8][0-9])|(9[0-5])
 ```{r}
 # Combine adress particulier and pro : coalesce takes the first value, but if null, imputes the second value
 
-data$all_adress <- coalesce(data$address_particulier, data$address_pro)
+data$all_address <- coalesce(data$address_particulier, data$address_pro)
 
 get_postal_code <- function(address) {
-  str_match(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[1]
+  # Get all the strings that match a possible postal code
+  poss_postal_codes <- str_match_all(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]][,1]
+  l <- length(poss_postal_codes)
+  # If there isn't any, return NA
+  if (l == 0) {
+    NA
+  }
+  # If there is just one, good, we keep that one
+  else if (l == 1) {
+     poss_postal_codes[1]
+  } 
+  # If there are many, we test them again, considering that scenario : we have both a postal box (BP) and a postal code. We want the one that is most likely to be a postal code (should usually end with a 0), and keep that one.
+  # Note: we don't use that usually. Some postal codes end don't end with 0, ex in Paris : 75001.
+  else {
+    better_postal_code <- str_match(poss_postal_codes, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{2}[0]")[,1]
+    better_postal_code[!is.na(better_postal_code)]
+    }
 }
 
-# Ca marchait avant mais plus mtn...
-
-sapply(data$all_address, get_postal_code)
-
-# Test
-
-#get_postal_code <- function(address) {
-#  poss_postal_codes <- str_match_all(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]][,1]
-#  if (dim(poss_postal_codes)[1] == 1) {
-#     poss_postal_codes[1]
-#  } else {
-#    print(poss_postal_codes)
-#  }
-#}
-#
-#get_postal_code("AVENUE LOUIS ARMAND Z I NORD BP 2151587000 LI")
-#
-#test_match <- str_match_all("AVENUE LOUIS ARMAND Z I NORD BP 2151587000 LI", #"(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")
-#
-## if that
-#dim(test_match[[1]])[1]
-## is equal to 1
-## then return
-#test_match[[1]][1]
-## else
-#print(test_match[[1]][,1])
+data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 ```
+
+#### Join on long, lat and city
+
+It's not the most efficient thing to do codewise, surely, but it does ensure that we'll have the same format for everything.
+
+```{r}
+# Filter the information we're interested in
+relevant_mapping_villes <- mapping_villes %>% 
+  select(code_région, nom_région, numéro_département, nom_département, nom_commune, codes_postaux, latitude, longitude)
+
+# Join with postal codes
+data <- data %>% 
+  left_join(relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
+```
+
 
