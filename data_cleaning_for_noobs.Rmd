@@ -130,4 +130,12 @@ data <- data %>%
   left_join(relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
 ```
 
+#### Name pro + is pro
 
+Name pro will be useful only when the seller is a pro. Let's just keep it that way and create an "is_pro" binary column for easy access to this information.
+
+```{r}
+data$is_pro <- (1 - is.na(data$name_pro))
+```
+
+#### Année
