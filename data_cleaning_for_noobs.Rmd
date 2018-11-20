@@ -19,6 +19,7 @@ library(tidyverse)
 library(magrittr)
 library(readr)
 library(stringr)
+library(lubridate)
 
 Sys.setlocale(locale="en_US.UTF-8")
 ```
@@ -47,10 +48,8 @@ data <- data %>%
   select(-X1, -is_listing_deleted)
 
 data <- data.frame(data)
-```
 
-```{r}
-View(data)
+#View(data)
 ```
 
 #### URL
@@ -63,7 +62,7 @@ We keep URL.
 
 # To check over other datasets, but for now it seems occasion is mentioned every time, so let's just remove it
 
-sum(sapply(data$brand, function(x) str_detect(x, "occasion"))) / length(data$brand)
+# sum(sapply(data$brand, function(x) str_detect(x, "occasion"))) / length(data$brand)
 
 # Actual cleaning
 
@@ -71,8 +70,8 @@ data$brand <- sapply(data$brand, function(x) str_remove(x, " occasion")[1], USE.
 
 # Check
 
-data %>% 
-  distinct(brand)
+#data %>% 
+#  distinct(brand)
 
 # Good, we reduced the brand column to their actual brand names
 ```
@@ -83,13 +82,13 @@ For now, let's just consider that the modèle is an additional information but n
 
 #### Adresse pro / particulier
 
-For now, we will focus on retrieving the postal code from the adress and the city from mapping_villes.csv (source : http://www.nosdonnees.fr/wiki/index.php/Fichier:EUCircos_Regions_departements_circonscriptions_communes_gps.csv.gz)
+For now, we will focus on retrieving the postal code from the address and the city from mapping_villes.csv (source : http://www.nosdonnees.fr/wiki/index.php/Fichier:EUCircos_Regions_departements_circonscriptions_communes_gps.csv.gz)
 
 We'll use a regular expression to find the postal code : "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}"
 
 
 ```{r}
-# Combine adress particulier and pro : coalesce takes the first value, but if null, imputes the second value
+# Combine address particulier and pro : coalesce takes the first value, but if null, imputes the second value
 
 data$all_address <- coalesce(data$address_particulier, data$address_pro)
 
@@ -106,7 +105,7 @@ get_postal_code <- function(address) {
      poss_postal_codes[1]
   } 
   # If there are many, we test them again, considering that scenario : we have both a postal box (BP) and a postal code. We want the one that is most likely to be a postal code (should usually end with a 0), and keep that one.
-  # Note: we don't use that usually. Some postal codes end don't end with 0, ex in Paris : 75001.
+  # Note: we don't use that for everything because some postal codes end don't end with 0, ex in Paris : 75001.
   else {
     better_postal_code <- str_match(poss_postal_codes, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{2}[0]")[,1]
     better_postal_code[!is.na(better_postal_code)]
@@ -115,6 +114,9 @@ get_postal_code <- function(address) {
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 ```
+
+ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
+REPRENDRE ICI...
 
 #### Join on long, lat and city
 
@@ -125,9 +127,15 @@ It's not the most efficient thing to do codewise, surely, but it does ensure tha
 relevant_mapping_villes <- mapping_villes %>% 
   select(code_région, nom_région, numéro_département, nom_département, nom_commune, codes_postaux, latitude, longitude)
 
+relevant_mapping_villes %>% 
+  group_by(codes_postaux)
+
+dim(relevant_mapping_villes)
+
 # Join with postal codes
-data <- data %>% 
-  left_join(relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
+
+test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
+distinct(test)
 ```
 
 #### Name pro + is pro
@@ -141,15 +149,61 @@ data$is_pro <- (1 - is.na(data$name_pro))
 #### Année
 
 ```{r}
-sapply(data$Année, function(x) str_detect(x, "Assurance auto : Comparez"), USE.NAMES = F)
+# sapply(data$Année, function(x) str_detect(x, "Assurance auto : Comparez"), USE.NAMES = F)
+
 # We either have NA or something that includes " Assurance auto : Comparez" : let's remove it.
+# Then our objective is to get a date object
 
-data$month_year <- sapply(data$Année, function(x) str_remove(x, "\nAssurance auto : Comparez"), USE.NAMES = F)
+french_months <- c(
+                   "janvier", 
+                   "février", 
+                   "mars", 
+                   "avril",
+                   "mai",
+                   "juin",
+                   "juillet",
+                   "août",
+                   "septembre",
+                   "octobre",
+                   "novembre",
+                   "décembre"
+                   )
 
-# Make a date format of month + year, for only year we take january
+clean_month_year <- function(my) {
+  my = str_remove(my, "\nAssurance auto : Comparez")
+  my_split <- str_split(my, " ")[[1]]
+  if (all(is.na(my_split))) {
+    NA
+  }
+  else if (length(my_split) == 1) {
+    ymd(str_c(y_split_test, "-01-01"))
+  }
+  else if (length(my_split) == 2) {
+    ymd(
+      str_c(
+        my_split[2],
+        "-",
+        str_pad(
+          string = as.character(
+            which(
+              french_months %in% str_to_lower(my_split)[1]
+              )
+            ), width = 2, pad = "0"),
+        "-01"
+        )
+      )
+  }
+  else { NA }
+}
 
-#data$year <- 
-#sapply(data$month_year, function(x) str_match(x, "[1-2]([9]|[0-1])[0-9]{2}")[1], USE.NAMES = F)
+clean_month_year(data$Année[200])
+
+str_remove(my, "\nAssurance auto : Comparez")
+
+data$Année[1]
+
+test <- sapply(data$Année, clean_month_year, USE.NAMES = F)
+class(test[1])
 ```
 
 
