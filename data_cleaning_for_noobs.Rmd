@@ -216,6 +216,179 @@ test <- sapply(data$Année, clean_month_year, USE.NAMES = F)
 class(test[1])
 ```
 
+#### Carrosserie
+
+```{r}
+# Check distinct items
+data %>% distinct(Carrosserie)
+```
+
+It seems quite clean already, nothing to add.
+
+#### Consommation mixte
+
+```{r}
+# Let's just remove the "litre / 100 km" part that is at the end of each line.
+
+data$cons_mixte_l_by_100km <- sapply(data$Consommation.mixte, function(x) str_remove(x, "\nlitres / 100 km")[1], USE.NAMES = F)
+
+# OK, it works
+
+```
+
+#### Emissions de CO2
+
+```{r}
+# Let's just remove the "litre / 100 km" part that is at the end of each line.
+
+data$emissions_co2_g_by_km <- sapply(data$Emissions.de.CO2, function(x) str_remove(x, "\ng/km")[1], USE.NAMES = F)
+data %>% distinct(emissions_co2_g_by_km)
+
+# OK, it works
+```
+
+#### Energie
+
+```{r}
+# Just creating an identical energie column with the right name 
+colnames(data)[colnames(data)=="Energie"] <- "energie"
+```
+
+#### Etat du véhicule
+
+```{r}
+colnames(data)[colnames(data)=="Etat.du.véhicule"] <- "etat_vehicule"
+```
+
+#### Kilométrage
+
+```{r}
+data$kilometrage_km <- sapply(data$Kilométrage, function(x) str_remove(str_remove(x, "\nkm")," ")[1], USE.NAMES = F)
+```
+
+#### Nombre de portes
+
+```{r}
+# Faire 2 colonnes : une pour le nombre de portes une pour le hayon 
+data %>% distinct(Nb.de.portes)
+data$nb_portes <- sapply(data$Nb.de.portes, function(x) str_remove(str_remove(x, " avec hayon"),c(" portes"))[1], USE.NAMES = F)
+data %>% distinct(nb_portes)
+
+data$hayon <- sapply(data$Nb.de.portes, function(x) str_detect(x, "hayon")*1)
+```
+
+#### Nombre de places
+
+```{r}
+data$nb_places <- sapply(data$Nombre.de.places, function(x) str_remove(x, "\nplaces")[1], USE.NAMES = F)
+```
+
+#### Prix
+
+```{r}
+data$prix <- sapply(data$Prix, function(x) str_remove(str_remove(x, " €"), " ")[1], USE.NAMES = F)
+```
+
+#### Puissance fiscale
+
+```{r}
+data$puissance_fiscale_cv <- sapply(data$Puissance.fiscale, function(x) str_remove(x, "\nCV")[1], USE.NAMES = F)
+```
+
+#### Puissance réelle
+
+```{r}
+data$puissance_reelle_ch <- sapply(data$Puissance.réelle, function(x) str_remove(x, "\nCh")[1], USE.NAMES = F)
+```
+
+#### Transmission
+
+```{r}
+colnames(data)[colnames(data)=="Transmission"] <- "transmission"
+```
+
+#### Garantie mécanique
+
+```{r}
+data$garantie_mecanique_mois <- sapply(data$Garantie.mécanique, function(x) str_remove(x, " mois")[1], USE.NAMES = F)
+```
+
+#### V1
+
+```{r}
+# Only NA : do we want to get it out?
+data %>% distinct(V1)
+```
+
+#### Contrôle technique
+
+```{r}
+colnames(data)[colnames(data)=="Contrôle.technique"] <- "controle_technique"
+
+# Créer des dummies ?
+data %>% distinct(controle_technique)
+```
+
+#### Couleur intérieur
+
+```{r}
+colnames(data)[colnames(data)=="Couleur.intérieur"] <- "couleur_interieur"
+```
+
+#### Type de peinture carrosserie
+
+```{r}
+colnames(data)[colnames(data)=="Type.de.peinture.carrosserie"] <- "type_peinture_carrosserie"
+```
+
+#### Option Equipement Sécurité
+
+```{r}
+data$abs <- sapply(data$Option.equipement.Sécurité, function(x) str_detect(x, "ABS")*1)
+data$esp <- sapply(data$Option.equipement.Sécurité, function(x) str_detect(x, "ESP")*1)
+data$regulateur_vitesse <- sapply(data$Option.equipement.Sécurité, function(x) str_detect(x, "Régulateur de vitesse")*1)
+data$asr <- sapply(data$Option.equipement.Sécurité, function(x) str_detect(x, "ASR")*1)
+data$alarme_antivol <- sapply(data$Option.equipement.Sécurité, function(x) str_detect(x, "Alarme antivol")*1)
+data %>% distinct(abs,esp, asr, alarme_antivol, regulateur_vitesse,Option.equipement.Sécurité)
+
+# Beaucoup de NA, on va surement jeter
+```
+
+#### Option Equipement Confort Intérieur
+
+```{r}
+data$direction_assistee <- sapply(data$Option.Equipement.Confort.intérieur, function(x) str_detect(x, "Direction assistée")*1)
+data$banquette_ar <- sapply(data$Option.Equipement.Confort.intérieur, function(x) str_detect(x, "Banquette AR 1/3 - 2/3")*1)
+data$radio_cd <- sapply(data$Option.Equipement.Confort.intérieur, function(x) str_detect(x, "Radio/CD")*1)
+data$fermeture_centralisee <- sapply(data$Option.Equipement.Confort.intérieur, function(x) str_detect(x, "Fermeture centralisée")*1)
+data$vitres_electriques <- sapply(data$Option.Equipement.Confort.intérieur, function(x) str_detect(x, "Vitres électriques")*1)
+
+data %>% distinct(Option.Equipement.Confort.intérieur, direction_assistee, banquette_ar,radio_cd, fermeture_centralisee, vitres_electriques)
+
+# Beaucoup de NA, on va surement jeter
+```
+
+#### Option Equipement Exterieurs
+
+```{r}
+
+data$allumage_auto_feux <- sapply(data$Option.equipement.extérieurs, function(x) str_detect(x, "Allumage automatique des feux")*1)
+data$peinture_metallisee <- sapply(data$Option.equipement.extérieurs, function(x) str_detect(x, "Peinture métallisée")*1)
+data$retroviseurs_electriques <- sapply(data$Option.equipement.extérieurs, function(x) str_detect(x, "Rétroviseurs électriques")*1)
+data$roues_alliage_léger <- sapply(data$Option.equipement.extérieurs, function(x) str_detect(x, "Roues alliage léger")*1)
+data$fap <- sapply(data$Option.equipement.extérieurs, function(x) str_detect(x, "FAP")*1)
+
+data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_metallisee,retroviseurs_electriques, roues_alliage_léger, fap)
+
+
+```
+
+
+```{r}
+new_data %>% names()
+new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2)
+```
+
 
 #### A faire : toutes les colonnes suivantes
 
