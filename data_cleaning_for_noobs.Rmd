@@ -118,6 +118,10 @@ data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
 REPRENDRE ICI...
 
+Il faut récupérer les villes en parsant les strings puis faire un join sur code postal et ville.
++ Trouver une manière de faire un join "loose" qui ne prenne pas en compte espaces, casse, etc
+Le parsing se fera différemment selon si pro ou particulier -> soit partir des deux colonnes, soit utiliser le "is_pro" plus bas.
+
 #### Join on long, lat and city
 
 It's not the most efficient thing to do codewise, surely, but it does ensure that we'll have the same format for everything.
@@ -134,8 +138,10 @@ dim(relevant_mapping_villes)
 
 # Join with postal codes
 
-test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
-distinct(test)
+# NE FONCTIONNE PAS !
+
+#test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
+#distinct(test)
 ```
 
 #### Name pro + is pro
@@ -147,6 +153,9 @@ data$is_pro <- (1 - is.na(data$name_pro))
 ```
 
 #### Année
+
+
+/!\ Ne fonctionne pas !!!! Fonctionne sur des dates individuelles mais pas sur toute la colonne, je n'ai pas réussi à gérer le bugs
 
 ```{r}
 # sapply(data$Année, function(x) str_detect(x, "Assurance auto : Comparez"), USE.NAMES = F)
@@ -202,8 +211,15 @@ str_remove(my, "\nAssurance auto : Comparez")
 
 data$Année[1]
 
+# C'est ça qui ne marche pas : normalement je l'assignerais à une colonne de data mais là marche pas...
 test <- sapply(data$Année, clean_month_year, USE.NAMES = F)
 class(test[1])
 ```
 
 
+#### A faire : toutes les colonnes suivantes
+
+Selon la convention : noms de variables en minuscules, en anglais, sans espace, avec "_"
+Pour les valeurs numériques : préciser les unités dans le nom de colonne
+Ex : Consommation.mixte / "6.5 litres / 100 km" (première valeur)
+devient "cons_mixte_l_by_100km" / 6.5
