@@ -5,6 +5,7 @@
 # Name of variables as well as other choices will have to be fitted to the "clean" dataset
 
 library(shiny)
+library(dplyr)
 
 # Define UI for application
 ui <- fluidPage(
@@ -15,13 +16,15 @@ ui <- fluidPage(
    sidebarLayout(
       sidebarPanel(
         # Slider Input for the Price
-        sliderInput("Price", "Choose a price range (in euros):", min = 1000, max = 20000, value = c(2000, 10000)),
+        sliderInput("Price", "Choose a price range (in euros):", min = 1000, max = 40000, value = c(2000, 10000)),
         
         # Select Input for the Postal Code: for the time being, choices are linked to the "Mapping_villes" csv file
         selectInput("postalcode", "Select your postal code:", choices = mapping_villes$codes_postaux %>% sort()),
         
         # Select type of car: for the time being, choices are linked to factors taken by Carosserie in the first raw dataset
         selectInput("carosserie", "Choose the type of car:", choices = dataset1$Carrosserie %>% unique()),
+        
+        # Action Button (to be automatized)
         actionButton("go", "Go")
         ),
       
@@ -31,8 +34,36 @@ ui <- fluidPage(
         # Creating the tabs
         tabsetPanel(type = "tabs",
         
-        # First Tab
-         tabPanel("Results Overview",
+        # First tab
+        tabPanel("Complementary Adjustments",
+                 # Left column with adjustment inputs
+                 column(6, 
+                        selectInput("transmission", "Choose the type of transmission:", choices = c("Manual", "Automatic", "No Preference")),
+                        selectInput("brand", "Brand:", choices = c("No Preference", dataset1$brand %>% unique())),
+                        sliderInput("year_built", "Year:", min = 1950, max = 2017, value = c(2000,2014)),
+                        sliderInput("mileage", "Mileage:", min = 10000, max = 100000, value = c(50000, 80000)),
+                        selectInput("fuel", "Type of fuel:", choices = dataset1$Energie %>% unique()),
+                        selectInput("nb_seats", "Number of seats:", choices = dataset1$`Nombre de places` %>% unique()),
+                        selectInput("nb_doors", "Number of doors:", choices = dataset1$`Nb de portes` %>% unique())
+                        ),
+                 # Right column with impact on the price
+                 column(6, 
+                        h3("Adjusted Price"),
+                        h3(" "),
+                          h4("At 30 min drive"),
+                          h4(" "),
+                            h5("Mean price:"),
+                            h5("Minimum price:"),
+                            h5("Maximum price:"),
+                          h3(" "),
+                          h4("In the whole country"),
+                          h4(" "),
+                            h5("Mean price:"),
+                            h5("Minimum price:"),
+                            h5("Maximum price:"))),    
+        
+        # Second Tab
+        tabPanel("Results Overview",
                   # Map Title
                   div(h3("Available cars around you")),
                   # Plotting the Map
@@ -53,7 +84,6 @@ server <- function(input, output) {
   
   library(readr)
   library(sf)
-  library(dplyr)
   library(ggplot2)
   library(raster)
   library(rasterVis)
