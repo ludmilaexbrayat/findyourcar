@@ -113,16 +113,35 @@ get_postal_code <- function(address) {
 }
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
+
 ```
 
 ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
 REPRENDRE ICI...
 
+```{r}
+get_city <- function(address){
+  poss_city <- str_match_all(address, "Nice")[,1]
+  poss_city[1]
+}
+  
+get_city(data$all_adress[41])
+data$ville <- sapply(data$all_adress, get_city, USE.NAMES = F)
+
+data %>% distinct(all_address)
+
+
+```
+
+
+
 Il faut récupérer les villes en parsant les strings puis faire un join sur code postal et ville.
-+ Trouver une manière de faire un join "loose" qui ne prenne pas en compte espaces, casse, etc
++ Trouver une manière de faire un join "loose" qui ne prenne pas en compte espaces, casse, etc 
 Le parsing se fera différemment selon si pro ou particulier -> soit partir des deux colonnes, soit utiliser le "is_pro" plus bas.
 
 #### Join on long, lat and city
+
+WARNING FROM INES : ATTENTION JE PENSE QU'ON NE PEUT PAS FAIRE CA TANT QU'ON A PAS FAIT LE MAPPING DES VILLES ! DONC LA PREMIERE ETAPE EST AU DESSUS
 
 It's not the most efficient thing to do codewise, surely, but it does ensure that we'll have the same format for everything.
 
@@ -136,12 +155,16 @@ relevant_mapping_villes %>%
 
 dim(relevant_mapping_villes)
 
+
 # Join with postal codes
 
 # NE FONCTIONNE PAS !
 
-#test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
-#distinct(test)
+
+test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
+test
+
+distinct(test)
 ```
 
 #### Name pro + is pro
@@ -156,6 +179,7 @@ data$is_pro <- (1 - is.na(data$name_pro))
 
 
 /!\ Ne fonctionne pas !!!! Fonctionne sur des dates individuelles mais pas sur toute la colonne, je n'ai pas réussi à gérer le bugs
+--> Bug corrigé je pense !
 
 ```{r}
 # sapply(data$Année, function(x) str_detect(x, "Assurance auto : Comparez"), USE.NAMES = F)
@@ -185,7 +209,8 @@ clean_month_year <- function(my) {
     NA
   }
   else if (length(my_split) == 1) {
-    ymd(str_c(y_split_test, "-01-01"))
+    #ymd(str_c(y_split_test, "-01-01"))
+    ymd(str_c(my_split, "-01-01"))
   }
   else if (length(my_split) == 2) {
     ymd(
@@ -205,22 +230,46 @@ clean_month_year <- function(my) {
   else { NA }
 }
 
-clean_month_year(data$Année[200])
 
-str_remove(my, "\nAssurance auto : Comparez")
 
-data$Année[1]
+clean_month_year(data$Année[300])
+
+#str_remove(my, "\nAssurance auto : Comparez")
+
+data$Année[300]
 
 # C'est ça qui ne marche pas : normalement je l'assignerais à une colonne de data mais là marche pas...
-test <- sapply(data$Année, clean_month_year, USE.NAMES = F)
-class(test[1])
+#test <- sapply(data$Année, clean_month_year, USE.NAMES = T)
+data$date <- sapply(data$Année, clean_month_year, USE.NAMES = F)
+#class(test[1])
+data$date <- as.Date(data$date, origin = "1970-01-01")
+data %>% distinct(date)
+
+# Message for Gaelle (from Ines): je crois que j'ai trouvé la solution! Enfin si c'est bien ça le format que tu voulais avoir :) 
+
 ```
+
+#### Autres informations
+
+```{r}
+data$pneus_hiver <- sapply(data$Autres.informations, function(x) str_detect(x, "Pneus hiver")*1)
+data$barres_de_toit <- sapply(data$Autres.informations, function(x) str_detect(x, "Barres de toit")*1)
+data$premiere_main <- sapply(data$Autres.informations, function(x) str_detect(x, "Première main")*1)
+data$non_fumeur <- sapply(data$Autres.informations, function(x) str_detect(x, "Véhicule non fumeur")*1)
+data$stationne_dans_garage <- sapply(data$Autres.informations, function(x) str_detect(x, "Stationne dans un garage")*1)
+data$sous_garantie_constructeur <- sapply(data$Autres.informations, function(x) str_detect(x, "Sous garantie constructeur")*1)
+data$attelage <- sapply(data$Autres.informations, function(x) str_detect(x, "Attelage")*1)
+data$sous_garantie_autre_que_constructeur <- sapply(data$Autres.informations, function(x) str_detect(x, "(autre que constructeur)")*1)
+
+data %>% distinct(Autres.informations, pneus_hiver, barres_de_toit,premiere_main,non_fumeur,stationne_dans_garage,sous_garantie_constructeur,attelage,sous_garantie_autre_que_constructeur)
+```
+
 
 #### Carrosserie
 
 ```{r}
-# Check distinct items
-data %>% distinct(Carrosserie)
+
+colnames(data)[colnames(data)=="Carrosserie"] <- "carrosserie"
 ```
 
 It seems quite clean already, nothing to add.
@@ -286,7 +335,8 @@ data$nb_places <- sapply(data$Nombre.de.places, function(x) str_remove(x, "\npla
 #### Prix
 
 ```{r}
-data$prix <- sapply(data$Prix, function(x) str_remove(str_remove(x, " €"), " ")[1], USE.NAMES = F)
+data$prix_euros <- sapply(data$Prix, function(x) str_remove(str_remove(x, " €"), " ")[1], USE.NAMES = F)
+
 ```
 
 #### Puissance fiscale
@@ -385,8 +435,8 @@ data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_me
 
 
 ```{r}
-new_data %>% names()
-new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2)
+new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année)
+names(new_data)
 ```
 
 
