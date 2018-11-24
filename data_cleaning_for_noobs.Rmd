@@ -48,6 +48,7 @@ data <- data %>%
   select(-X1, -is_listing_deleted)
 
 data <- data.frame(data)
+data %>% distinct()
 
 #View(data)
 ```
@@ -79,6 +80,14 @@ data$brand <- sapply(data$brand, function(x) str_remove(x, " occasion")[1], USE.
 #### Modèle
 
 For now, let's just consider that the modèle is an additional information but not a category, as in one we would use in our filtering or models.
+
+#### Name pro
+
+```{r}
+data$name_pro <- sapply(data$name_pro, function(x) str_trim(x), USE.NAMES = F)
+data %>% distinct(name_pro)
+```
+
 
 #### Adresse pro / particulier
 
@@ -120,15 +129,46 @@ ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
 REPRENDRE ICI...
 
 ```{r}
-get_city <- function(address){
-  poss_city <- str_match_all(address, "Nice")[,1]
-  poss_city[1]
+#1. Pour les particuliers : 
+  
+get_city_particulier <- function(address){
+  spl <- str_split(str_trim(address)," ")
+  b <- str_locate(address, str_c("(",str_match(spl,"(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]],")"))[1]
+  a <- str_locate(address, str_match(spl,"-"))[2]
+  ville <- str_sub(address, a + 2, b - 3) # Pour l'instant on a récupéré ce qu'il y a entre le premier tiret et le code postal
+  if (is.na(ville)) { NA } 
+  else {
+    len <- nchar(ville)
+    for (i in 0:len-1){
+      str_sub(ville,len-i,len-i) <- sub("[[:digit:]]*$", "",str_sub(ville,len-i,len-i))
+    }
+  } # Là on règle le problème de type "Paris 14" qui devient "Paris"
+  ville <- str_trim(ville)
+  if (is.na(str_match(ville,"- ")))
+  {ville
+  } else
+  {ville <- str_sub(ville, str_locate(ville,"- ")[2] + 1)
+  ville} # Là on règle le problème des prénoms composés dans la colonne addresse 
 }
   
-get_city(data$all_adress[41])
-data$ville <- sapply(data$all_adress, get_city, USE.NAMES = F)
 
-data %>% distinct(all_address)
+data$city_particulier <- sapply(data$address_particulier, get_city_particulier, USE.NAMES = F)
+
+
+#2. Pour les pros : 
+
+get_city_pro <- function(address){
+  spl <- str_split(str_trim(address)," ")
+  b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
+  ville <- str_trim(str_sub(address, b+2))
+}
+
+data$city_pro <- sapply(data$address_pro, get_city_pro, USE.NAMES = F)
+
+#3. Réunion des deux (pros et particuliers)
+
+data$all_city <- coalesce(data$city_particulier, data$city_pro)
+
 
 
 ```
@@ -146,6 +186,17 @@ WARNING FROM INES : ATTENTION JE PENSE QU'ON NE PEUT PAS FAIRE CA TANT QU'ON A P
 It's not the most efficient thing to do codewise, surely, but it does ensure that we'll have the same format for everything.
 
 ```{r}
+#Fonction pour retirer les accents
+unaccent <- function(text) {
+  text <- gsub("['`^~\"]", " ", text)
+  text <- iconv(text, to="ASCII//TRANSLIT//IGNORE")
+  text <- gsub("['`^~\"]", "", text)
+  return(text)
+}
+```
+
+
+```{r}
 # Filter the information we're interested in
 relevant_mapping_villes <- mapping_villes %>% 
   select(code_région, nom_région, numéro_département, nom_département, nom_commune, codes_postaux, latitude, longitude)
@@ -158,13 +209,29 @@ dim(relevant_mapping_villes)
 
 # Join with postal codes
 
-# NE FONCTIONNE PAS !
 
+# Je crée une colonne avec le code postal et la ville dans chaque dataset,sans tiret, sans espace, et sans majuscule, et sans accents
+data$postal_code_city <- tolower(gsub("-","",gsub(" ","",str_c(data$postal_codes,data$all_city))))
+data$postal_code_city <- sapply(data$postal_code_city, unaccent, USE.NAMES = F)
+data %>% distinct(postal_code_city)
 
-test <- inner_join(x = data[1,], y = relevant_mapping_villes, by= c("postal_codes" = "codes_postaux"))
-test
+relevant_mapping_villes$codes_postaux_commune <- tolower(gsub("-","",gsub(" ","", str_c(relevant_mapping_villes$codes_postaux,relevant_mapping_villes$nom_commune))))
+relevant_mapping_villes$codes_postaux_commune <- sapply(relevant_mapping_villes$codes_postaux_commune, unaccent, USE.NAMES = F)
+relevant_mapping_villes %>% distinct(codes_postaux_commune) %>% arrange(codes_postaux_commune)
 
-distinct(test)
+join_table <- left_join(x = data, y = relevant_mapping_villes, by= c("postal_code_city" = "codes_postaux_commune")) %>% distinct()
+data <- join_table
+
+# Regardons là où ça ne marche pas (44 sur 454 lignes pour ce fichier)
+data %>% filter(is.na(code_région)) %>% select(postal_code_city) %>% distinct()
+
+# On check ce qu'il en est dans le fichier de mapping sur 
+relevant_mapping_villes %>% filter(nom_commune == "Paris")
+relevant_mapping_villes %>% filter(nom_commune == "Marseille")
+
+### Le problème, c'est que dans le fichier relevant_mapping_villes, il y a parfois plusieurs codes_postaux par ligne... donc mon join ne marche pas dans ces cas là. Cela dit, il semble que pour ces lignes là, la latitude et longitude sont manquants donc ce n'est peut-être pas dramatique.
+### On pourrait dupliquer les lignes pour n'avoir qu'un seul code postal dans la colonne code_postaux.
+### Si trop compliqué, on peut faire un second join juste pour les 44 lignes où on a un beug, juste sur le nom de la ville en ignorant les codes postaux?
 ```
 
 #### Name pro + is pro
@@ -433,10 +500,12 @@ data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_me
 
 ```
 
+#### Selection des colonnes utiles seulement dans un nouveau dataset new_data
+
 
 ```{r}
-new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année)
-names(new_data)
+new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année,-address_particulier,-address_pro,-city_particulier,-city_pro,-postal_code_city,-codes_postaux,-all_address)
+head(new_data)
 ```
 
 
