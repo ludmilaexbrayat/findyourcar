@@ -6,6 +6,7 @@
 
 library(shiny)
 library(dplyr)
+library(RColorBrewer)
 
 # Define UI for application
 ui <- fluidPage(
@@ -63,16 +64,26 @@ ui <- fluidPage(
                             h5("Maximum price:"))),    
         
         # Second Tab
-        tabPanel("Results Overview",
+        tabPanel("At 30 min drive",
                   # Map Title
                   div(h3("Available cars around you")),
                   # Plotting the Map
-                  plotOutput("map"), 
                   
                   # Table Title
-                  div(h3("Summary Results")),
+                  div(h3("Summary Results"))),
                   # Drawing the Table
-                  DT::DTOutput("table"))
+                  
+        # Third Tab
+        tabPanel("In the whole country",
+                 # Map Title
+                 div(h3("Available cars")),
+                 # Plotting the Map
+                 plotOutput("map"), 
+                 
+                 # Table Title
+                 div(h3("Summary Results")),
+                 # Drawing the Table
+                 DT::DTOutput("table"))
         )
       )
    )
@@ -97,14 +108,37 @@ server <- function(input, output) {
   # Loading the department shapes
   dept_193 <- st_read("cartography/DEPARTEMENT.shp")
   
+  # Transforming the department map into region map
+  region_map <- dept_193 %>% 
+    group_by(CODE_REG, NOM_REG) %>%
+    summarize()
+  
+  # Creating centroids of each region  
+  centroids <- region_map %>% st_centroid()
+  
+  # Transforming st format into coordinates format
+  coord <- centroids %>% st_coordinates() 
+  centroids <- cbind(centroids, coord) %>% 
+    mutate(price_ex = "3,338€") # This is just a dummy variable for the moment
+  
+  # Defining location (to be replaced by automated location)
+  point <- region_map %>% 
+    filter(CODE_REG == 11) %>% 
+    st_centroid()
+  
+  # Creating an appropriate palette for the plot
+  cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))
   
   ### FUNCTION AREA
   
   # Creating a function to plot the maps
   plot_map <- function() {
-    ggplot(dept_193) +
-      geom_sf() +
-      coord_sf(crs = st_crs(dept_193)) +
+    ggplot(region_map) +
+      geom_sf(aes(fill = CODE_REG)) +
+      geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
+      scale_fill_manual(values = cc) + # Applying the palette we have built further up
+      geom_sf(data = point, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
+      coord_sf(crs = st_crs(reg)) +
       # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
       theme(axis.line=element_blank(),
              axis.text.x=element_blank(),
