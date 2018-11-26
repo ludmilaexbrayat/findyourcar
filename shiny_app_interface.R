@@ -68,10 +68,12 @@ ui <- fluidPage(
                   # Map Title
                   div(h3("Available cars around you")),
                   # Plotting the Map
+                 plotOutput("drive_map"),
                   
                   # Table Title
-                  div(h3("Summary Results"))),
+                  div(h3("Summary Results")),
                   # Drawing the Table
+                 DT::DTOutput("table_drive")),
                   
         # Third Tab
         tabPanel("In the whole country",
@@ -113,32 +115,69 @@ server <- function(input, output) {
     group_by(CODE_REG, NOM_REG) %>%
     summarize()
   
-  # Creating centroids of each region  
+  # Creating centroids of each region to plot the labels at the center of each region
   centroids <- region_map %>% st_centroid()
   
   # Transforming st format into coordinates format
   coord <- centroids %>% st_coordinates() 
   centroids <- cbind(centroids, coord) %>% 
-    mutate(price_ex = "3,338€") # This is just a dummy variable for the moment
+    mutate(price_ex = "3,338€") # This is just a dummy value for the moment
   
   # Defining location (to be replaced by automated location)
   point <- region_map %>% 
-    filter(CODE_REG == 11) %>% 
+    filter(CODE_REG == 11) %>% # Example of Ile de France is taken here as the location of the user
     st_centroid()
-  
+    
   # Creating an appropriate palette for the plot
   cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))
   
   ### FUNCTION AREA
   
-  # Creating a function to plot the maps
+  # Creating a polygon of the area around the location of the user
+  area_around <- function(geometry) {
+    st_buffer(geometry, dist = units::set_units(200, km)) # For the moment we have put 200 km as an example
+  }
+  
+  # Creating the polygon of the intersection of our national map and of the area around the location of the user
+  intersection <- st_intersection(region_map, area_around(point)) 
+  
+  # Creating a dummy dataset to have an example of plotting the results (this is just the centroid of each department)
+  example_points <- dept_193 %>% 
+    st_centroid() %>% 
+    st_intersection(intersection)
+  
+  
+  # Creating a function to plot the map of the 30 min drive area
+  plot_drive_map <- function() {
+    ggplot(intersection) +
+      geom_sf(aes(fill = CODE_REG)) +
+      scale_fill_manual(values = cc) + # Applying the palette we have built further up
+      geom_sf(data = point, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
+      geom_sf(data = example_points, color = "black", size = 1) + # Plotting the cars around
+      coord_sf(crs = st_crs(region_map)) +
+      # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
+      theme(axis.line=element_blank(),
+            axis.text.x=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title.x=element_blank(),
+            axis.title.y=element_blank(),
+            legend.position="none",
+            panel.background=element_blank(),
+            panel.border=element_blank(),
+            panel.grid.major=element_blank(),
+            panel.grid.minor=element_blank(),
+            plot.background=element_blank())
+  }
+  
+  # Creating a function to plot the map of the whole country
   plot_map <- function() {
     ggplot(region_map) +
       geom_sf(aes(fill = CODE_REG)) +
       geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
       scale_fill_manual(values = cc) + # Applying the palette we have built further up
       geom_sf(data = point, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
-      coord_sf(crs = st_crs(reg)) +
+      coord_sf(crs = st_crs(region_map)) +
       # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
       theme(axis.line=element_blank(),
              axis.text.x=element_blank(),
@@ -170,7 +209,15 @@ server <- function(input, output) {
      plot_map()
    })
    
+   output$drive_map <- renderPlot({
+     plot_drive_map()
+   })
+   
    output$table <- DT::renderDT({
+     result_table()
+   })
+   
+   output$table_drive <- DT::renderDT({
      result_table()
    })
 }
