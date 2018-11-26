@@ -61,7 +61,13 @@ ui <- fluidPage(
                           h4(" "),
                             h5("Mean price:"),
                             h5("Minimum price:"),
-                            h5("Maximum price:"))),    
+                            h5("Maximum price:")),
+                 # Bottom right column with additional informations
+                 column(6,
+                        h3("For your information"),
+                        h5("Importance of main parameters in the price"),
+                        plotOutput("fyi"))
+                 ),
         
         # Second Tab
         tabPanel("At 30 min drive",
@@ -193,6 +199,19 @@ server <- function(input, output) {
              plot.background=element_blank())
   }
   
+  # Creating a dummy dataframe just for plotting the importance of parameters
+  df <- data.frame(c("Number of seats", "Number of seats",
+          "Brand", "Brand", "Brand", "Brand", "Brand",
+          "Type of Fuel",
+          "Year"))
+  
+  # Creating a function to plot the graph of importance of each parameter
+  plot_fyi <- function() {
+    ggplot(data = df) +
+      geom_bar(aes(df[,1]), fill = "orange") +
+      labs(x = "Parameter", y = "Relative Importance")
+  }
+  
   # Creating a function to draw the appropriate table (this is just an example)
   result_table <- function() {
     head(
@@ -219,6 +238,10 @@ server <- function(input, output) {
    
    output$table_drive <- DT::renderDT({
      result_table()
+   })
+   
+   output$fyi <- renderPlot({
+     plot_fyi()
    })
 }
 
