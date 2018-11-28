@@ -198,8 +198,10 @@ unaccent <- function(text) {
 
 ```{r}
 # Filter the information we're interested in
+names(mapping_villes) <- c("eu_circo","code_region", "nom_region", "chef_lieu_region", "numero_departement","nom_departement","prefecture","numero_circonsription","nom_commune","codes_postaux","code_insee","latitude", "longitude","eloignement")
+
 relevant_mapping_villes <- mapping_villes %>% 
-  select(code_région, nom_région, numéro_département, nom_département, nom_commune, codes_postaux, latitude, longitude)
+  select(code_region, nom_region, numero_departement, nom_departement, nom_commune, codes_postaux, latitude, longitude)
 
 relevant_mapping_villes %>% 
   group_by(codes_postaux)
@@ -211,27 +213,31 @@ dim(relevant_mapping_villes)
 
 
 # Je crée une colonne avec le code postal et la ville dans chaque dataset,sans tiret, sans espace, et sans majuscule, et sans accents
-data$postal_code_city <- tolower(gsub("-","",gsub(" ","",str_c(data$postal_codes,data$all_city))))
+data$postal_code_city <- gsub("saint","st",tolower(gsub("-","",gsub(" ","",str_c(data$postal_codes,data$all_city)))))
 data$postal_code_city <- sapply(data$postal_code_city, unaccent, USE.NAMES = F)
 data %>% distinct(postal_code_city)
 
-relevant_mapping_villes$codes_postaux_commune <- tolower(gsub("-","",gsub(" ","", str_c(relevant_mapping_villes$codes_postaux,relevant_mapping_villes$nom_commune))))
+relevant_mapping_villes$codes_postaux_commune <- gsub("saint","st",tolower(gsub("-","",gsub(" ","", str_c(relevant_mapping_villes$codes_postaux,relevant_mapping_villes$nom_commune)))))
 relevant_mapping_villes$codes_postaux_commune <- sapply(relevant_mapping_villes$codes_postaux_commune, unaccent, USE.NAMES = F)
 relevant_mapping_villes %>% distinct(codes_postaux_commune) %>% arrange(codes_postaux_commune)
+
 
 join_table <- left_join(x = data, y = relevant_mapping_villes, by= c("postal_code_city" = "codes_postaux_commune")) %>% distinct()
 data <- join_table
 
 # Regardons là où ça ne marche pas (44 sur 454 lignes pour ce fichier)
-data %>% filter(is.na(code_région)) %>% select(postal_code_city) %>% distinct()
+data %>% filter(is.na(code_region)) %>% select(postal_code_city) %>% distinct()
+data
 
 # On check ce qu'il en est dans le fichier de mapping sur 
 relevant_mapping_villes %>% filter(nom_commune == "Paris")
 relevant_mapping_villes %>% filter(nom_commune == "Marseille")
 
+data %>% filter(is.na(longitude)) %>% distinct(postal_code_city)
+
 ### Le problème, c'est que dans le fichier relevant_mapping_villes, il y a parfois plusieurs codes_postaux par ligne... donc mon join ne marche pas dans ces cas là. Cela dit, il semble que pour ces lignes là, la latitude et longitude sont manquants donc ce n'est peut-être pas dramatique.
 ### On pourrait dupliquer les lignes pour n'avoir qu'un seul code postal dans la colonne code_postaux.
-### Si trop compliqué, on peut faire un second join juste pour les 44 lignes où on a un beug, juste sur le nom de la ville en ignorant les codes postaux?
+### Si trop compliqué, on peut faire un second join juste pour les 44 lignes où on a un beug, juste sur le nom de la ville en ignorant les codes postaux? 
 ```
 
 #### Name pro + is pro
@@ -509,9 +515,4 @@ head(new_data)
 ```
 
 
-#### A faire : toutes les colonnes suivantes
 
-Selon la convention : noms de variables en minuscules, en anglais, sans espace, avec "_"
-Pour les valeurs numériques : préciser les unités dans le nom de colonne
-Ex : Consommation.mixte / "6.5 litres / 100 km" (première valeur)
-devient "cons_mixte_l_by_100km" / 6.5
