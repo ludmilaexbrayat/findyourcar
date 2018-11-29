@@ -31,9 +31,41 @@ Read the data (in the future, we will have to rbind all the scrapped listings - 
 ```{r}
 mapping_villes <- data.frame(read_csv2("datasets/mapping_villes.csv"))
 
-data <- read_csv("datasets/scrapped_listings_1_1_500.csv")
+# Trouver une méthode plus compacte pour lire tous les csv
 
-#todo:
+#data <- read_csv("datasets/arnaud_scrapping.csv") try StringsAsFactors = False
+
+data_l1 <- read_csv("datasets/scrapped_listings_1_1_500.csv")
+data_l2 <- read_csv("datasets/scrapped_listings_1_501_750.csv")
+data_l3 <- read_csv("datasets/scrapped_listings_1_751_1000.csv")
+data_l4 <- read_csv("datasets/scrapped_listings_1_1000_1500.csv")
+data_l5 <- read_csv("datasets/scrapped_listings_1_1501_2000.csv")
+data_l6 <- read_csv("datasets/scrapped_listings_1_2001_2400.csv")
+data_l7 <- read_csv("datasets/scrapped_listings_1_2401_3000.csv")
+data_l8 <- read_csv("datasets/scrapped_listings_1_3001_4000.csv")
+data_l9 <- read_csv("datasets/scrapped_listings_1_4001_4500.csv")
+data_l10 <- read_csv("datasets/scrapped_listings_1_4501_5500.csv")
+data_l11 <- read_csv("datasets/scrapped_listings_1_5501_6500.csv")
+data_l12 <- read_csv("datasets/scrapped_listings_1_6501_7500.csv")
+data_l13 <- read_csv("datasets/scrapped_listings_1_7501_8500.csv")
+data_l14 <- read_csv("datasets/scrapped_listings_2_1_250.csv")
+data_l15 <- read_csv("datasets/scrapped_listings_2_251_500.csv")
+data_l16 <- read_csv("datasets/scrapped_listings_2_501_750.csv")
+data_l17 <- read_csv("datasets/scrapped_listings_2_751_1000.csv")
+data_l18 <- read_csv("datasets/scrapped_listings_3_1_250.csv")
+data_l19 <- read_csv("datasets/scrapped_listings_3_251_500.csv")
+data_l20 <- read_csv("datasets/scrapped_listings_3_501_750.csv")
+data_l21 <- read_csv("datasets/scrapped_listings_3_751_1000.csv")
+
+# PB accent with data_l11
+names(data_l11) <- c("X1","url", "is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Etat du véhicule", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs")
+
+# Not the same nb columns il all datasets !
+
+data <- bind_rows(data_l1, data_l2, data_l3, data_l4, data_l5, data_l6, data_l7, data_l8, data_l9, data_l10, data_l11, data_l12, data_l13, data_l14, data_l15, data_l16, data_l17, data_l18, data_l19, data_l20, data_l21)
+
+#todo: be careful with the new "marque column I dont understand"
+
 
 #function that reads and rowbinds the list of csv
 
@@ -45,6 +77,7 @@ Remove the deleted listings, and the useless column that is X1:
 ```{r}
 data <- data %>% 
   filter(is_listing_deleted == 0) %>% 
+  #select(-X1, -is_listing_deleted)
   select(-X1, -is_listing_deleted)
 
 data <- data.frame(data)
@@ -123,6 +156,8 @@ get_postal_code <- function(address) {
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 
+data %>% distinct(postal_codes)
+
 ```
 
 ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
@@ -158,12 +193,16 @@ data$city_particulier <- sapply(data$address_particulier, get_city_particulier, 
 #2. Pour les pros : 
 
 get_city_pro <- function(address){
-  spl <- str_split(str_trim(address)," ")
+  #spl <- str_split(str_trim(address)," ")
+  spl <- str_trim(address)
   b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
   ville <- str_trim(str_sub(address, b+2))
 }
 
+
+# GERER LE MESSAGE D'ERREUR ICI !!!!!!!!!! 
 data$city_pro <- sapply(data$address_pro, get_city_pro, USE.NAMES = F)
+data %>% distinct(postal_codes)
 
 #3. Réunion des deux (pros et particuliers)
 
@@ -512,6 +551,7 @@ data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_me
 ```{r}
 new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année,-address_particulier,-address_pro,-city_particulier,-city_pro,-postal_code_city,-codes_postaux,-all_address)
 head(new_data)
+View(new_data)
 ```
 
 
