@@ -20,6 +20,7 @@ library(magrittr)
 library(readr)
 library(stringr)
 library(lubridate)
+library(purrr)
 
 Sys.setlocale(locale="en_US.UTF-8")
 ```
@@ -118,7 +119,6 @@ For now, let's just consider that the modèle is an additional information but n
 
 ```{r}
 data$name_pro <- sapply(data$name_pro, function(x) str_trim(x), USE.NAMES = F)
-data %>% distinct(name_pro)
 ```
 
 
@@ -155,13 +155,11 @@ get_postal_code <- function(address) {
 }
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
-
-data %>% distinct(postal_codes)
+# Pas d'erreur de mon côté (gg)
 
 ```
 
-ATTENTION S'ARRÊTER LÀ : PLUSIEURS VILLES PAR CODES POSTAUX
-REPRENDRE ICI...
+#### Villes 
 
 ```{r}
 #1. Pour les particuliers : 
@@ -194,14 +192,22 @@ data$city_particulier <- sapply(data$address_particulier, get_city_particulier, 
 
 get_city_pro <- function(address){
   #spl <- str_split(str_trim(address)," ")
+  print(address)
   spl <- str_trim(address)
   b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
   ville <- str_trim(str_sub(address, b+2))
 }
 
+# GERER LE MESSAGE D'ERREUR ICI !!!!!!!!!! --> C'est un pb de code postal qui gère pas un cas particulier
+# 2 solutions : faire un try() ou gérer l'erreur
+# ou régler la fonction code postal
+# De toute façon c'est suboptimal de ré-appliquer la fonction, il faudrait utiliser la colonne code postal et mapper le df
+# A réessayer sur le dataset d'Arnaud
 
-# GERER LE MESSAGE D'ERREUR ICI !!!!!!!!!! 
 data$city_pro <- sapply(data$address_pro, get_city_pro, USE.NAMES = F)
+
+# Remplacer par : map(data$address_pro, ~get_city_pro(.x))
+
 data %>% distinct(postal_codes)
 
 #3. Réunion des deux (pros et particuliers)
