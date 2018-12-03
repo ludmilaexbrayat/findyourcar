@@ -182,13 +182,13 @@ data$city_particulier <- sapply(data$address_particulier, get_city_particulier, 
 
 #2. Pour les pros : 
 
-get_city_pro <- function(address){
-  #spl <- str_split(str_trim(address)," ")
-  #print(address)
-  spl <- str_trim(address)
-  b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
-  ville <- str_trim(str_sub(address, b+2))
-}
+#get_city_pro <- function(address){
+#  #spl <- str_split(str_trim(address)," ")
+#  #print(address)
+#  spl <- str_trim(address)
+#  b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
+#  ville <- str_trim(str_sub(address, b+2))
+#}
 
 get_city_pro2 <- function(address, pc){
   if (!is.character(pc)) {
@@ -362,7 +362,7 @@ data$Année[300]
 data$date <- sapply(data$Année, clean_month_year, USE.NAMES = F)
 #class(test[1])
 data$date <- as.Date(data$date, origin = "1970-01-01")
-data %>% distinct(date)
+#data %>% distinct(date)
 
 # Message for Gaelle (from Ines): je crois que j'ai trouvé la solution! Enfin si c'est bien ça le format que tu voulais avoir :) 
 
@@ -410,7 +410,7 @@ data$cons_mixte_l_by_100km <- sapply(data$Consommation.mixte, function(x) str_re
 # Let's just remove the "litre / 100 km" part that is at the end of each line.
 
 data$emissions_co2_g_by_km <- sapply(data$Emissions.de.CO2, function(x) str_remove(x, "\ng/km")[1], USE.NAMES = F)
-data %>% distinct(emissions_co2_g_by_km)
+# data %>% distinct(emissions_co2_g_by_km)
 
 # OK, it works
 ```
