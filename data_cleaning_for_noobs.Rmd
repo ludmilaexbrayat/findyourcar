@@ -65,12 +65,6 @@ names(data_l11) <- c("X1","url", "is_listing_deleted", "brand", "modele","addres
 
 data <- bind_rows(data_l1, data_l2, data_l3, data_l4, data_l5, data_l6, data_l7, data_l8, data_l9, data_l10, data_l11, data_l12, data_l13, data_l14, data_l15, data_l16, data_l17, data_l18, data_l19, data_l20, data_l21)
 
-#todo: be careful with the new "marque column I dont understand"
-
-
-#function that reads and rowbinds the list of csv
-
-#assign all to data
 ```
 
 Remove the deleted listings, and the useless column that is X1:
@@ -82,7 +76,6 @@ data <- data %>%
   select(-X1, -is_listing_deleted)
 
 data <- data.frame(data)
-data %>% distinct()
 
 #View(data)
 ```
@@ -156,7 +149,6 @@ get_postal_code <- function(address) {
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 # Pas d'erreur de mon côté (gg)
-
 ```
 
 #### Villes 
@@ -192,11 +184,27 @@ data$city_particulier <- sapply(data$address_particulier, get_city_particulier, 
 
 get_city_pro <- function(address){
   #spl <- str_split(str_trim(address)," ")
-  print(address)
+  #print(address)
   spl <- str_trim(address)
   b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
   ville <- str_trim(str_sub(address, b+2))
 }
+
+get_city_pro2 <- function(address, pc){
+  if (!is.character(pc)) {
+    return(NA)
+  } else {
+  spl <- str_trim(address)
+  pcmatch <- str_match(spl, pc)
+  if (is_empty(pcmatch)) {
+    return(NA)
+  } else {
+  b <- str_locate(address, pcmatch[[1]])[2]
+  return(str_trim(str_sub(address, b+2)))
+  }
+  }
+}
+
 
 # GERER LE MESSAGE D'ERREUR ICI !!!!!!!!!! --> C'est un pb de code postal qui gère pas un cas particulier
 # 2 solutions : faire un try() ou gérer l'erreur
@@ -204,18 +212,11 @@ get_city_pro <- function(address){
 # De toute façon c'est suboptimal de ré-appliquer la fonction, il faudrait utiliser la colonne code postal et mapper le df
 # A réessayer sur le dataset d'Arnaud
 
-data$city_pro <- sapply(data$address_pro, get_city_pro, USE.NAMES = F)
-
-# Remplacer par : map(data$address_pro, ~get_city_pro(.x))
-
-data %>% distinct(postal_codes)
+data$city_pro <- unlist(map2(data$address_pro, data$postal_codes, ~get_city_pro2(.x, .y)))
 
 #3. Réunion des deux (pros et particuliers)
 
 data$all_city <- coalesce(data$city_particulier, data$city_pro)
-
-
-
 ```
 
 
@@ -558,6 +559,16 @@ data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_me
 new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année,-address_particulier,-address_pro,-city_particulier,-city_pro,-postal_code_city,-codes_postaux,-all_address)
 head(new_data)
 View(new_data)
+
+glimpse(new_data)
+
+#Réglage d'un petit pb de liste dans la colonne
+new_data <- 
+  new_data %>% 
+  unnest(postal_codes)
+
+write_csv(new_data, path = "datasets/first_dataset_full.csv")
+
 ```
 
 
