@@ -1,0 +1,140 @@
+---
+title: "Regression"
+author: "Arnaud Fournier"
+date: "07/12/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(MASS)
+library(glmnet)
+library(stringr)
+Sys.setlocale(locale="en_US.UTF-8")
+```
+
+```{r Load Data}
+reg_data <- read_csv("first_dataset_full.csv")
+```
+
+#data clearing
+
+```{r}
+
+#select only variables useful for our regression
+reg_data <- reg_data %>% dplyr::select(prix_euros , brand, carrosserie, energie, transmission, is_pro, kilometrage_km, nb_portes, hayon)
+
+#We need to have price to predict it so we delete rows where price is na, we also need the type of car for our shiny app
+#I recoded nb_porte as a factor because it makes more sense
+reg_data <- reg_data %>% 
+  filter(!is.na(prix_euros), !is.na(carrosserie)) %>% 
+  mutate(nb_portes=as.factor(nb_portes))
+
+
+#We can get the list of type of car we can use in our app using this:
+carrosserie_name <- reg_data %>%
+  group_by(carrosserie) %>%
+  summarise(n=n()) %>% 
+  filter(n > 50, !is.na(carrosserie)) %>% 
+  dplyr::select(carrosserie) %>% 
+  as.list()
+carrosserie_name$carrosserie
+
+```
+
+
+```{r, function}
+
+regression_function <- function(data_reg, carrosserie){
+
+  type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
+  
+  data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
+  
+reg_sol <- lm(log(prix_euros)  ~ energie + transmission+is_pro+kilometrage_km+nb_portes+hayon , data_reg) #We log as price is skewed, yet it is gaussion when logged
+return(summary(reg_sol))
+}
+
+regression_function(reg_data, "Berline")
+
+
+```
+
+
+
+
+
+###### Trash
+
+
+
+
+
+
+### Model selection
+```{r}
+#tried doing a lasso before realissing it would nor be possible to interpret easily if we had to recode all factor variables into dummies and if only some brand were kept (as our aim is interpretation we decided to use a linear regression)
+
+
+#testing the distribution of price
+ggplot(reg_data) +aes(x = log(prix_euros))+geom_histogram(bins = 50)
+
+
+
+#missing values management
+missing_values <- as.data.frame(colSums(is.na(reg_data)))
+colnames(missing_values) <- "x"
+
+missing_values_uncleared <- colSums(is.na(reg_data))
+
+
+
+#test of LASSO
+glimpse(reg_data)
+
+lam=seq(0,5,by=0.05)
+?model.matrix
+xfactor <- model.matrix(prix_euros ~ brand, energie, transmission , is_pro, nb_portes, hayon, data = reg_data)
+x <- as.matrix()
+
+beta.lasso=glmnet(x=c(prix_euros,modele, brand, carrosserie, energie, transmission, is_pro, kilometrage_km, nb_portes, hayon), y= prix_euros ,alpha=1,lambda=lam )
+
+?glmnet
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+```{r}
+
+#Test of different regression
+reg_data_break <- reg_data %>% filter(carrosserie=="Break")
+reg_sol_break <- lm(prix_euros  ~ energie+transmission+is_pro+kilometrage_km+nb_portes+hayon , reg_data_break)
+summary(reg_sol_break)
+
+reg_data_berlines <- reg_data %>% filter(carrosserie=="Berline")
+
+reg_sol_berlines <- lm(prix_euros  ~ energie+transmission+is_pro+kilometrage_km+nb_portes+hayon , reg_data_berlines)
+summary(reg_sol_berlines)
+
+```
+
+
