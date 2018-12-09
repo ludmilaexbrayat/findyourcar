@@ -34,7 +34,7 @@ mapping_villes <- data.frame(read_csv2("datasets/mapping_villes.csv"))
 
 # Trouver une méthode plus compacte pour lire tous les csv
 
-#data <- read_csv("datasets/arnaud_scrapping.csv") try StringsAsFactors = False
+data_a <- read_csv("datasets/arnaud_scrapping.csv") #try StringsAsFactors = False
 
 data_l1 <- read_csv("datasets/scrapped_listings_1_1_500.csv")
 data_l2 <- read_csv("datasets/scrapped_listings_1_501_750.csv")
@@ -61,10 +61,17 @@ data_l21 <- read_csv("datasets/scrapped_listings_3_751_1000.csv")
 # PB accent with data_l11
 names(data_l11) <- c("X1","url", "is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Etat du véhicule", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs")
 
+names(data_a) <- c("X1","url","is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Etat du véhicule", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs", "Marque")
+
+
+
 # Not the same nb columns il all datasets !
 
-data <- bind_rows(data_l1, data_l2, data_l3, data_l4, data_l5, data_l6, data_l7, data_l8, data_l9, data_l10, data_l11, data_l12, data_l13, data_l14, data_l15, data_l16, data_l17, data_l18, data_l19, data_l20, data_l21)
+data <- bind_rows(data_l1, data_l2, data_l3, data_l4, data_l5, data_l6, data_l7, data_l8, data_l9, data_l10, data_l11, data_l12, data_l13, data_l14, data_l15, data_l16, data_l17, data_l18, data_l19, data_l20, data_l21, data_a)
 
+
+# filtrer modèles OK
+names(data)
 ```
 
 Remove the deleted listings, and the useless column that is X1:
@@ -73,7 +80,7 @@ Remove the deleted listings, and the useless column that is X1:
 data <- data %>% 
   filter(is_listing_deleted == 0) %>% 
   #select(-X1, -is_listing_deleted)
-  select(-X1, -is_listing_deleted)
+  dplyr::select(-X1, -is_listing_deleted)
 
 data <- data.frame(data)
 
@@ -149,6 +156,8 @@ get_postal_code <- function(address) {
 
 data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
 # Pas d'erreur de mon côté (gg)
+data %>% distinct(postal_codes)
+View(data)
 ```
 
 #### Villes 
@@ -247,7 +256,7 @@ unaccent <- function(text) {
 names(mapping_villes) <- c("eu_circo","code_region", "nom_region", "chef_lieu_region", "numero_departement","nom_departement","prefecture","numero_circonsription","nom_commune","codes_postaux","code_insee","latitude", "longitude","eloignement")
 
 relevant_mapping_villes <- mapping_villes %>% 
-  select(code_region, nom_region, numero_departement, nom_departement, nom_commune, codes_postaux, latitude, longitude)
+  dplyr::select(code_region, nom_region, numero_departement, nom_departement, nom_commune, codes_postaux, latitude, longitude)
 
 relevant_mapping_villes %>% 
   group_by(codes_postaux)
@@ -272,7 +281,7 @@ join_table <- left_join(x = data, y = relevant_mapping_villes, by= c("postal_cod
 data <- join_table
 
 # Regardons là où ça ne marche pas (44 sur 454 lignes pour ce fichier)
-data %>% filter(is.na(code_region)) %>% select(postal_code_city) %>% distinct()
+data %>% filter(is.na(code_region)) %>% dplyr::select(postal_code_city) %>% distinct()
 data
 
 # On check ce qu'il en est dans le fichier de mapping sur 
@@ -381,6 +390,8 @@ data$attelage <- sapply(data$Autres.informations, function(x) str_detect(x, "Att
 data$sous_garantie_autre_que_constructeur <- sapply(data$Autres.informations, function(x) str_detect(x, "(autre que constructeur)")*1)
 
 data %>% distinct(Autres.informations, pneus_hiver, barres_de_toit,premiere_main,non_fumeur,stationne_dans_garage,sous_garantie_constructeur,attelage,sous_garantie_autre_que_constructeur)
+
+names(data)
 ```
 
 
@@ -455,7 +466,6 @@ data$nb_places <- sapply(data$Nombre.de.places, function(x) str_remove(x, "\npla
 
 ```{r}
 data$prix_euros <- sapply(data$Prix, function(x) str_remove(str_remove(x, " €"), " ")[1], USE.NAMES = F)
-
 ```
 
 #### Puissance fiscale
@@ -510,6 +520,14 @@ colnames(data)[colnames(data)=="Couleur.intérieur"] <- "couleur_interieur"
 colnames(data)[colnames(data)=="Type.de.peinture.carrosserie"] <- "type_peinture_carrosserie"
 ```
 
+#### Marque
+
+```{r}
+colnames(data)[colnames(data)=="Marque"] <- "marque"
+```
+
+
+
 #### Option Equipement Sécurité
 
 ```{r}
@@ -556,7 +574,7 @@ data %>% distinct(Option.equipement.extérieurs, allumage_auto_feux, peinture_me
 
 
 ```{r}
-new_data <- data %>% select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année,-address_particulier,-address_pro,-city_particulier,-city_pro,-postal_code_city,-codes_postaux,-all_address)
+new_data <- data %>% dplyr::select(-Kilométrage,-Puissance.fiscale,-Puissance.réelle,-Garantie.mécanique,-Option.equipement.Sécurité,-Option.Equipement.Confort.intérieur,-Option.equipement.extérieurs,-V1,-Nb.de.portes,-Nombre.de.places,-Consommation.mixte,-Emissions.de.CO2,-Prix,-Autres.informations,-Année,-address_particulier,-address_pro,-city_particulier,-city_pro,-postal_code_city,-codes_postaux,-all_address)
 head(new_data)
 View(new_data)
 
@@ -569,6 +587,7 @@ new_data <-
 
 write_csv(new_data, path = "datasets/first_dataset_full.csv")
 
+names(new_data)
 ```
 
 
