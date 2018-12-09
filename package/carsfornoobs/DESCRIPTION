@@ -1,0 +1,12 @@
+Package: carsfornoobs
+Type: Package
+Title: Analytics on Buying a Second Hand Car
+Version: 0.0.0.9000
+Author: c(person("First Name", "Last Name", email ="a_valid@email.com", role = c("aut", "cre"))) Ludmila Exbrayat, Arnaud Fournier, Gaëlle Guillou, Skander Kamoun, Inès Van Agt
+Maintainer: Ludmila Exbrayat <ludmila.exbrayat@polytechnique.edu>
+Description: This package uses data from paruvendu.com scrapped during October and November of 2019 to analyse the components of the prices of a car.
+    It is meant to help anyone find the perfect car at a perfect price and reduce information asymmetry regarding second-hand cars.
+    The Shiny app provides an interface for that.
+License: No license
+Encoding: UTF-8
+LazyData: true
