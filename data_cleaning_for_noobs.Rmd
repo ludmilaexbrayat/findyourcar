@@ -1,6 +1,6 @@
 ---
 title: "data_cleaning_for_noobs"
-author: "gg"
+author: "group 1"
 date: "11/19/2018"
 output: html_document
 ---
@@ -8,8 +8,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## Warning : built over one dataset. Surely other datasets will pose many problems but it's the beginning of a solution here.
 
 ## Data Cleaning
 
@@ -27,109 +25,59 @@ Sys.setlocale(locale="en_US.UTF-8")
 
 #### Read data and primary data cleaning
 
-Read the data (in the future, we will have to rbind all the scrapped listings - a function should do):
+Read the data:
 
 ```{r}
-mapping_villes <- data.frame(read_csv2("datasets/mapping_villes.csv"))
+mapping_villes <- data.frame(read_delim("datasets/mapping_villes.csv", delim = ";"))
 
-# Trouver une méthode plus compacte pour lire tous les csv
+all_files <- c("datasets/arnaud_scrapping.csv", 
+               "datasets/scrapped_listings_1_1_500.csv",
+               "datasets/scrapped_listings_1_501_750.csv",
+               "datasets/scrapped_listings_1_751_1000.csv",
+               "datasets/scrapped_listings_1_1000_1500.csv",
+               "datasets/scrapped_listings_1_1501_2000.csv",
+               "datasets/scrapped_listings_1_2001_2400.csv",
+               "datasets/scrapped_listings_1_2401_3000.csv",
+               "datasets/scrapped_listings_1_3001_4000.csv",
+               "datasets/scrapped_listings_1_4001_4500.csv",
+               "datasets/scrapped_listings_1_4501_5500.csv",
+               "datasets/scrapped_listings_1_6501_7500.csv",
+               "datasets/scrapped_listings_1_7501_8500.csv",
+               "datasets/scrapped_listings_2_1_250.csv",
+               "datasets/scrapped_listings_2_251_500.csv",
+               "datasets/scrapped_listings_2_501_750.csv",
+               "datasets/scrapped_listings_2_751_1000.csv",
+               "datasets/scrapped_listings_3_1_250.csv",
+               "datasets/scrapped_listings_3_251_500.csv",
+               "datasets/scrapped_listings_3_501_750.csv",
+               "datasets/scrapped_listings_3_751_1000.csv")
 
-data_a <- read_csv("datasets/arnaud_scrapping.csv") #try StringsAsFactors = False
+# Read all
 
-data_l1 <- read_csv("datasets/scrapped_listings_1_1_500.csv")
-data_l2 <- read_csv("datasets/scrapped_listings_1_501_750.csv")
-data_l3 <- read_csv("datasets/scrapped_listings_1_751_1000.csv")
-data_l4 <- read_csv("datasets/scrapped_listings_1_1000_1500.csv")
-data_l5 <- read_csv("datasets/scrapped_listings_1_1501_2000.csv")
-data_l6 <- read_csv("datasets/scrapped_listings_1_2001_2400.csv")
-data_l7 <- read_csv("datasets/scrapped_listings_1_2401_3000.csv")
-data_l8 <- read_csv("datasets/scrapped_listings_1_3001_4000.csv")
-data_l9 <- read_csv("datasets/scrapped_listings_1_4001_4500.csv")
-data_l10 <- read_csv("datasets/scrapped_listings_1_4501_5500.csv")
-#data_l11 <- read_csv("datasets/scrapped_listings_1_5501_6500.csv")
-data_l12 <- read_csv("datasets/scrapped_listings_1_6501_7500.csv")
-data_l13 <- read_csv("datasets/scrapped_listings_1_7501_8500.csv")
-data_l14 <- read_csv("datasets/scrapped_listings_2_1_250.csv")
-data_l15 <- read_csv("datasets/scrapped_listings_2_251_500.csv")
-data_l16 <- read_csv("datasets/scrapped_listings_2_501_750.csv")
-data_l17 <- read_csv("datasets/scrapped_listings_2_751_1000.csv")
-data_l18 <- read_csv("datasets/scrapped_listings_3_1_250.csv")
-data_l19 <- read_csv("datasets/scrapped_listings_3_251_500.csv")
-data_l20 <- read_csv("datasets/scrapped_listings_3_501_750.csv")
-data_l21 <- read_csv("datasets/scrapped_listings_3_751_1000.csv")
+all_df <- map(all_files, ~read_csv(.x))
 
-# PB accent with data_l11
-#names(data_l11) <- c("X1","url", "is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Etat du véhicule", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs")
+# For one dataset, we have a different ordering of the columns ¯\_(ツ)_/¯
 
-names(data_a) <- c("X1","url","is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie",  "Etat du véhicule", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs", "Marque")
+names(all_df[[1]]) <- c("X1","url","is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie",  "Etat du véhicule", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs", "Marque")
 
+# Row bind into data
 
-
-# Not the same nb columns il all datasets !
-
-data <- bind_rows(data_l1, data_l2, data_l3, data_l4, data_l5, data_l6, data_l7, data_l8, data_l9, data_l10, data_l12, data_l13, data_l14, data_l15, data_l16, data_l17, data_l18, data_l19, data_l20, data_l21, data_a)
-
-
-# filtrer modèles OK
-names(data)
-
+data <- map_df(all_df, ~bind_rows(.x))
 ```
 
-Remove the deleted listings, and the useless column that is X1:
+Remove the deleted listings, and the useless column that is X1, and V1:
 
 ```{r}
 data <- data %>% 
-  filter(is_listing_deleted == 0) %>% 
-  #select(-X1, -is_listing_deleted)
-  dplyr::select(-X1, -is_listing_deleted)
+  filter(is_listing_deleted == 0 
+         | is.na(Prix)
+         | is.na(Carrosserie)) %>% 
+  dplyr::select(-X1, -is_listing_deleted, -V1)
 
 data <- data.frame(data)
-
-#View(data)
 ```
 
-#### URL
-
-We keep URL.
-
-#### Brand
-
-```{r}
-
-# To check over other datasets, but for now it seems occasion is mentioned every time, so let's just remove it
-
-# sum(sapply(data$brand, function(x) str_detect(x, "occasion"))) / length(data$brand)
-
-# Actual cleaning
-
-data$brand <- sapply(data$brand, function(x) str_remove(x, " occasion")[1], USE.NAMES = F)
-
-# Check
-
-data %>% distinct(brand)
-
-# Good, we reduced the brand column to their actual brand names
-```
-
-#### Modèle
-
-For now, let's just consider that the modèle is an additional information but not a category, as in one we would use in our filtering or models.
-
-```{r}
-data <- data %>% filter(is.na(str_match(data$modele,"euro")))
-data %>% distinct(modele)
-```
-
-
-#### Name pro
-
-```{r}
-data$name_pro <- sapply(data$name_pro, function(x) str_trim(x), USE.NAMES = F)
-data %>% distinct(name_pro)
-```
-
-
-#### Adresse pro / particulier
+#### Get Postal Code Function
 
 For now, we will focus on retrieving the postal code from the address and the city from mapping_villes.csv (source : http://www.nosdonnees.fr/wiki/index.php/Fichier:EUCircos_Regions_departements_circonscriptions_communes_gps.csv.gz)
 
@@ -137,10 +85,6 @@ We'll use a regular expression to find the postal code : "(([0-8][0-9])|(9[0-5])
 
 
 ```{r}
-# Combine address particulier and pro : coalesce takes the first value, but if null, imputes the second value
-
-data$all_address <- coalesce(data$address_particulier, data$address_pro)
-
 get_postal_code <- function(address) {
   # Get all the strings that match a possible postal code
   poss_postal_codes <- str_match_all(address, "(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]][,1]
@@ -160,52 +104,40 @@ get_postal_code <- function(address) {
     better_postal_code[!is.na(better_postal_code)]
     }
 }
-
-data$postal_codes <- sapply(data$all_address, get_postal_code, USE.NAMES = F)
-# Pas d'erreur de mon côté (gg)
-View(data)
 ```
 
-#### Villes 
+#### Get City Function
 
 ```{r}
 #1. Pour les particuliers : 
   
 get_city_particulier <- function(address){
+  
   spl <- str_split(str_trim(address)," ")
   b <- str_locate(address, str_c("(",str_match(spl,"(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]],")"))[1]
   a <- str_locate(address, str_match(spl,"-"))[2]
-  ville <- str_sub(address, a + 2, b - 3) # Pour l'instant on a récupéré ce qu'il y a entre le premier tiret et le code postal
-  if (is.na(ville)) { NA } 
-  else {
-    len <- nchar(ville)
-    for (i in 0:len-1){
-      str_sub(ville,len-i,len-i) <- sub("[[:digit:]]*$", "",str_sub(ville,len-i,len-i))
-    }
-  } # Là on règle le problème de type "Paris 14" qui devient "Paris"
-  ville <- str_trim(ville)
-  if (is.na(str_match(ville,"- ")))
-  {ville
-  } else
-  {ville <- str_sub(ville, str_locate(ville,"- ")[2] + 1)
-  ville} # Là on règle le problème des prénoms composés dans la colonne addresse 
-}
   
+  city <- str_sub(address, a + 2, b - 3) # Pour l'instant on a récupéré ce qu'il y a entre le premier tiret et le code postal
+  
+  if (is.na(city)) {
+    return(NA)
+    } 
+  else {
+    city <- str_remove_all(city, "[0-9]+")
+    city <- str_trim(city, side = "both")
+    if (is.na(str_match(city,"- ")))
+      {
+      return(city)
+      } else {
+        city <- str_sub(city, str_locate(city,"- ")[2] + 1)
+        return(city)
+    } # Là on règle le problème des prénoms composés dans la colonne addresse 
+    } # Là on règle le problème de type "Paris 14" qui devient "Paris"
+}
 
-data$city_particulier <- sapply(data$address_particulier, get_city_particulier, USE.NAMES = F)
+#2. Pour les pros :
 
-
-#2. Pour les pros : 
-
-#get_city_pro <- function(address){
-#  #spl <- str_split(str_trim(address)," ")
-#  #print(address)
-#  spl <- str_trim(address)
-#  b <- str_locate(address, str_match(spl,get_postal_code(address))[[1]])[2]
-#  ville <- str_trim(str_sub(address, b+2))
-#}
-
-get_city_pro2 <- function(address, pc){
+get_city_pro <- function(address, pc){
   if (!is.character(pc)) {
     return(NA)
   } else {
@@ -215,36 +147,14 @@ get_city_pro2 <- function(address, pc){
     return(NA)
   } else {
   b <- str_locate(address, pcmatch[[1]])[2]
-  return(str_trim(str_sub(address, b+2)))
+  city <- str_trim(str_remove_all(str_sub(address, b+2), "[0-9]+"))
+  return(city)
   }
   }
 }
-
-
-# GERER LE MESSAGE D'ERREUR ICI !!!!!!!!!! --> C'est un pb de code postal qui gère pas un cas particulier
-# 2 solutions : faire un try() ou gérer l'erreur
-# ou régler la fonction code postal
-# De toute façon c'est suboptimal de ré-appliquer la fonction, il faudrait utiliser la colonne code postal et mapper le df
-# A réessayer sur le dataset d'Arnaud
-
-data$city_pro <- unlist(map2(data$address_pro, data$postal_codes, ~get_city_pro2(.x, .y)))
-
-#3. Réunion des deux (pros et particuliers)
-
-data$all_city <- coalesce(data$city_particulier, data$city_pro)
 ```
 
-
-
-Il faut récupérer les villes en parsant les strings puis faire un join sur code postal et ville.
-+ Trouver une manière de faire un join "loose" qui ne prenne pas en compte espaces, casse, etc 
-Le parsing se fera différemment selon si pro ou particulier -> soit partir des deux colonnes, soit utiliser le "is_pro" plus bas.
-
-#### Join on long, lat and city
-
-WARNING FROM INES : ATTENTION JE PENSE QU'ON NE PEUT PAS FAIRE CA TANT QU'ON A PAS FAIT LE MAPPING DES VILLES ! DONC LA PREMIERE ETAPE EST AU DESSUS
-
-It's not the most efficient thing to do codewise, surely, but it does ensure that we'll have the same format for everything.
+#### Remove Accents Function
 
 ```{r}
 #Fonction pour retirer les accents
@@ -256,71 +166,30 @@ unaccent <- function(text) {
 }
 ```
 
+#### Create Postal_Code_City Function
 
 ```{r}
-# Filter the information we're interested in
-names(mapping_villes) <- c("eu_circo","code_region", "nom_region", "chef_lieu_region", "numero_departement","nom_departement","prefecture","numero_circonsription","nom_commune","codes_postaux","code_insee","latitude", "longitude","eloignement")
-
-relevant_mapping_villes <- mapping_villes %>% 
-  dplyr::select(code_region, nom_region, numero_departement, nom_departement, nom_commune, codes_postaux, latitude, longitude)
-
-relevant_mapping_villes %>% 
-  group_by(codes_postaux)
-
-dim(relevant_mapping_villes)
-
-
-# Join with postal codes
-
-
-# Je crée une colonne avec le code postal et la ville dans chaque dataset,sans tiret, sans espace, et sans majuscule, et sans accents
-data$postal_code_city <- gsub("saint","st",tolower(gsub("-","",gsub(" ","",str_c(data$postal_codes,data$all_city)))))
-data$postal_code_city <- sapply(data$postal_code_city, unaccent, USE.NAMES = F)
-data %>% distinct(postal_code_city)
-
-relevant_mapping_villes$codes_postaux_commune <- gsub("saint","st",tolower(gsub("-","",gsub(" ","", str_c(relevant_mapping_villes$codes_postaux,relevant_mapping_villes$nom_commune)))))
-relevant_mapping_villes$codes_postaux_commune <- sapply(relevant_mapping_villes$codes_postaux_commune, unaccent, USE.NAMES = F)
-relevant_mapping_villes %>% distinct(codes_postaux_commune) %>% arrange(codes_postaux_commune)
-
-
-join_table <- left_join(x = data, y = relevant_mapping_villes, by= c("postal_code_city" = "codes_postaux_commune")) %>% distinct()
-data <- join_table
-
-# Regardons là où ça ne marche pas (44 sur 454 lignes pour ce fichier)
-data %>% filter(is.na(code_region)) %>% dplyr::select(postal_code_city) %>% distinct()
-data
-
-# On check ce qu'il en est dans le fichier de mapping sur 
-relevant_mapping_villes %>% filter(nom_commune == "Paris")
-relevant_mapping_villes %>% filter(nom_commune == "Marseille")
-
-data %>% filter(is.na(longitude)) %>% distinct(postal_code_city)
-
-### Le problème, c'est que dans le fichier relevant_mapping_villes, il y a parfois plusieurs codes_postaux par ligne... donc mon join ne marche pas dans ces cas là. Cela dit, il semble que pour ces lignes là, la latitude et longitude sont manquants donc ce n'est peut-être pas dramatique.
-### On pourrait dupliquer les lignes pour n'avoir qu'un seul code postal dans la colonne code_postaux.
-### Si trop compliqué, on peut faire un second join juste pour les 44 lignes où on a un beug, juste sur le nom de la ville en ignorant les codes postaux? 
+create_postal_code_city <- function(pc, city) {
+  as.character(
+    unaccent(
+      gsub(
+        "saint", 
+        "st", 
+        tolower(
+          str_remove_all(
+                    str_c(pc,city),
+                          "[- ]+"
+                    )
+          )
+        )
+      )
+  )
+}
 ```
 
-#### Name pro + is pro
-
-Name pro will be useful only when the seller is a pro. Let's just keep it that way and create an "is_pro" binary column for easy access to this information.
+#### Get Age Function
 
 ```{r}
-data$is_pro <- (1 - is.na(data$name_pro))
-```
-
-#### Année
-
-
-/!\ Ne fonctionne pas !!!! Fonctionne sur des dates individuelles mais pas sur toute la colonne, je n'ai pas réussi à gérer le bugs
---> Bug corrigé je pense !
-
-```{r}
-# sapply(data$Année, function(x) str_detect(x, "Assurance auto : Comparez"), USE.NAMES = F)
-
-# We either have NA or something that includes " Assurance auto : Comparez" : let's remove it.
-# Then our objective is to get a date object
-
 french_months <- c(
                    "janvier", 
                    "février", 
@@ -364,17 +233,62 @@ clean_month_year <- function(my) {
   else { NA }
 }
 
+ymd("1970-10-23")
+```
 
 
-clean_month_year(data$Année[300])
+#### Mapping Villes Cleaning
 
-#str_remove(my, "\nAssurance auto : Comparez")
+```{r}
+names(mapping_villes) <- c("eu_circo","code_region", "nom_region", "chef_lieu_region", "numero_departement","nom_departement","prefecture","numero_circonsription","nom_commune","codes_postaux","code_insee","latitude", "longitude","eloignement")
 
-data$Année[300]
+relevant_mapping_villes <- mapping_villes %>% 
+  dplyr::select(code_region, nom_region, numero_departement, nom_departement, nom_commune, codes_postaux, latitude, longitude) %>% 
+  mutate(codes_postaux_commune = map2_chr(codes_postaux, nom_commune, create_postal_code_city))
+```
 
+#### Final Columns Cleaning
+
+```{r}
+# PB WARNINGS? SUPPRESS WARNINGS NE MARCHE PAS. POTENTIELLEMENT ON PEUT SE PASSER DE MAP SI ON ENLEVE LES FOR?
+
+data_test <- 
+data %>% 
+  # Modele cleaning - some modeles have had a problem with the scraping, they have "euro" in it
+  filter(is.na(str_match(data$modele,"euro"))) %>% 
+  mutate(
+         brand = str_remove(brand, " occasion")[1],
+         name_pro = str_trim(name_pro),
+         all_address = coalesce(address_particulier, address_pro),
+         postal_codes = map(all_address, get_postal_code),
+         city_particulier = map(address_particulier, get_city_particulier),
+         city_pro = map2(address_pro, postal_codes, ~get_city_pro(.x, .y)),
+         all_city = coalesce(city_particulier, city_pro),
+         postal_code_city = map2(postal_codes, all_city, create_postal_code_city) ,
+         is_pro = map(name_pro, function(x) 1 - is.na(x)),
+         date = map(Année, clean_month_year)
+         ) %>% 
+  mutate_if(is.list, as.character) %>% 
+  mutate(date = as.Date(date, origin = "1970-01-01")) %>% 
+  left_join(relevant_mapping_villes,  by= c("postal_code_city" = "codes_postaux_commune")) %>% 
+  distinct()
+
+View(data_test)
+glimpse(data_test)
+
+```
+
+#### Année
+
+
+/!\ Ne fonctionne pas !!!! Fonctionne sur des dates individuelles mais pas sur toute la colonne, je n'ai pas réussi à gérer le bugs
+--> Bug corrigé je pense !
+
+```{r}
 # C'est ça qui ne marche pas : normalement je l'assignerais à une colonne de data mais là marche pas...
 #test <- sapply(data$Année, clean_month_year, USE.NAMES = T)
-data$date <- sapply(data$Année, clean_month_year, USE.NAMES = F)
+#data$date <- 
+sapply(data$Année, clean_month_year, USE.NAMES = F)
 #class(test[1])
 data$date <- as.Date(data$date, origin = "1970-01-01")
 #data %>% distinct(date)
@@ -463,6 +377,8 @@ data$hayon <- sapply(data$Nb.de.portes, function(x) str_detect(x, "hayon")*1)
 ```
 
 #### Nombre de places
+
+TODO : clean! pas assez bien
 
 ```{r}
 data$nb_places <- sapply(data$Nombre.de.places, function(x) str_remove(x, "\nplaces")[1], USE.NAMES = F)
