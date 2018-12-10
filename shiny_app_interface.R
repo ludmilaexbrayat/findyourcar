@@ -35,7 +35,7 @@ crs_lambert <- 2154
 
 dpt_map <- dept_193 %>% 
   st_transform(crs = crs_lambert) #%>%                     # With the good CRS
-  #st_simplify(preserveTopology = TRUE, dTolerance = 2000) # Simplifying the raster so that the map loads faster
+#st_simplify(preserveTopology = TRUE, dTolerance = 2000) # Simplifying the raster so that the map loads faster
 
 region_map <- dpt_map %>% 
   group_by(NOM_REG) %>% 
@@ -44,91 +44,94 @@ region_map <- dpt_map %>%
 
 # Define UI for application
 ui <- fluidPage(
-   
+  
   # Title of the App
-   titlePanel("Find Your Car"),
-   
-   sidebarLayout(
-      sidebarPanel(
-        # Select Input for the Postal Code:
-        selectInput("city", "Select your city:", choices = dataset1$nom_commune %>% unique %>% sort()),
-        
-        # Select type of car: for the time being, choices are linked to factors taken by Carosserie in the first raw dataset
-        selectInput("carrosserie", "Choose the type of car:", choices = dataset1$carrosserie %>% unique()),
-        
-        # Action Button (to be automatized)
-        actionButton("go", "Go")
-        ),
+  titlePanel("Find Your Car"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      # Select Input for the Postal Code:
+      selectInput("city", "Select your city:", choices = dataset1$nom_commune %>% unique %>% sort()),
       
+      # Select type of car: for the time being, choices are linked to factors taken by Carosserie in the first raw dataset
+      selectInput("carrosserie", "Choose the type of car:", choices = dataset1$carrosserie %>% unique()),
       
-      mainPanel(
-        
-        # Creating the tabs
-        tabsetPanel(type = "tabs",
-        
-        # First tab
-        tabPanel("Complementary Adjustments",
-                 # Left column with adjustment inputs
-                 column(6, 
-                        selectInput("transmission", "Choose the type of transmission:", choices = c("No Preference", dataset1$transmission)),
-                        selectInput("brand", "Brand:", choices = c("No Preference", dataset1$brand %>% unique())),
-                        sliderInput("year_built", "Year:", min = 1950, max = 2017, value = c(1950,2017)),
-                        sliderInput("mileage", "Mileage:", min = 10000, max = 100000, value = c(10000, 100000)),
-                        selectInput("fuel", "Type of fuel:", choices = c("No Preference", dataset1$energie %>% unique())),
-                        selectInput("nb_seats", "Number of seats:", choices = c("No Preference", dataset1$nb_places %>% unique())),
-                        selectInput("nb_doors", "Number of doors:", choices = c("No Preference", dataset1$nb_portes %>% unique()))
-                        ),
-                 # Right column with impact on the price
-                 column(6, 
-                        h3("Adjusted Price"),
-                        h3(" "),
-                          h4("At 30 min drive"),
-                          h4(" "),
-                            h5("Mean price:"),
-                            h5("Minimum price:"),
-                            h5("Maximum price:"),
-                          h3(" "),
-                          h4("In the whole country"),
-                          h4(" "),
-                            h5("Mean price: "),
-                            textOutput(outputId = "mean"),
-                            h5("Minimum price:"),
-                            textOutput(outputId = "min"),
-                            h5("Maximum price:"),
-                            textOutput(outputId = "max")),
-                 # Bottom right column with additional informations
-                 column(6,
-                        h3("For your information"),
-                        h5("Importance of main parameters in the price"),
-                        plotOutput("fyi"))
-                 ),
-        
-        # Second Tab
-        tabPanel("At 30 min drive",
-                  # Map Title
-                  div(h3("Available cars around you")),
-                  # Plotting the Map
-                 plotOutput("drive_map"),
+      # Action Button (to be automatized)
+      actionButton("go", "Go")
+    ),
+    
+    
+    mainPanel(
+      
+      # Creating the tabs
+      tabsetPanel(type = "tabs",
                   
-                  # Table Title
-                  div(h3("Summary Results")),
-                  # Drawing the Table
-                 DT::DTOutput("table_drive")),
+                  # First tab
+                  tabPanel("Complementary Adjustments",
+                           # Left column with adjustment inputs
+                           column(6, 
+                                  selectInput("transmission", "Choose the type of transmission:", choices = c("No Preference", dataset1$transmission[!is.na(dataset1$transmission)] %>% unique())),
+                                  selectInput("brand", "Brand:", choices = c("No Preference", dataset1$brand[!is.na(dataset1$brand)] %>% unique() %>% sort())),
+                                  sliderInput("year_built", "Year:", min = 1950, max = 2017, value = c(1950,2017)),
+                                  sliderInput("mileage", "Mileage:", min = 10000, max = 100000, value = c(10000, 100000)),
+                                  selectInput("fuel", "Type of fuel:", choices = c("No Preference", dataset1$energie[!is.na(dataset1$energie)] %>% unique() %>% sort())),
+                                  selectInput("nb_seats", "Number of seats:", choices = c("No Preference", dataset1$nb_places[!is.na(dataset1$nb_places)] %>% unique() %>% sort())),
+                                  selectInput("nb_doors", "Number of doors:", choices = c("No Preference", dataset1$nb_portes[!is.na(dataset1$nb_portes)] %>% unique() %>% sort()))
+                           ),
+                           # Right column with impact on the price
+                           column(6, 
+                                  h3("Adjusted Price"),
+                                  h3(" "),
+                                  h4("In a 100km radius"),
+                                  h4(" "),
+                                  h5("Mean price:"),
+                                  textOutput(outputId = "mean_area"),
+                                  h5("Minimum price:"),
+                                  textOutput(outputId = "min_area"),
+                                  h5("Maximum price:"),
+                                  textOutput(outputId = "max_area"),
+                                  h3(" "),
+                                  h4("In the whole country"),
+                                  h4(" "),
+                                  h5("Mean price: "),
+                                  textOutput(outputId = "mean"),
+                                  h5("Minimum price:"),
+                                  textOutput(outputId = "min"),
+                                  h5("Maximum price:"),
+                                  textOutput(outputId = "max")),
+                           # Bottom right column with additional informations
+                           column(6,
+                                  h3("For your information"),
+                                  h5("Importance of main parameters in the price"),
+                                  plotOutput("fyi"))
+                  ),
                   
-        # Third Tab
-        tabPanel("In the whole country",
-                 # Map Title
-                 div(h3("Available cars")),
-                 # Plotting the Map
-                 plotOutput("map"), 
-                 
-                 # Table Title
-                 div(h3("Summary Results")),
-                 # Drawing the Table
-                 DT::DTOutput("table"))
-        )
+                  # Second Tab
+                  tabPanel("At 30 min drive",
+                           # Map Title
+                           div(h3("Available cars around you")),
+                           # Plotting the Map
+                           plotOutput("drive_map"),
+                           
+                           # Table Title
+                           div(h3("Summary Results")),
+                           # Drawing the Table
+                           DT::DTOutput("table_area")),
+                  
+                  # Third Tab
+                  tabPanel("In the whole country",
+                           # Map Title
+                           div(h3("Available cars")),
+                           # Plotting the Map
+                           plotOutput("map"), 
+                           
+                           # Table Title
+                           div(h3("Summary Results")),
+                           # Drawing the Table
+                           DT::DTOutput("table"))
       )
-   )
+    )
+  )
 )
 
 server <- function(input, output) {
@@ -145,8 +148,15 @@ server <- function(input, output) {
   dataset1_sf <- st_as_sf(dataset1 %>% filter(!is.na(longitude) & !is.na(latitude)), 
                           coords = c("longitude", "latitude"), crs = 4326)
   
+  # Preparing the objects we need for the plot
+  dataset_map <- dataset1 %>% 
+    filter(!is.na(longitude) & !is.na(latitude)) %>% 
+    st_as_sf(coords = c("longitude", "latitude"),
+             crs = 4326) %>% 
+    st_transform(crs = crs_lambert)
+  
   mapping_villes_sf <- st_as_sf(mapping_villes %>% filter(!is.na(longitude) & !is.na(latitude)), 
-                                 coords = c("latitude", "longitude"), crs = 4326)
+                                coords = c("latitude", "longitude"), crs = 4326)
   
   # Creating an appropriate palette for the plot
   cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))
@@ -155,59 +165,80 @@ server <- function(input, output) {
   
   # Creating an eventreactive for the basic filters on the condition of the "Go" button
   data_filtered_basic_country <- eventReactive(input$go, {
-    dataset1 %>%
+    dataset_map %>%
       filter(
         !is.na(prix_euros),
         carrosserie == input$carrosserie
       )
   })
   
-  # Creating a reactive for the advanced filters
+  # Creating a reactive for the advanced filters at the country level
   data_filtered_advanced_country <- reactive({
     data_filtered_basic_country() %>%
+      mutate(
+        year = substr(date, 0, 4)
+      ) %>% 
       filter(
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
         (brand %in% input$brand) | (input$brand == "No Preference"),
+        year >= input$year_built[1] & year <= input$year_built[2],
         kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
         (energie %in% input$fuel) | (input$fuel == "No Preference"),
         (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
         (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
-        )
+      )
   })
-  
-  ### FUNCTION AREA
-  # Preparing the objects we need for the plot
-  dataset_map <- dataset1 %>% 
-    filter(!is.na(longitude) & !is.na(latitude)) %>% 
-    st_as_sf(coords = c("longitude", "latitude"),
-             crs = 4326) %>% 
-    st_transform(crs = crs_lambert)
-  
   
   # Finding the localization of the user
   point_user <- eventReactive(input$go, {dataset_map %>%
-   filter(nom_commune == input$city) %>%
-   head(n = 1) %>%
-   st_simplify(preserveTopology = TRUE, dTolerance = 2000)})  # Simplifying the raster so that the map loads faster
-
-
+      filter(nom_commune == input$city) %>%
+      head(n = 1) %>%
+      st_simplify(preserveTopology = TRUE, dTolerance = 2000)})  # Simplifying the raster so that the map loads faster
+  
+  # Creating a reactive for the advanced filters at the 100km area level
+  data_filtered_advanced_100km <- reactive({
+    data_filtered_basic_country() %>%
+      mutate(
+        year = substr(date, 0, 4),
+        distance = st_distance(data_filtered_basic_country(), point_user())
+      ) %>% 
+      filter(
+        distance <= units::set_units(100, km),
+        (transmission %in% input$transmission) | (input$transmission == "No Preference"),
+        (brand %in% input$brand) | (input$brand == "No Preference"),
+        year >= input$year_built[1] & year <= input$year_built[2],
+        kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
+        (energie %in% input$fuel) | (input$fuel == "No Preference"),
+        (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
+        (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
+      )
+  })
+  
+  
+  # Filtering for points around the user input location
+  points_around <- reactive({
+    data_filtered_advanced_100km() %>% 
+      filter(st_distance(data_filtered_advanced_100km(), point_user()) <= units::set_units(100, km))
+  })
+  
   # Cropping the map of France to focus on the region
   area_around <- function(geometry) {
-    st_buffer(geometry, dist = units::set_units(200, km)) %>% 
+    st_buffer(geometry, dist = units::set_units(100, km)) %>% 
       st_transform(crs = st_crs(dpt_map)) # For the moment we have put 200 km as an example
   }
   
-    intersection <- reactive({
-      
-      st_intersection(dpt_map, area_around(point_user()))
-      
-    }) 
-
+  intersection <- reactive({
+    
+    st_intersection(dpt_map, area_around(point_user()))
+    
+  }) 
   
-  # Creating a function to plot the map of the 200km area
-  plot_drive_map <- function(intersection, point_user) {
+  
+  # Creating a function to plot the map of the 100km area
+  plot_drive_map <- function(intersection, point_user, points_around) {
     ggplot(intersection) +
       geom_sf(aes(fill = CODE_REG)) +
+      geom_sf(data = points_around, color = "black", size = 1) +
       geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
       coord_sf(crs = st_crs(dpt_map)) +
       scale_fill_manual(values = cc) + # Applying the palette we have built further up
@@ -224,7 +255,7 @@ server <- function(input, output) {
             panel.grid.minor=element_blank(),
             plot.background=element_blank(),
             panel.grid.major = element_line(colour = "white"))
-   }
+  }
   
   # Creating a function to plot the map of the whole country
   # map_prices_per_region <- eventReactive(input$go, {
@@ -235,14 +266,14 @@ server <- function(input, output) {
   # })
   
   plot_map <- function(map, point_user) {
-   ggplot(map) +
-     geom_sf(aes(fill = NOM_REG)) +
-     geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
-     scale_fill_manual(values = cc) + # Applying the palette we have built further up
-     geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
-     coord_sf(crs = st_crs(map)) +
-  #All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
-     theme(axis.line=element_blank(),
+    ggplot(map) +
+      geom_sf(aes(fill = NOM_REG)) +
+      geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
+      scale_fill_manual(values = cc) + # Applying the palette we have built further up
+      geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
+      coord_sf(crs = st_crs(map)) +
+      #All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
+      theme(axis.line=element_blank(),
             axis.text.x=element_blank(),
             axis.text.y=element_blank(),
             axis.ticks=element_blank(),
@@ -258,9 +289,9 @@ server <- function(input, output) {
   
   # Creating a dummy dataframe just for plotting the importance of parameters
   df <- data.frame(c("Number of seats", "Number of seats",
-          "Brand", "Brand", "Brand", "Brand", "Brand",
-          "Type of Fuel",
-          "Year"))
+                     "Brand", "Brand", "Brand", "Brand", "Brand",
+                     "Type of Fuel",
+                     "Year"))
   
   # Creating a function to plot the graph of importance of each parameter
   plot_fyi <- function() {
@@ -269,58 +300,92 @@ server <- function(input, output) {
       labs(x = "Parameter", y = "Relative Importance")
   }
   
-  # Creating a function to draw the appropriate table (this is just an example)
+  # Creating a function to draw the appropriate table 
   result_table <- function() {
-    head(
-      dataset1 %>% 
+    table <- as.data.frame(data_filtered_advanced_country()) %>% 
       dplyr::select(prix_euros, brand, modele, nom_commune, kilometrage_km, transmission) %>% 
       filter(!is.na(brand) & !is.na(nom_commune))
-    )
+    
+    colnames(table) <- c("Price", "Brand", "Modele", "City", "Mileage", "Transmission")
+    
+    return(table)
+  }
+  
+  # Creating a function to draw the appropriate table within the 100km area
+  result_table_area <- function() {
+    table <- as.data.frame(data_filtered_advanced_100km()) %>% 
+      dplyr::select(prix_euros, brand, modele, nom_commune, kilometrage_km, transmission) %>% 
+      filter(!is.na(brand) & !is.na(nom_commune))
+    
+    colnames(table) <- c("Price", "Brand", "Modele", "City", "Mileage", "Transmission")
+    
+    return(table)
   }
   
   # Creating a function to give the mean, minimum and maximum price depending on the filters
   result_price <- function() {
-          a <- c(
-            mean(data_filtered_advanced_country()$prix_euros),
-            max(data_filtered_advanced_country()$prix_euros),
-            min(data_filtered_advanced_country()$prix_euros)
-          )
+    a <- c(
+      mean(data_filtered_advanced_country()$prix_euros),
+      max(data_filtered_advanced_country()$prix_euros),
+      min(data_filtered_advanced_country()$prix_euros)
+    )
     return(a)
   }
-
+  
+  result_price_area <- function() {
+    a <- a <- c(
+      mean(data_filtered_advanced_100km()$prix_euros),
+      max(data_filtered_advanced_100km()$prix_euros),
+      min(data_filtered_advanced_100km()$prix_euros)
+    )
+    return(a)
+  }
+  
   ### OUTPUT AREA
   
-   output$map <- renderPlot({
-     plot_map(map = region_map, point_user = point_user())
-   })
-   
-   output$drive_map <- renderPlot({
-     plot_drive_map(intersection = intersection(), point_user = point_user())
-   })
-   
-   output$table <- DT::renderDT({
-     result_table()
-   })
-   
-   output$table_drive <- DT::renderDT({
-     result_table()
-   })
-   
-   output$mean <- renderText({
-     round(result_price()[1])
+  output$map <- renderPlot({
+    plot_map(map = region_map, point_user = point_user())
   })
-   
-   output$max <- renderText({
-     round(result_price()[2])
-   })
-   
-   output$min <- renderText({
-     round(result_price()[3])
-   })
-   
-   output$fyi <- renderPlot({
-     plot_fyi()
-   })
+  
+  output$drive_map <- renderPlot({
+    plot_drive_map(intersection = intersection(), point_user = point_user(), points_around = points_around())
+  })
+  
+  output$table <- DT::renderDT({
+    result_table()
+  })
+  
+  output$table_area <- DT::renderDT({
+    result_table_area()
+  })
+  
+  output$mean <- renderText({
+    round(result_price()[1])
+  })
+  
+  output$max <- renderText({
+    round(result_price()[2])
+  })
+  
+  output$min <- renderText({
+    round(result_price()[3])
+  })
+  
+  output$mean_area <- renderText({
+    round(result_price_area()[1])
+  })
+  
+  output$max_area <- renderText({
+    round(result_price_area()[2])
+  })
+  
+  output$min_area <- renderText({
+    round(result_price_area()[3])
+  })
+  
+  output$fyi <- renderPlot({
+    plot_fyi()
+  })
 }
 
 # Run the application 
