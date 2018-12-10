@@ -33,9 +33,13 @@ dept_193 <- st_read("cartography/DEPARTEMENT.shp")
 # Transforming the department map into region map
 crs_lambert <- 2154
 
-region_map <- dept_193 %>% 
-  st_transform(crs = crs_lambert) %>%                     # With the good CRS
-  st_simplify(preserveTopology = TRUE, dTolerance = 2000) # Simplifying the raster so that the map loads faster
+dpt_map <- dept_193 %>% 
+  st_transform(crs = crs_lambert) #%>%                     # With the good CRS
+  #st_simplify(preserveTopology = TRUE, dTolerance = 2000) # Simplifying the raster so that the map loads faster
+
+region_map <- dpt_map %>% 
+  group_by(NOM_REG) %>% 
+  summarize()
 
 
 # Define UI for application
@@ -138,10 +142,6 @@ server <- function(input, output) {
     mutate(price_ex = "3,338???") # This is just a dummy value for the moment
   
   # Defining location (to be replaced by automated location)
-  point <- region_map %>% 
-    filter(CODE_REG == 53) %>% # Example of Ile de France is taken here as the location of the user
-    st_centroid()
-  
   dataset1_sf <- st_as_sf(dataset1 %>% filter(!is.na(longitude) & !is.na(latitude)), 
                           coords = c("longitude", "latitude"), crs = 4326)
   
@@ -185,30 +185,31 @@ server <- function(input, output) {
   
   
   # Finding the localization of the user
-  #point_user <- eventReactive(input$go, {dataset_map %>% 
-  #  filter(nom_commune == input$city) %>%
-  #  head(n = 1) %>% 
-  #  st_simplify(preserveTopology = TRUE, dTolerance = 2000)})  # Simplifying the raster so that the map loads faster
-  
-  point_user <-dataset_map %>% 
-      filter(nom_commune == "Montpellier") %>%
-      head(n = 1) %>% 
-      st_simplify(preserveTopology = TRUE, dTolerance = 2000)  # Simplifying the raster so that the map loads faster
+  point_user <- eventReactive(input$go, {dataset_map %>%
+   filter(nom_commune == input$city) %>%
+   head(n = 1) %>%
+   st_simplify(preserveTopology = TRUE, dTolerance = 2000)})  # Simplifying the raster so that the map loads faster
+
 
   # Cropping the map of France to focus on the region
   area_around <- function(geometry) {
     st_buffer(geometry, dist = units::set_units(200, km)) %>% 
-      st_transform(crs = st_crs(region_map)) # For the moment we have put 200 km as an example
+      st_transform(crs = st_crs(dpt_map)) # For the moment we have put 200 km as an example
   }
   
-  intersection <- st_intersection(region_map, area_around(point_user))
+    intersection <- reactive({
+      
+      st_intersection(dpt_map, area_around(point_user()))
+      
+    }) 
+
   
   # Creating a function to plot the map of the 200km area
-  plot_drive_map <- function() {
+  plot_drive_map <- function(intersection, point_user) {
     ggplot(intersection) +
       geom_sf(aes(fill = CODE_REG)) +
       geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
-      coord_sf(crs = st_crs(region_map)) +
+      coord_sf(crs = st_crs(dpt_map)) +
       scale_fill_manual(values = cc) + # Applying the palette we have built further up
       # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
       theme(axis.line=element_blank(),
@@ -220,33 +221,40 @@ server <- function(input, output) {
             legend.position="none",
             panel.background=element_blank(),
             panel.border=element_blank(),
-            panel.grid.major=element_blank(),
+            panel.grid.minor=element_blank(),
+            plot.background=element_blank(),
+            panel.grid.major = element_line(colour = "white"))
+   }
+  
+  # Creating a function to plot the map of the whole country
+  # map_prices_per_region <- eventReactive(input$go, {
+  #   dataset_map %>% 
+  #     filter(carrosserie == input$carrosserie) %>% 
+  #     group_by(nom_region) %>% 
+  #     summarize(mean_price = mean(prix_euros))
+  # })
+  
+  plot_map <- function(map, point_user) {
+   ggplot(map) +
+     geom_sf(aes(fill = NOM_REG)) +
+     geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
+     scale_fill_manual(values = cc) + # Applying the palette we have built further up
+     geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
+     coord_sf(crs = st_crs(map)) +
+  #All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
+     theme(axis.line=element_blank(),
+            axis.text.x=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title.x=element_blank(),
+            axis.title.y=element_blank(),
+            legend.position="none",
+            panel.background=element_blank(),
+            panel.border=element_blank(),
+            panel.grid.major=element_line(colour = "white"),
             panel.grid.minor=element_blank(),
             plot.background=element_blank())
   }
-  
-  # Creating a function to plot the map of the whole country
-  #plot_map <- function() {
-  #  ggplot(region_map) +
-  #    geom_sf(aes(fill = CODE_REG)) +
-  #    geom_text(data = centroids, aes(x=X, y=Y, label= price_ex)) + # Adding label with prices
-  #    scale_fill_manual(values = cc) + # Applying the palette we have built further up
-  #    geom_sf(data = point, color = "orange", size = 5) + # Plotting a point at the position of the user (to be automatized)
-  #    coord_sf(crs = st_crs(region_map)) +
-      # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
-  #    theme(axis.line=element_blank(),
-  #           axis.text.x=element_blank(),
-  #           axis.text.y=element_blank(),
-  #           axis.ticks=element_blank(),
-  #           axis.title.x=element_blank(),
-  #           axis.title.y=element_blank(),
-  #           legend.position="none",
-  #           panel.background=element_blank(),
-  #           panel.border=element_blank(),
-  #           panel.grid.major=element_blank(),
-  #           panel.grid.minor=element_blank(),
-  #           plot.background=element_blank())
-  #}
   
   # Creating a dummy dataframe just for plotting the importance of parameters
   df <- data.frame(c("Number of seats", "Number of seats",
@@ -283,11 +291,11 @@ server <- function(input, output) {
   ### OUTPUT AREA
   
    output$map <- renderPlot({
-     plot_map()
+     plot_map(map = region_map, point_user = point_user())
    })
    
    output$drive_map <- renderPlot({
-     plot_drive_map()
+     plot_drive_map(intersection = intersection(), point_user = point_user())
    })
    
    output$table <- DT::renderDT({
