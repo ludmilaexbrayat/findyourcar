@@ -164,12 +164,12 @@ server <- function(input, output) {
   data_filtered_advanced_country <- reactive({
     data_filtered_basic_country() %>%
       filter(
-        transmission == ifelse(input$transmission != "No Preference", input$transmission, transmission),
-        brand == ifelse(input$brand != "No Preference", input$brand, brand),
+        (transmission %in% input$transmission) | (input$transmission == "No Preference"),
+        (brand %in% input$brand) | (input$brand == "No Preference"),
         kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
-        energie == ifelse(input$fuel != "No Preference", input$fuel, energie),
-        nb_places == ifelse(input$nb_seats != "No Preference", input$nb_seats, nb_places),
-        nb_portes == ifelse(input$nb_doors != "No Preference", input$nb_doors, nb_portes)
+        (energie %in% input$fuel) | (input$fuel == "No Preference"),
+        (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
+        (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
         )
   })
   
