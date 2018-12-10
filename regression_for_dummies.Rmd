@@ -28,23 +28,31 @@ reg_data <- read_csv("first_dataset_full.csv")
 ```{r}
 
 #select only variables useful for our regression
-reg_data <- reg_data %>% dplyr::select(prix_euros , brand, carrosserie, energie, transmission, is_pro, kilometrage_km, nb_portes, hayon)
+reg_data <- reg_data %>% dplyr::select(prix_euros , brand, carrosserie, energie, transmission, is_pro, kilometrage_km, nb_portes, hayon, cons_mixte_l_by_100km)
 
 #We need to have price to predict it so we delete rows where price is na, we also need the type of car for our shiny app
 #I recoded nb_porte as a factor because it makes more sense
 reg_data <- reg_data %>% 
   filter(!is.na(prix_euros), !is.na(carrosserie)) %>% 
-  mutate(nb_portes=as.factor(nb_portes))
+  mutate(nb_portes=as.factor(nb_portes),
+         cons_mixte_l_by_100km=as.numeric(cons_mixte_l_by_100km))
+
+
 
 
 #We can get the list of type of car we can use in our app using this:
-carrosserie_name <- reg_data %>%
+carrosserie_name <- function(df){
+
+carrosserie <-   df %>%
   group_by(carrosserie) %>%
   summarise(n=n()) %>% 
   filter(n > 50, !is.na(carrosserie)) %>% 
   dplyr::select(carrosserie) %>% 
   as.list()
-carrosserie_name$carrosserie
+  return(carrosserie$carrosserie)
+}  
+
+carrosserie_name(reg_data)
 
 ```
 
@@ -57,17 +65,58 @@ regression_function <- function(data_reg, carrosserie){
   
   data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
   
-reg_sol <- lm(log(prix_euros)  ~ energie + transmission+is_pro+kilometrage_km+nb_portes+hayon , data_reg) #We log as price is skewed, yet it is gaussion when logged
-return(summary(reg_sol))
+  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) #We log as price is skewed, yet it is gaussion when logged
+  return(summary(reg_sol))
 }
 
 regression_function(reg_data, "Berline")
 
 
+
+
+
+
+coef_function <- function(carrosserie){
+  carrosserie <- as.character(carrosserie)
+  
+  coef_0 <- regression_function(reg_data, carrosserie)$coef[1]
+  coef_essence <- regression_function(reg_data, carrosserie)$coef[3]
+  coef_hybride <- regression_function(reg_data, carrosserie)$coef[5]
+  coef_manuelle <- regression_function(reg_data, carrosserie)$coef[7]
+  coef_semi_auto <- regression_function(reg_data, carrosserie)$coef[8]
+  coef_is_pro <- regression_function(reg_data, carrosserie)$coef[9]
+  coef_kilom <- regression_function(reg_data, carrosserie)$coef[10]
+ 
+  
+  return(data_frame(coef_0,coef_essence,coef_hybride,coef_manuelle,coef_semi_auto,coef_is_pro,coef_kilom))
+}
+
+
+coef_function("Berline")
+
+?geom_bar
+ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_bar(stats="identity")
+
+ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_smooth()
+
+
+?summary
+?lm
 ```
 
 
 
+
+
+```{r}
+
+
+ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_smooth()
+
+
+
+
+```
 
 
 ###### Trash
@@ -106,17 +155,6 @@ x <- as.matrix()
 beta.lasso=glmnet(x=c(prix_euros,modele, brand, carrosserie, energie, transmission, is_pro, kilometrage_km, nb_portes, hayon), y= prix_euros ,alpha=1,lambda=lam )
 
 ?glmnet
-
-
-
-
-
-
-
-
-
-
-
 
 ```
 
