@@ -76,20 +76,24 @@ regression_function(reg_data, "Berline")
 
 
 
-coef_function <- function(carrosserie){
+coef_function <- function(carrosserie, df){
   carrosserie <- as.character(carrosserie)
   
-  coef_0 <- regression_function(reg_data, carrosserie)$coef[1]
-  coef_essence <- regression_function(reg_data, carrosserie)$coef[3]
-  coef_hybride <- regression_function(reg_data, carrosserie)$coef[5]
-  coef_manuelle <- regression_function(reg_data, carrosserie)$coef[7]
-  coef_semi_auto <- regression_function(reg_data, carrosserie)$coef[8]
-  coef_is_pro <- regression_function(reg_data, carrosserie)$coef[9]
-  coef_kilom <- regression_function(reg_data, carrosserie)$coef[10]
+  coef_0 <- regression_function(df, carrosserie)$coef[1]
+  coef_essence <- regression_function(df, carrosserie)$coef[3]
+  coef_hybride <- regression_function(df, carrosserie)$coef[5]
+  coef_manuelle <- regression_function(df, carrosserie)$coef[7]
+  coef_semi_auto <- regression_function(df, carrosserie)$coef[8]
+  coef_is_pro <- regression_function(df, carrosserie)$coef[9]
+  coef_kilom <- regression_function(df, carrosserie)$coef[10]
  
   
   return(data_frame(coef_0,coef_essence,coef_hybride,coef_manuelle,coef_semi_auto,coef_is_pro,coef_kilom))
 }
+
+
+
+
 
 
 coef_function("Berline")
