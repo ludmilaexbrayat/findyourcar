@@ -27,6 +27,8 @@ library(lubridate)
 library(purrr)
 
 Sys.setlocale(locale="en_US.UTF-8")
+
+rm(list = ls())
 ```
 
 #### Read data and primary data cleaning
@@ -85,7 +87,7 @@ data <- data %>%
 data %>% dim()
 
 data <- data.frame(data)
-#data_test <- data %>% head(500)
+data <- data %>% head(3000)
 
 
 ```
@@ -345,12 +347,28 @@ data %>%
          -address_pro,
          -city_particulier,
          -city_pro,
-         -postal_code_city,
          -codes_postaux,
          -all_address)
 
-glimpse(new_data)
 
+new_data <- new_data %>% mutate(latitude = case_when(all_city == "Paris" ~ 48.8534,
+                                                     all_city == "Marseille" ~ 43.3,
+                                                     all_city == "Lyon" ~ 45.75,
+                                                     all_city == "CREUTZWALD" ~ 49.2,
+                                                     all_city == "Nimes" ~ 43.8333,
+                                                     TRUE ~ latitude),
+                                 longitude = case_when(all_city == "Paris" ~ 2.3488,
+                                                       all_city == "Marseille" ~ 5.4,
+                                                       all_city == "Lyon" ~ 4.85,
+                                                       all_city == "CREUTZWALD" ~ 6.6833,
+                                                       all_city == "Nimes" ~ 4.35,
+                                                       TRUE ~ longitude))
+
+subset <- new_data %>% 
+  filter(str_detect(postal_code_city,"france")) %>%
+  
+
+new_data %>% filter(is.na(latitude)) %>% distinct(postal_code_city)
 
 # NA dans city_particulier
 ```
@@ -359,7 +377,7 @@ glimpse(new_data)
 #### Writing the final csv
 
 ```{r}
-write_csv(new_data, path = "datasets/third_dataset_full.csv")
+#write_csv(new_data, path = "datasets/third_dataset_full.csv")
 ```
 
 
