@@ -65,34 +65,52 @@ regression_function <- function(data_reg, carrosserie){
   
   data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
   
-  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) #We log as price is skewed, yet it is gaussion when logged
+  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
   return(summary(reg_sol))
 }
 
-regression_function(reg_data, "Berline")
+
+
+regression_function(reg_data, "Break")
+
+coef_function("Monospace", reg_data)
 
 
 
 
 
 
-coef_function <- function(carrosserie){
+
+coef_function <- function(carrosserie, df){
   carrosserie <- as.character(carrosserie)
+  carrosserie <- enquo(carrosserie)
   
-  coef_0 <- regression_function(reg_data, carrosserie)$coef[1]
-  coef_essence <- regression_function(reg_data, carrosserie)$coef[3]
-  coef_hybride <- regression_function(reg_data, carrosserie)$coef[5]
-  coef_manuelle <- regression_function(reg_data, carrosserie)$coef[7]
-  coef_semi_auto <- regression_function(reg_data, carrosserie)$coef[8]
-  coef_is_pro <- regression_function(reg_data, carrosserie)$coef[9]
-  coef_kilom <- regression_function(reg_data, carrosserie)$coef[10]
+  coef_0 <- regression_function(reg_data, !!carrosserie)$coef[1]
+ coef_essence <- regression_function(reg_data, !!carrosserie)$coef[3]
+  coef_hybride <- regression_function(reg_data, !!carrosserie)$coef[5]
+  coef_manuelle <- regression_function(reg_data, !!carrosserie)$coef[7]
+  coef_semi_auto <- regression_function(reg_data, !!carrosserie)$coef[8]
+  coef_is_pro <- regression_function(reg_data, !!carrosserie)$coef[9]
+  coef_kilom <- regression_function(reg_data, !!carrosserie)$coef[10]
  
   
   return(data_frame(coef_0,coef_essence,coef_hybride,coef_manuelle,coef_semi_auto,coef_is_pro,coef_kilom))
 }
 
 
-coef_function("Berline")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?geom_bar
 ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_bar(stats="identity")
