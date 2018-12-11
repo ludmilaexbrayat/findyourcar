@@ -2,7 +2,11 @@ Package: carsfornoobs
 Type: Package
 Title: Analytics on Buying a Second Hand Car
 Version: 0.0.0.9000
-Author: c(person("First Name", "Last Name", email ="a_valid@email.com", role = c("aut", "cre"))) Ludmila Exbrayat, Arnaud Fournier, Gaëlle Guillou, Skander Kamoun, Inès Van Agt
+Author: c(person("Gaëlle", "Guillou", email = "gaelle.guillou@polytechnique.edu", role = c("aut")), 
+person("Arnaud", "Fournier", email = "arnaud.fournier@polytechnique.edu", role = c("aut")), 
+person("Ludmila", "Exbrayat", email = "ludmila.exbrayat@polytechnique.edu", role = c("aut")), 
+person("Inès", "Van Agt", email = "ines.vanagt@polytechnique.edu", role = c("aut")), 
+person("Skander", "Kamoun", email = "skander.kamoun@polytechnique.edu", role = c("aut")))
 Maintainer: Ludmila Exbrayat <ludmila.exbrayat@polytechnique.edu>
 Description: This package uses data from paruvendu.com scrapped during October and November of 2019 to analyse the components of the prices of a car.
     It is meant to help anyone find the perfect car at a perfect price and reduce information asymmetry regarding second-hand cars.
