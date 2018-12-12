@@ -337,7 +337,7 @@ new_data <- new_data %>%
 #### Writing the final csv
 
 ```{r}
-#write_csv(new_data, path = "datasets/final_dataset_full.csv")
+write_csv(new_data, path = "datasets/final_dataset_full.csv")
 ```
 
 
