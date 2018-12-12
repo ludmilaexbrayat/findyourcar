@@ -49,7 +49,7 @@ usethis::use_news_md()
 #library(readr)
 #Sys.setlocale(locale="en_US.UTF-8")
 #cardata <- data.frame(read_csv("data-raw/cardata.csv"))
-usethis::use_data(cardata)
+usethis::use_data(cardata, overwrite = T)
 
 # For tests
 usethis::use_testthat()
