@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Data Cleaning
 
 #### Libraries import
+
 ```{r}
 library(tidyverse)
 library(magrittr)
@@ -19,7 +20,11 @@ library(readr)
 library(stringr)
 library(lubridate)
 library(purrr)
+```
 
+#### Set the encoding to be able to read accents
+
+```{r}
 Sys.setlocale(locale="en_US.UTF-8")
 ```
 
@@ -30,57 +35,19 @@ Read the data:
 ```{r}
 mapping_villes <- data.frame(read_delim("datasets/mapping_villes.csv", delim = ";"))
 
-all_files <- c("datasets/arnaud_scrapping.csv", 
-               "datasets/scrapped_listings_1_1_500.csv",
-               "datasets/scrapped_listings_1_501_750.csv",
-               "datasets/scrapped_listings_1_751_1000.csv",
-               "datasets/scrapped_listings_1_1000_1500.csv",
-               "datasets/scrapped_listings_1_1501_2000.csv",
-               "datasets/scrapped_listings_1_2001_2400.csv",
-               "datasets/scrapped_listings_1_2401_3000.csv",
-               "datasets/scrapped_listings_1_3001_4000.csv",
-               "datasets/scrapped_listings_1_4001_4500.csv",
-               "datasets/scrapped_listings_1_4501_5500.csv",
-               "datasets/scrapped_listings_1_6501_7500.csv",
-               "datasets/scrapped_listings_1_7501_8500.csv",
-               "datasets/scrapped_listings_2_1_250.csv",
-               "datasets/scrapped_listings_2_251_500.csv",
-               "datasets/scrapped_listings_2_501_750.csv",
-               "datasets/scrapped_listings_2_751_1000.csv",
-               "datasets/scrapped_listings_3_1_250.csv",
-               "datasets/scrapped_listings_3_251_500.csv",
-               "datasets/scrapped_listings_3_501_750.csv",
-               "datasets/scrapped_listings_3_751_1000.csv")
-
-# Read all
-
-all_df <- map(all_files, ~read_csv(.x))
-
-# For one dataset, we have a different ordering of the columns ¯\_(ツ)_/¯
-
-names(all_df[[1]]) <- c("X1","url","is_listing_deleted", "brand", "modele","address_particulier","address_pro","name_pro","Année","Autres informations","Carrosserie","Emissions de CO2", "Energie","Kilométrage", "Nb de portes", "Nombre de places", "Prix", "Puissance fiscale", "Puissance réelle", "Transmission", "V1", "Garantie mécanique", "Consommation mixte", "Contrôle technique", "Couleur intérieur", "Type de peinture carrosserie",  "Etat du véhicule", "Option equipement Sécurité", "Option/Equipement Confort intérieur", "Option/equipement extérieurs", "Marque")
-
-# Row bind into data
-
-data <- map_df(all_df, ~bind_rows(.x))
+data <- read_csv("datasets/original_scrapped_data_full.csv")
 ```
 
-Remove the deleted listings, and the useless column that is X1, and V1:
+Remove the deleted listings, and the useless columns that are X1 and V1:
 
 ```{r}
-
 data <- data %>% 
   filter(is_listing_deleted == 0 
          & !(is.na(Prix))
          & !(is.na(Carrosserie))) %>% 
   dplyr::select(-X1, -is_listing_deleted, -V1)
 
-
-data %>% dim()
-
 data <- data.frame(data)
-
-
 ```
 
 #### Get Postal Code Function
@@ -115,33 +82,35 @@ get_postal_code <- function(address) {
 #### Get City Function
 
 ```{r}
-#1. Pour les particuliers : 
+#1. For private individuals owners ("particuliers"): 
   
 get_city_particulier <- function(address){
-  
+  # Get what is between the first dash "-" and the postal code
   spl <- str_split(str_trim(address)," ")
   b <- str_locate(address, str_c("(",str_match(spl,"(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}")[[1]],")"))[1]
   a <- str_locate(address, str_match(spl,"-"))[2]
   
-  city <- str_sub(address, a + 2, b - 3) # Pour l'instant on a récupéré ce qu'il y a entre le premier tiret et le code postal
-  
+  city <- str_sub(address, a + 2, b - 3)
+  # If there is no specified city, return NA
   if (is.na(city)) {
     return(NA)
-    } 
+  } 
+  # If there is something in this string, first take out all the numbers (e.g. for "Paris 14")
   else {
     city <- str_remove_all(city, "[0-9]+")
     city <- str_trim(city, side = "both")
+    # If there is still a dash followed by a space "- " in the string, it means we are getting something before the city name (for instance, the second part of a composed first name such as "Jean-Paul"), and we want to remove it
     if (is.na(str_match(city,"- ")))
       {
       return(city)
       } else {
         city <- str_sub(city, str_locate(city,"- ")[2] + 1)
         return(city)
-    } # Là on règle le problème des prénoms composés dans la colonne addresse 
-    } # Là on règle le problème de type "Paris 14" qui devient "Paris"
+    } 
+    } 
 }
 
-#2. Pour les pros :
+#2. For professional owners ("pros"):
 
 get_city_pro <- function(address, pc){
   if (!is.character(pc)) {
@@ -163,7 +132,6 @@ get_city_pro <- function(address, pc){
 #### Remove Accents Function
 
 ```{r}
-#Fonction pour retirer les accents
 unaccent <- function(text) {
   text <- gsub("['`^~\"]", " ", text)
   text <- iconv(text, to="ASCII//TRANSLIT//IGNORE")
@@ -173,6 +141,11 @@ unaccent <- function(text) {
 ```
 
 #### Create Postal_Code_City Function
+
+Here, we want to create a unique key to be able to join more easily our original data with a geographic dataset. Since there are sometimes:  
+- several postal codes for one city  
+- several cities for one postal code  
+We want to concatenate the postal code and the city to get this unique identifier. To avoid ambiguity, we will replace "saint" by "st" and remove spaces and accents.  
 
 ```{r}
 create_postal_code_city <- function(pc, city) {
@@ -193,7 +166,7 @@ create_postal_code_city <- function(pc, city) {
 }
 ```
 
-#### Get Age Function
+#### Get Date Function
 
 ```{r}
 french_months <- c(
@@ -218,7 +191,6 @@ clean_month_year <- function(my) {
     NA
   }
   else if (length(my_split) == 1) {
-    #ymd(str_c(y_split_test, "-01-01"))
     ymd(str_c(my_split, "-01-01"))
   }
   else if (length(my_split) == 2) {
@@ -256,12 +228,12 @@ relevant_mapping_villes <- mapping_villes %>%
 #### Final Columns Cleaning
 
 ```{r}
-# PB WARNINGS? SUPPRESS WARNINGS NE MARCHE PAS. POTENTIELLEMENT ON PEUT SE PASSER DE MAP SI ON ENLEVE LES FOR?
 
 new_data <- 
 data %>% 
   # Modele cleaning - some modeles have had a problem with the scraping, they have "euro" in it
   filter(is.na(str_match(data$modele,"euro"))) %>% 
+  # Actual cleaning using parsing and above functions
   mutate(
          brand = str_remove(brand, " occasion")[1],
          name_pro = str_trim(name_pro),
@@ -308,7 +280,9 @@ data %>%
          fap = str_detect(Option.equipement.extérieurs, "FAP")*1
          ) %>% 
   mutate_if(is.list, as.character) %>% 
+  # Format the date
   mutate(date = as.Date(as.numeric(date), origin = "1970-01-01")) %>% 
+  # Rename columns with the usual rule
   rename(carrosserie = Carrosserie,
          energie = Energie,
          etat_vehicule = Etat.du.véhicule,
@@ -318,8 +292,10 @@ data %>%
          type_peinture_carrosserie = Type.de.peinture.carrosserie,
          marque = Marque
          ) %>% 
+  # Join with the geographic dataset
   left_join(relevant_mapping_villes,  by= c("postal_code_city" = "codes_postaux_commune")) %>% 
   distinct() %>% 
+  # Select only relevant columns
   dplyr::select(-Kilométrage,
          -Puissance.fiscale,
          -Puissance.réelle,
@@ -341,6 +317,7 @@ data %>%
          -codes_postaux,
          -all_address)
 
+# Some important cities data are missing in the geographic dataset. We decided to input them manually after finding the information online (http://code-postal.fr.mapawi.com/france/)
 new_data <- new_data %>% 
   mutate(latitude = case_when(all_city == "Paris" ~ 48.8534,
                               all_city == "Marseille" ~ 43.3,
@@ -360,7 +337,7 @@ new_data <- new_data %>%
 #### Writing the final csv
 
 ```{r}
-write_csv(new_data, path = "datasets/final_dataset_full.csv")
+#write_csv(new_data, path = "datasets/final_dataset_full.csv")
 ```
 
 
