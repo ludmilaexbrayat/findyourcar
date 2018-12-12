@@ -1,4 +1,4 @@
-# the goal of this file is to keep track of all devtools/usethis 
+# the goal of this file is to keep track of all devtools/usethis
 # call you make for yout project
 
 # Feel free to cherry pick what you need and add elements
@@ -10,7 +10,7 @@
 # Hide this file from build
 usethis::use_build_ignore("devstuff_history.R")
 
-# DESCRIPTION 
+# DESCRIPTION
 
 library(desc)
 # Create and clean desc
@@ -45,10 +45,13 @@ usethis::use_code_of_conduct()
 usethis::use_lifecycle_badge("Experimental")
 usethis::use_news_md()
 
-# For data 
-usethis::use_data_raw()
+# For data
+#library(readr)
+#Sys.setlocale(locale="en_US.UTF-8")
+#cardata <- data.frame(read_csv("data-raw/cardata.csv"))
+usethis::use_data(cardata)
 
-# For tests 
+# For tests
 usethis::use_testthat()
 usethis::use_test("app")
 
@@ -59,7 +62,7 @@ usethis::use_package("stats")
 usethis::use_package("graphics")
 usethis::use_package("glue")
 
-# Reorder your DESC 
+# Reorder your DESC
 
 usethis::use_tidy_description()
 
