@@ -21,6 +21,7 @@ library(ggplot2)
 library(raster)
 library(rasterVis)
 
+
 # For the time being, we work with dataset1
 dataset1 <- read_csv("datasets/first_dataset_full_coordOK.csv")
 
@@ -180,7 +181,7 @@ server <- function(input, output) {
       filter(
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
         (brand %in% input$brand) | (input$brand == "No Preference"),
-        year >= input$year_built[1] & year <= input$year_built[2],
+        #year >= input$year_built[1] & year <= input$year_built[2],
         kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
         (energie %in% input$fuel) | (input$fuel == "No Preference"),
         (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
