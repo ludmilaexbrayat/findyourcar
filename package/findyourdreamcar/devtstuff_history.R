@@ -61,6 +61,8 @@ usethis::use_package("DT")
 usethis::use_package("stats")
 usethis::use_package("graphics")
 usethis::use_package("glue")
+usethis::use_package("dplyr")
+usethis::use_package("magrittr")
 
 # Reorder your DESC
 

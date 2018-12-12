@@ -11,7 +11,9 @@ Imports:
     glue,
     graphics,
     shiny,
-    stats
+    stats,
+    dplyr,
+    magrittr
 Suggests:
     testthat,
     knitr,

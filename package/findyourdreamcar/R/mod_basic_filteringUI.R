@@ -16,9 +16,11 @@
 
 # A minimalist example is mandatory
 
-#' @title   mod_basic_fileringInput and mod_basic_filtering
+#' @title   mod_basic_fileringUI and mod_basic_filtering
 #' @description  A shiny Module that allows the user to select basic filters
 #'
+#' @import dplyr
+#' @import magrittr
 #' @export
 #' @examples
 #' library(shiny)
@@ -37,20 +39,20 @@
 #' shinyApp(ui, server)
 #' }
 #'
-mod_basic_filteringInput <- function() {
+mod_basic_filteringUI <- function(id) {
 
-  sidebarLayout(
-    sidebarPanel(
+  ns <- NS(id)
+
+    tagList(
       # Select Input for the Postal Code:
-      selectInput("city", "Select your city:", choices = cardata$nom_commune %>% unique %>% sort()),
+      selectInput(ns("city"), "Select your city:", choices = cardata$nom_commune %>% unique %>% sort()),
 
       # Select type of car: for the time being, choices are linked to factors taken by Carosserie in the first raw dataset
-      selectInput("carrosserie", "Choose the type of car:", choices = cardata$carrosserie %>% unique()),
+      selectInput(ns("carrosserie"), "Choose the type of car:", choices = cardata$carrosserie %>% unique()),
 
       # Action Button (to be automatized)
-      actionButton("go", "Go")
+      actionButton(ns("go"), "Go")
     )
-  )
 
 }
 
@@ -61,8 +63,9 @@ mod_basic_filteringInput <- function() {
 #' @param output internal
 #' @param session internal
 #'
+#' @importFrom utils data
 #' @export
-#' @rdname mod_basic_filteringInput
+#' @rdname mod_basic_filteringUI
 mod_basic_filtering <- function(input, output, session) {
 
   data("cardata")

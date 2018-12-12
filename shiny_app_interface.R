@@ -23,7 +23,7 @@ library(rasterVis)
 
 
 # For the time being, we work with dataset1
-dataset1 <- read_csv("datasets/first_dataset_full_coordOK.csv")
+dataset1 <- read_csv("datasets/final_dataset_full.csv")
 
 # Loading "Mapping_villes" csv file for Postal Codes matches
 mapping_villes <- read_csv2("datasets/mapping_villes.csv")

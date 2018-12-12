@@ -10,13 +10,19 @@ options(app.prod=FALSE) # TRUE = production mode, FALSE = development mode
 
 # example("mod_csv_fileInput",package = "findyourdreamcar") # PR welcome
 library(shiny)
+library(dplyr)
+library(magrittr)
 if (interactive()){
   ui <- fluidPage(
-    mod_basic_filteringInput()
+      sidebarLayout(
+        sidebarPanel(
+          mod_basic_filteringUI("fichier")
+      )
+    )
   )
 
   server <- function(input, output, session) {
-    callModule(mod_basic_filtering)
+    fichier <- callModule(mod_basic_filtering, "fichier")
   }
 
   shinyApp(ui, server)
