@@ -16,12 +16,13 @@
 
 # A minimalist example is mandatory
 
-#' @title   mod_table_countryUI and mod_table_country
+#' @title   mod_table_areaUI and mod_table_area
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
+#' @import DT
 #' @export
 #' @examples
 #' library(shiny)
@@ -40,16 +41,16 @@
 #' shinyApp(ui, server)
 #' }
 #'
-mod_table_countryUI <- function(id) {
+mod_table_areaUI <- function(id) {
 
   ns <- NS(id)
 
-  DT::DTOutput(ns("table"))
+  DT::DTOutput(ns("table_area"))
 
 }
 
 
-#' mod_table_country server function
+#' mod_table_area server function
 #'
 #' @param input internal
 #' @param output internal
@@ -59,27 +60,42 @@ mod_table_countryUI <- function(id) {
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
+#' @import sf
 #' @importFrom utils data
 #' @export
-#' @rdname mod_table_countryUI
-mod_table_country <- function(input, output, session, dataframe) {
+#' @rdname mod_table_areaUI
+mod_table_area <- function(input, output, session, dataframe) {
 
-  # Creating an eventreactive for the basic filters on the condition of the "Go" button
+  crs_lambert <- 2154
+
+  dataset_map <- dataframe %>%
+    dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
+    st_as_sf(coords = c("longitude", "latitude"),
+             crs = 4326) %>%
+    st_transform(crs = crs_lambert)
+
+  point_user <- eventReactive(input$go, {dataset_map %>%
+      dplyr::filter(nom_commune == input$city) %>%
+      head(n = 1)
+  })
+
   data_filtered_basic_country <- eventReactive(input$go, {
-    dataframe %>%
-      filter(
+    dataset_map %>%
+      dplyr::filter(
         !is.na(prix_euros),
         carrosserie == input$carrosserie
       )
   })
 
   # Creating a reactive for the advanced filters at the country level
-  data_filtered_advanced_country <- reactive({
+  data_filtered_advanced_100km <- reactive({
     data_filtered_basic_country() %>%
-      mutate(
-        year = substr(date, 0, 4)
+      dplyr::mutate(
+        #year = substr(date, 0, 4),
+        distance = as.vector(st_distance(geometry, point_user()))
       ) %>%
-      filter(
+      dplyr::filter(
+        distance <= 100000,
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
         (brand %in% input$brand) | (input$brand == "No Preference"),
         #year >= input$year_built[1] & year <= input$year_built[2],
@@ -100,8 +116,8 @@ mod_table_country <- function(input, output, session, dataframe) {
     return(table)
   }
 
-  output$table <- DT::renderDT({
-    result_table(data_filtered_advanced_country())
+  output$table_area <- DT::renderDT({
+    result_table(data_filtered_advanced_100km())
   })
 
 }

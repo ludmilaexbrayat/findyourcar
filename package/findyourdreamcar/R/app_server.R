@@ -21,4 +21,10 @@ app_server <- function(input, output,session) {
 
   callModule(mod_country_stats, "fichier", cardata)
 
+  callModule(mod_table_country, "fichier", cardata)
+
+  callModule(mod_table_area, "fichier", cardata)
+
+  callModule(mod_map_area, "fichier", cardata)
+
 }

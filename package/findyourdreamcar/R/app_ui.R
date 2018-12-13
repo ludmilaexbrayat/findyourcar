@@ -21,8 +21,25 @@ app_ui <- function() {
                           mod_country_statsUI("fichier")
                           )),
 
-          tabPanel("At 30 min drive", h5("")),
-          tabPanel("In the whole country", h5(""))
+          tabPanel("At 30 min drive",
+                   # Map Title
+                   div(h3("Available cars around you")),
+                   # Plotting the Map
+                   mod_map_areaUI("fichier"),
+
+                   # Table Title
+                   div(h3("Summary Results")),
+                   # Drawing the Table
+                   mod_table_areaUI("fichier")),
+          tabPanel("In the whole country",
+                   # Map Title
+                   div(h3("Available cars")),
+                   # Plotting the Map
+
+                   # Table Title
+                   div(h3("Summary Results")),
+                   # Drawing the Table
+                   mod_table_countryUI("fichier"))
         )
       )
     )
