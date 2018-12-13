@@ -21,7 +21,7 @@ app_ui <- function() {
                           mod_country_statsUI("fichier")
                           )),
 
-          tabPanel("At 30 min drive",
+          tabPanel("In a 100km radius",
                    # Map Title
                    div(h3("Available cars around you")),
                    # Plotting the Map

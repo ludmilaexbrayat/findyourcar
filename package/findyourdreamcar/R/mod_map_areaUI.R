@@ -107,14 +107,14 @@ mod_map_area <- function(input, output, session, dataframe) {
   data_filtered_advanced_100km <- reactive({
     data_filtered_basic_country() %>%
       dplyr::mutate(
-        #year = substr(date, 0, 4),
+        year = substr(date, 0, 4),
         distance = as.vector(sf::st_distance(geometry, point_user()))
       ) %>%
       dplyr::filter(
         distance <= 100000,
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
         (brand %in% input$brand) | (input$brand == "No Preference"),
-        #year >= input$year_built[1] & year <= input$year_built[2],
+        year >= input$year_built[1] & year <= input$year_built[2],
         kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
         (energie %in% input$fuel) | (input$fuel == "No Preference"),
         (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
