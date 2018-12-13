@@ -21,7 +21,9 @@ Imports:
     raster,
     rasterVis,
     units,
-    scales
+    scales,
+    purrr,
+    tibble
 Suggests:
     testthat,
     knitr,

@@ -9,6 +9,12 @@ app_ui <- function() {
       ),
       mainPanel(
         tabsetPanel(type = "tabs",
+          tabPanel("For your information",
+                    # Left column with adjustment inputs
+                                    h3("Regression"),
+                                    h3(" "),
+                                    mod_regressionUI("fichier")
+                             ),
           tabPanel("Complementary Adjustments",
                    # Left column with adjustment inputs
                    column(6,

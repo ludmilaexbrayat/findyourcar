@@ -20,7 +20,9 @@ to_install <- c("DT",
                 "stats",
                 "glue",
                 "units",
-                "scales")
+                "scales",
+                "tibble",
+                "purr")
 for (i in to_install) {
   message(paste("looking for ", i))
   if (!requireNamespace(i)) {

@@ -17,6 +17,8 @@ app_server <- function(input, output,session) {
   #
   # callModule(mod_country_stats, "fichier3", advanced_filtering)
 
+  callModule(mod_regression, "fichier", cardata)
+
   callModule(mod_area_stats, "fichier", cardata)
 
   callModule(mod_country_stats, "fichier", cardata)

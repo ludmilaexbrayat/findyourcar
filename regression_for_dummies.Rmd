@@ -17,23 +17,26 @@ library(MASS)
 library(glmnet)
 library(stringr)
 library(data.table)
+library(purrr)
 Sys.setlocale(locale="en_US.UTF-8")
 ```
 
 ```{r Load Data}
-reg_data <- read_csv("first_dataset_full.csv")
+reg_data <- read_csv("archive/datasets/first_dataset_full.csv")
 ```
 
 
 
 ```{r, function shiny}
 
+reg_shiny_function("Berline", reg_data)
+
 reg_shiny_function <- function(carrosserie, df){
   
   carrosserie <- enquo(carrosserie) #enquo the variable
  
 #Lets create the table we'll use later   
-df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(reg_data, !!carrosserie)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
+df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, !!carrosserie)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
 
 df_significant_coef <- df_significant_coef %>% 
@@ -85,7 +88,7 @@ df_significant_coef  <- df_significant_coef %>%
   
 df_significant_coef  <- df_significant_coef %>% 
                       filter(coef== "transmissionSemi automatique") %>% 
-                      mutate(coef= "semi-atomatic transmission car") %>% 
+                      mutate(coef= "semi-automatic transmission car") %>% 
                       bind_rows(df_significant_coef) %>% 
                       filter(coef != "transmissionSemi automatique") 
   
@@ -107,6 +110,12 @@ df_significant_coef  <- df_significant_coef %>%
                       bind_rows(df_significant_coef) %>% 
                       filter(coef != "nb_portes5") 
 
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "nb_portes") %>% 
+                      mutate(coef= "car with one more door") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "nb_portes") 
+
 
 df_significant_coef  <- df_significant_coef %>% 
                       filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
@@ -120,9 +129,9 @@ positiv_coef <- df_significant_coef %>% filter(Estimate>0)
 negativ_coef <- df_significant_coef %>% filter(Estimate<0)
 
 
-negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("Buying a",coef,"you could save about", -signif(Estimate,2), "€")})
+negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "€")})
 
-positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("With a", coef, "you would pay an extra", signif(Estimate,2), "€")})
+positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "€")})
 
 return(c(negativ_coef,positiv_coef)) #Returns the two
 
