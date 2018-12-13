@@ -1,5 +1,12 @@
-
 #' @import shiny
+#' @import dplyr
+#' @import RColorBrewer
+#' @import readr
+#' @import sf
+#' @import ggplot2
+#' @import raster
+#' @import rasterVis
+
 app_ui <- function() {
   fluidPage(
 

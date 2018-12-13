@@ -13,7 +13,13 @@ Imports:
     shiny,
     stats,
     dplyr,
-    magrittr
+    magrittr,
+    RColorBrewer,
+    readr,
+    sf,
+    ggplot2,
+    raster,
+    rasterVis
 Suggests:
     testthat,
     knitr,

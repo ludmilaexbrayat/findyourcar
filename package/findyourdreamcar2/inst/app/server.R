@@ -1,8 +1,6 @@
-#' @import shiny
-#' @importFrom graphics hist
-#' @importFrom stats rnorm
-#'
-app_server <- function(input, output,session) {
+findyourdreamcar:::app_server
+
+server <- function(input, output) {
 
   ### BASE OBJECTS
 
@@ -260,5 +258,4 @@ app_server <- function(input, output,session) {
   output$fyi <- renderPlot({
     plot_fyi()
   })
-
 }

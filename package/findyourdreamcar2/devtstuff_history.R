@@ -63,6 +63,12 @@ usethis::use_package("graphics")
 usethis::use_package("glue")
 usethis::use_package("dplyr")
 usethis::use_package("magrittr")
+usethis::use_package("RColorBrewer")
+usethis::use_package("readr")
+usethis::use_package("sf")
+usethis::use_package("ggplot2")
+usethis::use_package("raster")
+usethis::use_package("rasterVis")
 
 # Reorder your DESC
 
