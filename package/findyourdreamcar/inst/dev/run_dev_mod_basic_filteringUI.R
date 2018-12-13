@@ -17,7 +17,8 @@ if (interactive()){
       sidebarLayout(
         sidebarPanel(
           mod_basic_filteringUI("fichier")
-      )
+      ),
+      mainPanel()
     )
   )
 
