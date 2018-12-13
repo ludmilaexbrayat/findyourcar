@@ -283,7 +283,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Ségny;01170;01399;46.3;6.
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Seillonnaz;01470;01400;45.8;5.483333;1.71
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Sergy;01630;01401;46.25;6;2.23
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Serrières-de-Briord;01470;01403;;;
-Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Seyssel;01420;01407;45,96;5,83; 
+Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Seyssel;01420;01407;45.96;5.83; 
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Songieu;01260;01409;45.966667;5.7;1.21
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Surjoux;01420;01413;46.016667;5.8;1.55
 Sud-Est;82;Rhône-Alpes;Lyon;01;Ain;Bourg-en-Bresse;3;Sutrieu;01260;01414;45.95;5.65;1.04
@@ -1934,14 +1934,14 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Dign
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Castellane;04120;04039;43.85;6.516667;1.44
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Castellet-lès-Sausses;04320;04042;43.983333;6.766667;2.39
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Champtercier;04660;04047;44.1;6.166667;0.14
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Château-Arnoux-Saint-Auban;04160;04049;44,09;6,01; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Château-Arnoux-Saint-Auban;04160;04049;44.09;6.01; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Châteauneuf-Val-Saint-Donat;04200;04053;44.1;5.95;0.89
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Châteauredon;04270;04054;44.016667;6.216667;0.88
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Chaudon-Norante;04330;04055;43.983333;6.35;0.8
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Clumanc;04330;04059;44.033333;6.416667;1.25
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Colmars;04370;04061;44.183333;6.633333;1.88
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Demandolx;04120;04069;43.866667;6.583333;1.69
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Digne-les-Bains;04000;04070;44,09;6,24; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Digne-les-Bains;04000;04070;44.09;6.24; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Draix;04420;04072;44.133333;6.35;0.8
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Entrages;04000;04074;44.05;6.266667;1.35
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;04;Alpes-de-Haute-Provence;Digne-les-Bains;1;Entrevaux;04320;04076;43.95;6.816667;2.58
@@ -2148,7 +2148,7 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;La Freiss
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;Lagrand;05300;05069;44.333333;5.75;1.69
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;La Haute-Beaume;05140;05066;;;
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;La Piarre;05700;05102;44.466667;5.65;1.54
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;Laragne-Montéglin;05300;05070;44,32;5,82; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;Laragne-Montéglin;05300;05070;44.32;5.82; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;Lardier-et-Valença;05110;05071;44.433333;5.966667;0.99
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;La Roche-des-Arnauds;05400;05123;44.566667;5.95;1.25
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;1;La Rochette;05000;05124;44.6;6.15;1.33
@@ -2236,7 +2236,7 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;Freissini
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;Guillestre;05600;05065;44.666667;6.65;1.76
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Chapelle-en-Valgaudémar;05800;05064;;;
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Fare-en-Champsaur;05500;05054;44.666667;6.066667;0.62
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Grave;05320;05063;45,05;6,31; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Grave;05320;05063;45.05;6.31; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Motte-en-Champsaur;05500;05090;44.733333;6.066667;1.09
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;L'Argentière-la-Bessée;05120;05006;44.783333;6.55;1.43
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;05;Hautes-Alpes;Gap;2;La Roche-de-Rame;05310;05122;44.75;6.583333;1.54
@@ -2991,7 +2991,7 @@ Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézière
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Aubrives;08320;08028;50.1;4.766667;-1
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Belval;08090;08058;49.783333;4.633333;1.11
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Blombay;08260;08071;49.816667;4.45;1.33
-Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Bogny-sur-Meuse;08120;08081;49,85;4,77; 
+Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Bogny-sur-Meuse;08120;08081;49.85;4.77; 
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Bourg-Fidèle;08230;08078;49.883333;4.533333;1.76
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Charleville-Mézières;08000;08105;49.766667;4.716667;1
 Est;21;Champagne-Ardenne;Châlons-en-Champagne;08;Ardennes;Charleville-Mézières;2;Charnois;08600;08106;50.1;4.808;-1
@@ -3266,7 +3266,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Aleu;09320;09005;42.9;1.
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Alliat;09400;09006;42.816667;1.583333;1.35
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Allières;09240;09007;43.033333;1.35;1.47
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Alzen;09240;09009;42.983333;1.466667;1.12
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Antras;09800;09011;42,88;0,94; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Antras;09800;09011;42.88;0.94; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Appy;09250;09012;42.8;1.733333;1.5
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Arabaux;09000;09013;42.983333;1.633333;0.7
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Argein;09800;09014;42.933333;1;2.35
@@ -3274,7 +3274,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Arignac;09400;09015;42.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Arnave;09400;09016;42.85;1.65;1.61
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Arrien-en-Bethmale;09800;09017;42.9;1.05;2.13
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Arrout;09800;09018;42.95;1.033333;2.2
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Artigues;09460;09020;42,72;2,07; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Artigues;09460;09020;42.72;2.07; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Artix;09120;09021;43.066667;1.566667;1.05
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ascou;09110;09023;42.716667;1.866667;2.25
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Aston;09310;09024;42.766667;1.666667;1.8
@@ -3297,10 +3297,10 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bestiac;09250;09053;42.7
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bethmale;09800;09055;42.866667;1.083333;2.05
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Biert;09320;09057;42.9;1.316667;0.96
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bompas;09400;09058;42.866667;1.616667;0.96
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bonac-Irazein;09800;09059;42,88;0,97; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bonac-Irazein;09800;09059;42.88;0.97; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Bouan;09310;09064;42.816667;1.65;1.46
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Boussenac;09320;09065;42.9;1.35;0.82
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Brassac;09000;09066;42,95;1,54; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Brassac;09000;09066;42.95;1.54; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Burret;09000;09068;42.95;1.483333;1.89
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Buzan;09800;09069;42.95;0.966667;2.49
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Cadarcet;09240;09071;43.016667;1.5;1.67
@@ -3312,7 +3312,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Castillon-en-Couserans;0
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Caussou;09250;09087;42.766667;1.8;2.04
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Caychax;09250;09088;42.8;1.716667;1.62
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Cazaux;09120;09090;43.05;1.516667;1.72
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Cazenave-Serres-et-Allens;09400;09092;42,84;1,67; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Cazenave-Serres-et-Allens;09400;09092;42.84;1.67; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Celles;09000;09093;42.916667;1.683333;1.64
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Cescau;09800;09095;42.933333;1.05;2.13
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Château-Verdun;09310;09096;42.783333;1.683333;1.65
@@ -3334,11 +3334,11 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ganac;09000;09130;42.95;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Garanou;09250;09131;42.766667;1.75;1.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Génat;09400;09133;42.816667;1.583333;1.35
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Gestiès;09220;09134;42.766667;1.583333;1.8
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Goulier;09220;09135;42,76;1,5; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Goulier;09220;09135;42.76;1.5; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Gourbit;09400;09136;42.841667;1.533333;1.71
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Gudas;09120;09137;43;1.666667;0.78
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ignaux;09110;09140;42.733333;1.833333;2.1
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ilhat;09300;09142;42,96;1,78; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ilhat;09300;09142;42.96;1.78; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Illartein;09800;09141;42.933333;0.966667;2.49
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Illier-et-Laramade;09220;09143;42.783333;1.55;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;La Bastide-de-Sérou;09240;09042;43.016667;1.433333;0.45
@@ -3355,11 +3355,11 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Le Port;09320;09231;42.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Le Puch;09460;09237;42.716667;2.1;2.46
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Lercoul;09220;09162;42.766667;1.55;1.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Les Bordes-sur-Lez;09800;09062;42.9;1.033333;2.2
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Les Cabannes;09310;09070;42,79;1,69; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Les Cabannes;09310;09070;42.79;1.69; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Lesparrou;09300;09165;42.933333;1.9;1.58
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Leychert;09300;09166;42.95;1.733333;1.42
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;L'Herm;09000;09138;42.966667;1.683333;1.45
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;L'Hospitalet-près-l'Andorre;09390;09139;42,59;1,8; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;L'Hospitalet-près-l'Andorre;09390;09139;42.59;1.8; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Lieurac;09300;09168;42.983333;1.783333;1.07
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Lordat;09250;09171;42.783333;1.75;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Loubens;09120;09173;43.033333;1.55;1.24
@@ -3376,7 +3376,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montaillou;09110;09197;4
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montégut-Plantaurel;09120;09202;43.066667;1.5;1.99
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montels;09240;09203;43;1.466667;1.01
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montferrier;09300;09206;42.9;1.783333;1.07
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montgaillard;09330;09207;42,93;1,63; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montgaillard;09330;09207;42.93;1.63; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montoulieu;09000;09210;42.9;1.633333;1.22
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montségur;09300;09211;42.866667;1.833333;1.29
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Montseron;09240;09212;43.016667;1.333333;1.72
@@ -3390,9 +3390,9 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Ornolac-Ussat-les-Bains;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Orus;09220;09222;42.783333;1.516667;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Oust;09140;09223;42.866667;1.216667;1.4
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Pech;09310;09226;42.783333;1.683333;1.65
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Péreille;09300;09227;42,94;1,8; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Péreille;09300;09227;42.94;1.8; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Perles-et-Castelet;09110;09228;42.75;1.783333;1.95
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Prades;09110;09232;42,79;1,88; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Prades;09110;09232;42.79;1.88; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Pradières;09000;09234;42.966667;1.65;0.89
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Prayols;09000;09236;42.933333;1.616667;0.6
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Quérigut;09460;09239;42.7;2.1;2.46
@@ -3404,11 +3404,11 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Roquefixade;09300;09249;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Roquefort-les-Cascades;09300;09250;42.95;1.766667;1
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Rouze;09460;09252;42.733333;2.066667;2.31
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Bauzeil;09120;09256;43.083333;1.583333;1.04
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Félix-de-Rieutord;09120;09258;43,05;1,67; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Félix-de-Rieutord;09120;09258;43.05;1.67; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Jean-d'Aigues-Vives;09300;09262;42.933333;1.866667;1.44
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Jean-de-Verges;09000;09264;43.016667;1.616667;0.95
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Jean-du-Castillonnais;09800;09263;42.933333;0.933333;2.64
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Lary;09800;09267;42,93;0,89; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Lary;09800;09267;42.93;0.89; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Martin-de-Caralp;09000;09269;42.983333;1.55;0.84
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Paul-de-Jarrat;09000;09272;42.916667;1.65;1.18
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Saint-Pierre-de-Rivière;09000;09273;42.966667;1.566667;0.5
@@ -3428,9 +3428,9 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Siguer;09220;09295;42.76
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Sinsat;09310;09296;42.8;1.65;1.5
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Sor;09800;09297;42.916667;1.016667;2.27
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Sorgeat;09110;09298;42.733333;1.85;2.1
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Soueix-Rogalle;09140;09299;42,89;1,21; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Soueix-Rogalle;09140;09299;42.89;1.21; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Soula;09000;09300;42.95;1.7;1.74
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Soulan;09320;09301;42,91;1,23; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Soulan;09320;09301;42.91;1.23; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Suc-et-Sentenac;09220;09302;42.783333;1.483333;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Surba;09400;09303;42.866667;1.583333;0.9
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Suzan;09240;09304;43.033333;1.433333;0.59
@@ -3450,11 +3450,11 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Vernajoul;09000;09329;42
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Vernaux;09250;09330;42.783333;1.75;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Verniolle;09340;09332;43.083333;1.633333;1.04
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Vicdessos;09220;09334;42.766667;1.5;1.8
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Villeneuve;09800;09335;42,94;0,98; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Villeneuve;09800;09335;42.94;0.98; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Villeneuve-d'Olmes;09300;09336;42.9;1.816667;1.22
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;1;Vira;09120;09340;43.05;1.766667;1.93
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Aigues-Vives;09600;09002;43;1.883333;1.51
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Alos;09200;09008;42,91;1,15; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Alos;09200;09008;42.91;1.15; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Artigat;09130;09019;43.133333;1.433333;1.49
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Arvigna;09100;09022;43.066667;1.733333;1.68
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Bagert;09160;09033;43.083333;1.083333;1.98
@@ -3474,8 +3474,8 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Canté;09700;09076;43.25
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Carla-Bayle;09130;09079;43.15;1.4;1.64
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Castelnau-Durban;09420;09082;43;1.35;1.65
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Castéras;09130;09083;43.133333;1.4;1.49
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Castex;09350;09084;43,17;1,31; 
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Caumont;09160;09086;43,03;1,09; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Castex;09350;09084;43.17;1.31; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Caumont;09160;09086;43.03;1.09; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Cazals-des-Baylès;09500;09089;43.083333;1.95;1.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Cazavet;09160;09091;43;1.05;2.13
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Cérizols;09230;09094;43.116667;1.066667;2.05
@@ -3485,14 +3485,14 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Coutens;09500;09102;43.0
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Daumazan-sur-Arize;09350;09105;43.15;1.316667;1.64
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Dun;09600;09107;43.033333;1.8;1.47
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Durfort;09130;09109;43.216667;1.466667;2.24
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Encourtiech;09200;09110;42,96;1,18; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Encourtiech;09200;09110;42.96;1.18; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Erp;09200;09114;42.95;1.2;1.47
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Esclagne;09600;09115;42.983333;1.833333;1.29
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Escosse;09100;09116;43.133333;1.55;1.49
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Esplas;09700;09117;43,19;1,5; 
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Esplas-de-Sérou;09420;09118;42,98;1,38; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Esplas;09700;09117;43.19;1.5; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Esplas-de-Sérou;09420;09118;42.98;1.38; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Eycheil;09200;09119;42.966667;1.166667;1.62
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Fabas;09230;09120;43,11;1,11; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Fabas;09230;09120;43.11;1.11; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Fornex;09350;09123;43.166667;1.25;1.79
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Gabre;09290;09127;43.066667;1.416667;1.2
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Gajan;09190;09128;43.016667;1.133333;1.76
@@ -3500,17 +3500,17 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Gaudiès;09700;09132;43.
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Justiniac;09700;09146;43.216667;1.483333;2.24
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-de-Besplas;09350;09038;43.166667;1.266667;1.79
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-de-Bousignac;09500;09039;43.05;1.883333;1.51
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-de-Lordat;09700;09040;43,14;1,71; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-de-Lordat;09700;09040;43.14;1.71; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-du-Salat;09160;09041;43.05;0.983333;2.42
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Bastide-sur-l'Hers;09600;09043;42.966667;1.916667;1.66
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Labatut;09700;09147;43.266667;1.516667;2.69
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lacave;09160;09148;43,04;1; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lacave;09160;09148;43.04;1; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lacourt;09200;09149;42.95;1.166667;1.62
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lagarde;09500;09150;43,05;1,93; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lagarde;09500;09150;43.05;1.93; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lanoux;09130;09151;43.116667;1.416667;1.34
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lapenne;09500;09153;43.133333;1.75;1.56
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Laroque-d'Olmes;09600;09157;42.966667;1.866667;1.44
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lasserre;09230;09158;43,07;1,17; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lasserre;09230;09158;43.07;1.17; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;La Tour-du-Crieu;09100;09312;43.1;1.633333;1.19
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Le Carlaret;09100;09081;43.116667;1.7;1.34
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Le Fossat;09130;09124;43.183333;1.416667;1.94
@@ -3526,7 +3526,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Le Vernet;09700;09331;43
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lézat-sur-Lèze;09210;09167;43.283333;1.35;2.83
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Limbrassac;09600;09169;43.016667;1.85;1.36
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lissac;09700;09170;43.266667;1.5;2.69
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lorp-Sentaraille;09190;09289;43,01;1,12; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Lorp-Sentaraille;09190;09289;43.01;1.12; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Loubaut;09350;09172;43.183333;1.266667;1.94
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Ludiès;09100;09175;43.116667;1.716667;1.34
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Madière;09100;09177;43.1;1.516667;1.32
@@ -3534,18 +3534,18 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Malegoude;09500;09178;43
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Manses;09500;09180;43.1;1.816667;1.22
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mauvezin-de-Prat;09160;09183;43.033333;0.983333;2.42
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mauvezin-de-Sainte-Croix;09230;09184;43.083333;1.233333;1.33
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mazères;09270;09185;43,25;1,68; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mazères;09270;09185;43.25;1.68; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Méras;09350;09186;43.183333;1.3;1.94
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mercenac;09160;09187;43.033333;1.083333;1.98
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mérigon;09230;09190;43.083333;1.2;1.47
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Mirepoix;09500;09194;43.083333;1.883333;1.51
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Monesple;09130;09195;43.083333;1.45;1.55
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montardit;09230;09198;43.066667;1.2;1.47
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montaut;09700;09199;43,19;1,64; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montaut;09700;09199;43.19;1.64; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montbel;09600;09200;42.983333;1.983333;2.08
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montégut-en-Couserans;09200;09201;42.983333;1.1;1.91
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montesquieu-Avantès;09200;09204;43.016667;1.2;1.47
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montfa;09350;09205;43,1;1,28; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montfa;09350;09205;43.1;1.28; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montgauch;09160;09208;43;1.083333;1.98
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Montjoie-en-Couserans;09200;09209;43;1.166667;1.62
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Moulin-Neuf;09500;09213;43.066667;1.95;1.8
@@ -3553,7 +3553,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Moulis;09200;09214;42.96
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Pailhès;09130;09224;43.1;1.45;1.26
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Pamiers;09100;09225;43.116667;1.6;1.34
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Pradettes;09600;09233;42.983333;1.816667;1.22
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Prat-Bonrepaux;09160;09235;43,03;1,02; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Prat-Bonrepaux;09160;09235;43.03;1.02; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Régat;09600;09243;42.983333;1.883333;1.51
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Rieucros;09500;09244;43.083333;1.766667;1.15
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Rimont;09420;09246;43;1.283333;1.11
@@ -3562,7 +3562,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Roumengoux;09500;09251;4
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Sabarat;09350;09253;43.1;1.4;1.98
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Amadou;09100;09254;43.116667;1.716667;1.34
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Amans;09100;09255;43.15;1.55;1.64
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Sainte-Croix-Volvestre;09230;09257;43,13;1,17; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Sainte-Croix-Volvestre;09230;09257;43.13;1.17; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Sainte-Foi;09500;09260;43.133333;1.916667;1.66
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Sainte-Suzanne;09130;09342;43.216667;1.383333;2.24
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Félix-de-Tournegat;09500;09259;43.133333;1.75;1.56
@@ -3571,7 +3571,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Jean-du-Falga;0910
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Julien-de-Gras-Capou;09500;09266;43.033333;1.85;1.36
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Lizier;09190;09268;43;1.133333;1.76
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Martin-d'Oydes;09100;09270;43.166667;1.5;1.79
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Michel;09100;09271;43,14;1,5; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Michel;09100;09271;43.14;1.5; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Quentin-la-Tour;09500;09274;43.033333;1.9;1.58
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Quirc;09700;09275;43.266667;1.5;2.69
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;09;Ariège;Foix;2;Saint-Victor-Rouzaud;09100;09276;43.083333;1.566667;1.04
@@ -4292,7 +4292,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Ferran;11240
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Festes-et-Saint-André;11300;11142;42.966667;2.15;1.4
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fontanès-de-Sault;11140;11147;42.766667;2.083333;2.41
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fonters-du-Razès;11400;11149;43.233333;1.933333;1.55
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fontiers-Cabardès;11310;11150;43,37;2,25; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fontiers-Cabardès;11310;11150;43.37;2.25; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fourtou;11190;11155;42.916667;2.433333;1.52
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Fraisse-Cabardès;11600;11156;43.325;2.275;1.92
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Gaja-et-Villedieu;11300;11158;43.083333;2.2;0.68
@@ -4456,7 +4456,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villasavary;
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villautou;11420;11419;43.15;1.833333;1.83
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villebazy;11250;11420;43.066667;2.333333;0.69
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villefloure;11570;11423;43.116667;2.383333;0.69
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villefort;11230;11424;42,95;2,03; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villefort;11230;11424;42.95;2.03; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villelongue-d'Aude;11300;11427;43.05;2.083333;1.4
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villemagne;11310;11428;43.35;2.133333;1.6
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;11;Aude;Carcassonne;3;Villeneuve-la-Comptal;11400;11430;43.283333;1.933333;1.45
@@ -4548,11 +4548,11 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;1;Vitrac-en-Viadène;1242
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Almont-les-Junies;12300;12004;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Ambeyrac;12260;12007;44.516667;1.95;2.32
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Anglars-Saint-Félix;12390;12008;44.416667;2.216667;1.72
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Asprières;12700;12012;44,55;2,15; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Asprières;12700;12012;44.55;2.15; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Aubin;12110;12013;44.533333;2.25;1.28
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Auzits;12390;12016;44.5;2.333333;0.99
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Balaguier-d'Olt;12260;12018;44.533333;1.983333;2.2
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Baraqueville;12160;12056;44,28;2,43; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Baraqueville;12160;12056;44.28;2.43; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Belcastel;12390;12024;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Boisse-Penchot;12300;12028;44.583333;2.216667;1.4
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;2;Bor-et-Bar;12270;12029;44.2;2.083333;1.86
@@ -4664,7 +4664,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Buzeins;12150;12040;44.
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Calmels-et-le-Viala;12400;12042;43.95;2.75;1.58
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Calmont;12450;12043;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Camarès;12360;12044;43.816667;2.883333;2.18
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Campagnac;12560;12047;44,42;3,09; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Campagnac;12560;12047;44.42;3.09; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Canet-de-Salars;12290;12050;44.233333;2.766667;0.88
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Cassagnes-Bégonhès;12120;12057;44.166667;2.533333;0.6
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Castelnau-Pégayrols;12620;12062;44.133333;2.933333;1.5
@@ -4728,7 +4728,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Réquista;12170;12197;4
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Rivière-sur-Tarn;12640;12200;44.183333;3.133333;1.77
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Roquefort-sur-Soulzon;12250;12203;43.983333;2.983333;1.43
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Rullac-Saint-Cirq;12120;12207;44.133333;2.5;0.75
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Saint-Affrique;12400;12208;43,96;2,89; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Saint-Affrique;12400;12208;43.96;2.89; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Saint-André-de-Vézines;12720;12211;44.15;3.266667;2.23
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Saint-Beaulize;12540;12212;43.9;3.1;1.8
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;12;Aveyron;Rodez;3;Saint-Beauzély;12620;12213;44.166667;2.95;1.13
@@ -4888,7 +4888,7 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Arles;13200;13004;43.666667;4.633333;2.57
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Boulbon;13150;13017;43.866667;4.683333;2.36
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Fontvieille;13990;13038;43.316667;5.483333;1.33
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Mas-Blanc-des-Alpilles;13103;13057;43,79;4,76; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Mas-Blanc-des-Alpilles;13103;13057;43.79;4.76; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Miramas;13140;13063;43.583333;5;1.05
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Port-Saint-Louis-du-Rhône;13230;13078;43.383333;4.8;1.88
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;13;Bouches-du-Rhône;Marseille;16;Saintes-Maries-de-la-Mer;13460;13096;43.45;4.425;-1
@@ -5156,7 +5156,7 @@ Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Cresseveuille;14430;14198;
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Cricqueboeuf;14113;14202;49.4;0.15;2.19
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Cricqueville-en-Auge;14430;14203;49.233333;-0.066667;0.89
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Danestal;14430;14218;49.25;0.016667;1.08
-Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Deauville;14800;14220;49,36;0,08; 
+Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Deauville;14800;14220;49.36;0.08; 
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Dives-sur-Mer;14160;14225;49.283333;-0.1;1.28
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Douville-en-Auge;14430;14227;49.266667;-0.016667;1.15
 Nord-Ouest;25;Basse-Normandie;Caen;14;Calvados;Caen;4;Dozulé;14430;14229;49.233333;-0.05;0.89
@@ -6984,7 +6984,7 @@ Centre;24;Centre;Orléans;18;Cher;Bourges;3;Reigny;18270;18192;47.3;2.75;2
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Rezay;18170;18193;46.683333;2.183333;1.67
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Sagonne;18600;18195;46.85;2.833333;1.36
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Aignan-des-Noyers;18600;18196;46.766667;2.816667;1.28
-Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Amand-Montrond;18200;18197;46,72;2,51; 
+Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Amand-Montrond;18200;18197;46.72;2.51; 
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Baudel;18160;18199;46.833333;2.216667;1.33
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Caprais;18400;18201;46.966667;2.3;0.99
 Centre;24;Centre;Orléans;18;Cher;Bourges;3;Saint-Christophe-le-Chaudry;18270;18203;46.583333;2.366667;2.16
@@ -7743,7 +7743,7 @@ Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Savoisy;21500;21594;47.733333;4.416
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Seigny;21150;21598;47.583333;4.433333;1.3
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Selongey;21260;21599;47.583333;5.166667;1.31
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Semond;21450;21602;47.716667;4.6;1.69
-Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Semur-en-Auxois;21140;21603;47,49;4,33; 
+Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Semur-en-Auxois;21140;21603;47.49;4.33; 
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Senailly;21500;21604;47.583333;4.266667;1.86
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Sincey-lès-Rouvray;21530;21608;47.433333;4.133333;2.33
 Est;26;Bourgogne;Dijon;21;Côte-d'Or;Dijon;4;Sombernon;21540;21611;47.3;4.7;0.53
@@ -8058,7 +8058,7 @@ Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Calorguen;22100;22026;
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Caulnes;22350;22032;48.283333;-2.15;1.73
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Corseul;22130;22048;48.483333;-2.166667;1.68
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Créhen;22130;22049;48.55;-2.216667;1.56
-Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Dinan;22100;22050;48,46;-2,24; 
+Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Dinan;22100;22050;48.46;-2.24; 
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Eréac;22250;22053;48.266667;-2.35;1.39
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Erquy;22430;22054;48.633333;-2.466667;1
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;2;Evran;22630;22056;48.383333;-1.983333;2.15
@@ -8233,7 +8233,7 @@ Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Bourbriac;22390;22013;
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Bringolo;22170;22019;48.583333;-3;1.1
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Bulat-Pestivien;22160;22023;48.433333;-3.333333;1.45
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Calanhel;22160;22024;48.441667;-3.483333;1.63
-Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Callac;22160;22025;48,41;-3,43; 
+Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Callac;22160;22025;48.41;-3.43; 
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Canihuel;22480;22029;48.333333;-3.1;0.96
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Carnoët;22160;22031;48.366667;-3.516667;1.71
 Ouest;53;Bretagne;Rennes;22;Côtes-d'Armor;Saint-Brieuc;4;Coadout;22970;22040;48.516667;-3.183333;1
@@ -8596,7 +8596,7 @@ Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Reterre;23110;23160;46.1;2.466667
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Rimondeix;23140;23161;46.233333;2.083333;0.89
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Roches;23270;23162;46.283333;1.983333;1.22
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Rougnat;23700;23164;46.058333;2.5;-1
-Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Royère-de-Vassivière;23460;23165;45,84;1,91; 
+Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Royère-de-Vassivière;23460;23165;45.84;1.91; 
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Saint-Agnant-près-Crocq;23260;23178;45.8;2.35;1.96
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Saint-Alpinien;23200;23179;45.983333;2.233333;0.86
 Centre;74;Limousin;Limoges;23;Creuse;Guéret;2;Saint-Amand;23200;23180;45.983333;2.2;0.76
@@ -9203,7 +9203,7 @@ Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Siorac-en-Périgord;241
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Tamniès;24620;24544;44.966667;1.166667;1.49
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Teillots;24390;24545;45.25;1.216667;1.66
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Temple-Laguyon;24390;24546;;;
-Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Terrasson-Lavilledieu;24120;24547;45,13;1,3; 
+Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Terrasson-Lavilledieu;24120;24547;45.13;1.3; 
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Thenon;24210;24550;45.133333;1.066667;1.14
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Thonac;24290;24552;45.016667;1.116667;1.31
 Sud-Ouest;72;Aquitaine;Bordeaux;24;Dordogne;Périgueux;4;Tourtoirac;24390;24555;45.266667;1.066667;1.76
@@ -11451,7 +11451,7 @@ Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Loperhet;29470;29140;48.383333;
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Loqueffret;29530;29141;48.316667;-3.866667;1.42
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Lothey;29190;29142;;;
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Motreff;29270;29152;48.2;-3.55;2.19
-Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Ouessant;29242;29155;48,46;-5,1; 
+Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Ouessant;29242;29155;48.46;-5.1; 
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Pleyben;29190;29162;48.233333;-3.966667;0.6
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Ploéven;29550;29166;48.15;-4.233333;0.63
 Ouest;53;Bretagne;Rennes;29;Finistère;Quimper;6;Plomodiern;29550;29172;48.183333;-4.233333;0.66
@@ -12003,7 +12003,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Gagnac-sur-Gar
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Garac;31480;31209;43.7;1.1;1.67
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Gargas;31620;31211;43.716667;1.466667;1.75
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Gratentour;31150;31230;43.716667;1.433333;1.75
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Grenade;31330;31232;43,77;1,29; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Grenade;31330;31232;43.77;1.29; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Labastide-Saint-Sernin;31620;31252;43.733333;1.466667;1.82
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Lagraulet-Saint-Nicolas;31480;31265;43.783333;1.083333;2.05
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;5;Laréole;31480;31275;43.733333;1.033333;1.82
@@ -12050,7 +12050,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Lasserre;31530
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Lavernose-Lacasse;31410;31287;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Le Fauga;31410;31181;43.4;1.283333;1.13
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Léguevin;31490;31291;43.6;1.25;1.22
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Lévignac;31530;31297;43,67;1,2; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Lévignac;31530;31297;43.67;1.2; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Lherm;31600;31299;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Mérenvielle;31530;31339;43.633333;1.166667;1.37
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;31;Haute-Garonne;Toulouse;6;Muret;31600;31395;43.466667;1.35;0.99
@@ -14948,7 +14948,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Annoisin-Chatelans;38460;38010
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Anthon;38280;38011;45.8;5.166667;2.3
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Aoste;38490;38012;45.583333;5.6;1.23
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Arandon;38510;38014;45.716667;5.433333;1.89
-Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Bourgoin-Jallieu;38300;38053;45,59;5,28; 
+Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Bourgoin-Jallieu;38300;38053;45.59;5.28; 
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Bouvesse-Quirieu;38390;38054;45.8;5.4;2.3
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Brangues;38510;38055;45.7;5.533333;1.8
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;6;Cessieu;38110;38064;45.566667;5.366667;1.99
@@ -15043,7 +15043,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bizonnes;38690;38046;45.45;5.3
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Blandin;38730;38047;45.466667;5.45;0.91
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bonnefamille;38090;38048;45.6;5.116667;1.42
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bossieu;38260;38049;45.416667;5.15;1.21
-Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bourgoin-Jallieu;38300;38053;45,59;5,28; 
+Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bourgoin-Jallieu;38300;38053;45.59;5.28; 
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Bressieux;38870;38056;45.316667;5.283333;0.75
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Brézins;38590;38058;45.35;5.316667;1.8
 Sud-Est;82;Rhône-Alpes;Lyon;38;Isère;Grenoble;7;Brion;38590;38060;45.3;5.333333;1.13
@@ -15623,7 +15623,7 @@ Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Rousses (Les);39220;39
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saffloz;39130;39473;46.666667;5.85;1.55
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Claude;39200;39478;46.383333;5.866667;1.69
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Germain-en-Montagne;39300;39481;46.783333;5.933333;1.65
-Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Laurent-en-Grandvaux;39150;39487;46,58;5,96; 
+Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Laurent-en-Grandvaux;39150;39487;46.58;5.96; 
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Lupicin;39170;39491;46.4;5.783333;1.61
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Maurice-Crillat;39130;39493;;;
 Est;43;Franche-Comté;Besançon;39;Jura;Lons-le-Saunier;2;Saint-Pierre;39150;39494;46.566667;5.916667;1.55
@@ -16256,7 +16256,7 @@ Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Orçay;41300;41168;47.291667;2
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Pierrefitte-sur-Sauldre;41300;41176;47.508333;2.15;-1
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Pouillé;41110;41181;47.316667;1.3;1.94
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Pruniers-en-Sologne;41200;41185;;;
-Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Romorantin-Lanthenay;41200;41194;47,36;1,74; 
+Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Romorantin-Lanthenay;41200;41194;47.36;1.74; 
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Rougeou;41230;41195;47.366667;1.533333;1.66
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Saint-Aignan;41110;41198;47.266667;1.383333;2.23
 Centre;24;Centre;Orléans;41;Loir-et-Cher;Blois;2;Saint-Dyé-sur-Loire;41500;41207;47.65;1.483333;0.75
@@ -16535,7 +16535,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Pommiers;42260;42173;45.8
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Pouilly-les-Nonains;42155;42176;46.033333;3.983333;1.49
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Renaison;42370;42182;46.05;3.933333;1.57
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Riorges;42153;42184;46.033333;4.033333;1.49
-Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Roanne;42300;42187;46,04;4,07; 
+Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Roanne;42300;42187;46.04;4.07; 
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Sail-les-Bains;42310;42194;46.233333;3.85;2.43
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Saint-Alban-les-Eaux;42370;42198;46;3.933333;1.35
 Sud-Est;82;Rhône-Alpes;Lyon;42;Loire;Saint-Étienne;5;Saint-André-d'Apchon;42370;42199;46.033333;3.933333;1.49
@@ -16793,7 +16793,7 @@ Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Chambon-
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Mas-de-Tence;43190;43129;45.116667;4.366667;2.37
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Monastier-sur-Gazeille;43150;43135;;;
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Pertuis;43200;43150;45.1;4.05;1.35
-Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Puy-en-Velay;43000;43157;45,04;3,89; 
+Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Le Puy-en-Velay;43000;43157;45.04;3.89; 
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Les Estables;43150;43091;44.908333;4.15;-1
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Les Vastres;43430;43253;;;
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;1;Les Villettes;43600;43265;45.233333;4.183333;1.66
@@ -16933,7 +16933,7 @@ Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Le Brignon;
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Le Monteil;43700;43140;;;
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Lempdes-sur-Allagnon;43410;43120;45.385;3.2721;-1
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Léotoing;43410;43121;45.366667;3.233333;2.03
-Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Le Puy-en-Velay;43000;43157;45,04;3,89; 
+Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Le Puy-en-Velay;43000;43157;45.04;3.89; 
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Le Vernet;43320;43260;45.033333;3.666667;1.3
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Lissac;43350;43122;45.133333;3.766667;1.07
 Centre;83;Auvergne;Clermont-Ferrand;43;Haute-Loire;Le Puy-en-Velay;2;Lorlanges;43360;43123;45.333333;3.266667;1.91
@@ -18305,7 +18305,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Pourcharesses;4
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Prévenchères;48800;48119;44.516667;3.916667;2.03
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Quézac;48320;48122;44.366667;3.533333;1.02
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Ribennes;48700;48126;44.633333;3.4;1.24
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Rieutort-de-Randon;48700;48127;44,64;3,48; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Rieutort-de-Randon;48700;48127;44.64;3.48; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Rocles;48300;48129;44.7;3.783333;1.42
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Rousses;48400;48130;44.2;3.6;1.96
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Amans;48700;48133;44.658333;3.45;0.75
@@ -18314,7 +18314,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-André-Ca
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-André-de-Lancize;48240;48136;44.266667;3.816667;1.58
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Bauzile;48000;48137;;;
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Bonnet-de-Montauroux;48600;48139;44.816667;3.716667;1.53
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Denis-en-Margeride;48700;48145;44,74;3,47; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Denis-en-Margeride;48700;48145;44.74;3.47; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Sainte-Croix-Vallée-Française;48110;48144;;;
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Sainte-Enimie;48210;48146;44.366667;3.416667;1.02
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Sainte-Hélène;48190;48157;;;
@@ -18342,7 +18342,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Saint-Symphorie
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Servières;48000;48189;44.583333;3.416667;1.74
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Vebron;48400;48193;44.233333;3.566667;1.77
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Vialas;48220;48194;44.333333;3.9;1.96
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Villefort;48800;48198;44,44;3,93; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;1;Villefort;48800;48198;44.44;3.93; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;2;Albaret-le-Comtal;48310;48001;44.866667;3.15;1.81
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;2;Albaret-Sainte-Marie;48200;48002;44.883333;3.266667;1.91
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;48;Lozère;Mende;2;Antrenas;48100;48005;44.583333;3.266667;0.94
@@ -22859,7 +22859,7 @@ Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Chaulgnes;58400;58067;47.133333;3.1;1
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Ciez;58220;58077;47.433333;3.166667;1.55
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Colméry;58350;58081;47.35;3.25;1.74
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Corvol-l'Orgueilleux;58460;58085;47.433333;3.4;1.55
-Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Cosne-Cours-sur-Loire;58200;58086;47,41;2,93; 
+Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Cosne-Cours-sur-Loire;58200;58086;47.41;2.93; 
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Couloutre;58220;58089;47.4;3.233333;1.37
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Courcelles;58210;58090;;;
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;2;Cuncy-lès-Varzy;58210;58093;47.366667;3.466667;1.19
@@ -22962,7 +22962,7 @@ Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Champallement;58420;58052;47.233333;3
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Champvert;58300;58055;46.833333;3.516667;1.66
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Charrin;58300;58060;46.783333;3.6;1.93
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Château-Chinon(Campagne);58120;58063;;;
-Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Château-Chinon(Ville);58120;58062;47,07;3,93; 
+Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Château-Chinon(Ville);58120;58062;47.07;3.93; 
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Châtillon-en-Bazois;58110;58065;47.05;3.666667;0.8
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Châtin;58120;58066;47.1;3.866667;1.65
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Chaumard;58120;58068;47.133333;3.916667;1.86
@@ -23071,7 +23071,7 @@ Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Germain-des-Bois;58210;58242;47
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Gratien-Savigny;58340;58243;46.883333;3.666667;1.4
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Hilaire-en-Morvan;58120;58244;47.083333;3.883333;1.72
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Hilaire-Fontaine;58300;58245;46.766667;3.616667;2.02
-Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Honoré-les-Bains;58360;58246;46,91;3,84; 
+Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Honoré-les-Bains;58360;58246;46.91;3.84; 
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Léger-de-Fougeret;58120;58249;47.016667;3.9;1.79
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Martin-du-Puy;58140;58255;47.333333;3.866667;1.65
 Est;26;Bourgogne;Dijon;58;Nièvre;Nevers;3;Saint-Maurice;58330;58257;;;
@@ -25524,7 +25524,7 @@ Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Marles-sur-Canch
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Merlimont;62155;62571;50.45;1.616667;2.04
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Monchel-sur-Canche;62270;62577;50.3;2.216667;1.06
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Montcavrel;62170;62585;50.516667;1.8;1.51
-Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Montreuil;62170;62588;50,46;1,76; 
+Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Montreuil;62170;62588;50.46;1.76; 
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Mouriez;62140;62596;50.35;1.95;1.25
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Nempont-Saint-Firmin;62180;62602;50.35;1.733333;1.7
 Nord-Ouest;31;Nord-Pas-de-Calais;Lille;62;Pas-de-Calais;Arras;4;Neuville-sous-Montreuil;62170;62610;50.466667;1.766667;1.61
@@ -27376,7 +27376,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Bélesta;66720;66019;42.716667;2.6;1.18
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Calce;66600;66030;42.766667;2.75;1.71
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Campoussy;66730;66035;42.716667;2.45;1.18
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Canet-en-Roussillon;66140;66037;42,71;3,01; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Canet-en-Roussillon;66140;66037;42.71;3.01; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Caramany;66720;66039;42.733333;2.566667;1.45
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Cases-de-Pène;66600;66041;42.783333;2.783333;1.89
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;2;Cassagnes;66720;66042;42.75;2.616667;1.53
@@ -27461,7 +27461,7 @@ Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Finestret;66320;66079;42.616667;2.516667;0.14
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Fontpédrouse;66360;66080;42.516667;2.183333;1.51
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Fontrabiouse;66210;66081;42.633333;2.1;1.76
-Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Font-Romeu-Odeillo-Via;66120;66124;42,5;2,03; 
+Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Font-Romeu-Odeillo-Via;66120;66124;42.5;2.03; 
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Formiguères;66210;66082;42.616667;2.1;1.76
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Fuilla;66820;66085;42.566667;2.366667;1.26
 Sud-Ouest;91;Languedoc-Roussillon;Montpellier;66;Pyrénées-Orientales;Perpignan;3;Glorianes;66320;66086;42.583333;2.566667;1.35
@@ -28524,7 +28524,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;5;Saint-Germain-au-Mont-d'Or;69650;6
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;5;Saint-Romain-au-Mont-d'Or;69270;69233;45.833333;4.833333;1.37
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;6;Villeurbanne;69100;69266;45.766667;4.883333;1.75
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Bron;69500;69029;45.733333;4.916667;2.01
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Rillieux-la-Pape;69140;69286;45,82;4,9; 
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Rillieux-la-Pape;69140;69286;45.82;4.9; 
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Sathonay-Camp;69580;69292;45.816667;4.866667;1.62
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Sathonay-Village;69580;69293;45.833333;4.883333;1.75
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;7;Vaulx-en-Velin;69120;69256;45.783333;4.933333;2.13
@@ -28545,7 +28545,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Chessy;69380;69056;45.9;4.616667;1
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Chevinay;69210;69057;45.766667;4.6;1.68
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Civrieux-d'Azergues;69380;69059;45.85;4.716667;0.65
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Claveisolles;69870;69060;46.1;4.5;1.5
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Cours-la-Ville;69470;69066;46,1;4,32; 
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Cours-la-Ville;69470;69066;46.1;4.32; 
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Cublize;69550;69070;46.016667;4.383333;2.07
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Dareizé;69490;69073;45.9;4.5;1.18
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;8;Dième;69170;69075;45.966667;4.466667;1.43
@@ -28783,7 +28783,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Décines-Charpieu;69150;69275;45.
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Genas;69740;69277;45.733333;5;2.64
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Jonage;69330;69279;45.8;5.033333;2.9
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Jons;69330;69280;45.8077;5.07919;-1
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Meyzieu;69330;69282;45,77;5; 
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Meyzieu;69330;69282;45.77;5; 
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Pusignan;69330;69285;45.75;5.066667;-1
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Saint-Bonnet-de-Mure;69720;69287;45.683333;5.033333;2.9
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;13;Saint-Laurent-de-Mure;69720;69288;45.683333;5.033333;2.9
@@ -30665,7 +30665,7 @@ Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Saint-Germain-sur-Rhône;0
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Saint-Martin-Bellevue;74370;74245;45.95;6.133333;0.77
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Sales;74150;74255;45.866667;5.95;1.56
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Sallenôves;74270;74257;46;6;1.34
-Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Seyssel;74910;74269;45,96;5,84; 
+Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Seyssel;74910;74269;45.96;5.84; 
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Sillingy;74330;74272;45.95;6.033333;1.19
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Talloires;74290;74275;45.85;6.216667;1.46
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;1;Thorens-Glières;74570;74282;45.983333;6.25;0.93
@@ -31677,7 +31677,7 @@ Nord-Ouest;23;Haute-Normandie;Rouen;76;Seine-Maritime;Rouen;12;Wanchy-Capval;766
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Nandy;77176;77326;48.583333;2.566667;1.68
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Perthes;77930;77359;;;
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Pringy;77310;77378;48.516667;2.566667;1.68
-Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Saint-Fargeau-Ponthierry;77310;77407;48,53;2,55; 
+Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Saint-Fargeau-Ponthierry;77310;77407;48.53;2.55; 
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Saint-Germain-sur-Ecole;77930;77412;48.466667;2.516667;1.92
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Saint-Martin-en-Bière;77630;77425;48.433333;2.566667;1.68
 Île-de-France;11;Île-de-France;Paris;77;Seine-et-Marne;Melun;1;Saint-Sauveur-sur-Ecole;77930;77435;48.483333;2.55;1.76
@@ -32713,7 +32713,7 @@ Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Louzy;79100;79157;47.
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Luché-Thouarsais;79330;79159;46.9;-0.333333;1.41
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Luzay;79100;79161;46.933333;-0.2;1.53
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Massais;79150;79168;47.016667;-0.35;1.84
-Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Mauléon;79700;79079;46,92;-0,75; 
+Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Mauléon;79700;79079;46.92;-0.75; 
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Mauzé-Thouarsais;79100;79171;46.983333;-0.266667;1.71
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Missé;79100;79178;46.95;-0.2;1.59
 Ouest;54;Poitou-Charentes;Poitiers;79;Deux-Sèvres;Niort;4;Montravers;79140;79183;46.833333;-0.716667;2.3
@@ -33543,7 +33543,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Cambon;81990;81052;43.91666
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Carmaux;81400;81060;44.05;2.15;1.46
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Castelnau-de-Lévis;81150;81063;43.933333;2.083333;1.12
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Combefa;81640;81068;44.05;2.083333;1.46
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Cordes-sur-Ciel;81170;81069;44,06;1,95; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Cordes-sur-Ciel;81170;81069;44.06;1.95; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Courris;81340;81071;43.933333;2.4;1.36
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Crespin;81350;81072;;;
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;81;Tarn;Albi;1;Crespinet;81350;81073;43.95;2.3;1.02
@@ -33872,7 +33872,7 @@ Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Labastide-d
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Lacapelle-Livron;82160;82082;44.266667;1.783333;2.43
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Lafrançaise;82130;82087;44.133333;1.25;1.52
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Laguépie;82250;82088;44.141667;1.966667;-1
-Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Laguépie;82250;82088;44,15;1,97; 
+Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Laguépie;82250;82088;44.15;1.97; 
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Lamothe-Capdeville;82130;82090;44.083333;1.366667;1.74
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;Lapenche;82240;82092;44.233333;1.583333;1.59
 Sud-Ouest;73;Midi-Pyrénées;Toulouse;82;Tarn-et-Garonne;Montauban;1;La Salvetat-Belmontet;82230;82176;43.966667;1.533333;1.38
@@ -34104,7 +34104,7 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Claviers;83830;
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Comps-sur-Artuby;83840;83044;43.716667;6.5;1.79
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Fayence;83440;83055;43.616667;6.683333;1.77
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Figanières;83830;83056;43.566667;6.5;1.52
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Fréjus;83600;83061;43,43;6,74; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;Fréjus;83600;83061;43.43;6.74; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;La Bastide;83840;83013;43.733333;6.616667;1.89
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;La Martre;83840;83074;43.766667;6.6;2.08
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;83;Var;Toulon;5;La Roque-Esclapon;83840;83109;43.716667;6.633333;1.79
@@ -34218,7 +34218,7 @@ Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Cadenet;8
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Caseneuve;84750;84032;43.883333;5.483333;1.7
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Castellet;84400;84033;43.85;5.483333;1.7
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Caumont-sur-Durance;84510;84034;43.9;4.95;1.04
-Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Cavaillon;84300;84035;43,84;5,04; 
+Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Cavaillon;84300;84035;43.84;5.04; 
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Châteauneuf-de-Gadagne;84470;84036;43.933333;4.933333;1.13
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Cheval-Blanc;84460;84038;43.8;5.066667;1.4
 Sud-Est;93;Provence-Alpes-Côte d'Azur;Marseille;84;Vaucluse;Avignon;2;Cucuron;84160;84042;43.783333;5.433333;1.51
@@ -34483,7 +34483,7 @@ Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Notre-Dame-de-Rie
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Olonne-sur-Mer;85340;85166;46.533333;-1.783333;1.62
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Sainte-Foy;85150;85214;46.55;-1.666667;1.27
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Gervais;85230;85221;46.9;-2.016667;2.31
-Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Gilles-Croix-de-Vie;85800;85222;46,7;-1,94; 
+Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Gilles-Croix-de-Vie;85800;85222;46.7;-1.94; 
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Hilaire-de-Riez;85270;85226;46.716667;-1.95;2.11
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Jean-de-Monts;85160;85234;46.783333;-2.066667;2.46
 Ouest;52;Pays de la Loire;Nantes;85;Vendée;La Roche-sur-Yon;3;Saint-Maixent-sur-Vie;85220;85239;46.733333;-1.833333;1.76
@@ -34669,7 +34669,7 @@ Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Migné-Auxances;86440;86
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Mirebeau;86110;86160;46.783333;0.183333;0.93
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Montamisé;86360;86163;46.616667;0.433333;1
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Monthoiron;86210;86164;46.733333;0.616667;1.22
-Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Neuville-de-Poitou;86170;86177;46,69;0,25; 
+Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Neuville-de-Poitou;86170;86177;46.69;0.25; 
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Poitiers;86000;86194;46.583333;0.333333;1
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Pouillé;86800;86198;46.533333;0.583333;1.33
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;1;Saint-Cyr;86130;86219;46.716667;0.45;1.27
@@ -34757,7 +34757,7 @@ Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Coulombiers;86600;86083;
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Coulonges;86290;86084;;;
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Curzay-sur-Vonne;86600;86091;46.483333;0.05;1.51
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Fleix;86300;86098;46.55;0.75;1.52
-Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Gençay;86160;86103;46,37;0,41; 
+Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Gençay;86160;86103;46.37;0.41; 
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Genouillé;86250;86104;;;
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Gouex;86320;86107;46.366667;0.683333;1.23
 Ouest;54;Poitou-Charentes;Poitiers;86;Vienne;Poitiers;3;Haims;86310;86110;46.5;0.916667;2.24
@@ -36057,7 +36057,7 @@ Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Saint-Sérotin;89140;89369;48.25;3.166
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Saint-Valérien;89150;89370;48.183333;3.1;1.77
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Saligny;89100;89373;48.216667;3.35;1.79
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Savigny-sur-Clairis;89150;89380;48.066667;3.1;1.77
-Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Sens;89100;89387;48,2;3,28; 
+Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Sens;89100;89387;48.2;3.28; 
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Sépeaux;89116;89388;47.95;3.233333;1.29
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Serbonnes;89140;89390;48.316667;3.2;2.28
 Est;26;Bourgogne;Dijon;89;Yonne;Auxerre;3;Sergines;89140;89391;48.333333;3.25;2.36
