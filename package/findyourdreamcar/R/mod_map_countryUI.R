@@ -65,8 +65,8 @@ mod_map_areaUI <- function(id) {
 #' @import ggplot2
 #' @importFrom utils data
 #' @export
-#' @rdname mod_map_areaUI
-mod_map_area <- function(input, output, session, dataframe) {
+#' @rdname mod_map_countryUI
+mod_map_country <- function(input, output, session, dataframe) {
 
   crs_lambert <- 2154
 
@@ -74,6 +74,21 @@ mod_map_area <- function(input, output, session, dataframe) {
 
   dpt_map <- dept_193 %>%
     sf::st_transform(crs = crs_lambert)
+
+  region_map <- dpt_map %>%
+    group_by(NOM_REG, CODE_REG) %>%
+    summarize()
+
+  # Adding the coordinates of the centroids of each region
+  coord <- region_map %>%
+    st_centroid() %>%
+    arrange(CODE_REG) %>%
+    st_coordinates() %>%
+    as.data.frame()
+
+  list_regions <- region_map %>% arrange(CODE_REG)
+
+  coord$CODE_REG <- list_regions$CODE_REG
 
   dataset_map <- dataframe %>%
     dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
@@ -86,15 +101,6 @@ mod_map_area <- function(input, output, session, dataframe) {
       head(n = 1)
   })
 
-  area_around <- function(geometry) {
-    sf::st_buffer(geometry, dist = units::set_units(100, km)) %>%
-      sf::st_transform(crs = sf::st_crs(dpt_map))
-  }
-
-  intersection <- reactive({
-    sf::st_intersection(dpt_map, area_around(point_user()))
-  })
-
   data_filtered_basic_country <- eventReactive(input$go, {
     dataset_map %>%
       dplyr::filter(
@@ -103,36 +109,33 @@ mod_map_area <- function(input, output, session, dataframe) {
       )
   })
 
-  # Creating a reactive for the advanced filters at the country level
-  data_filtered_advanced_100km <- reactive({
-    data_filtered_basic_country() %>%
-      dplyr::mutate(
-        #year = substr(date, 0, 4),
-        distance = as.vector(sf::st_distance(geometry, point_user()))
-      ) %>%
-      dplyr::filter(
-        distance <= 100000,
-        (transmission %in% input$transmission) | (input$transmission == "No Preference"),
-        (brand %in% input$brand) | (input$brand == "No Preference"),
-        #year >= input$year_built[1] & year <= input$year_built[2],
-        kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
-        (energie %in% input$fuel) | (input$fuel == "No Preference"),
-        (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
-        (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
-      )
-  })
+  # Computing the average price per region
+  prices_per_region <- eventReactive(input$go, {dataset_map %>%
+      st_join(dpt_map) %>%
+      filter(carrosserie == input$carrosserie,
+             (transmission %in% input$transmission) | (input$transmission == "No Preference"),
+             (brand %in% input$brand) | (input$brand == "No Preference"),
+             year >= input$year_built[1] & year <= input$year_built[2],
+             kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
+             (energie %in% input$fuel) | (input$fuel == "No Preference"),
+             (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
+             (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")) %>%
+      group_by(CODE_REG) %>%
+      summarize(mean_price = as.integer(mean(prix_euros))) %>%
+      merge(coord, by = c("CODE_REG" = "CODE_REG"))})
 
   cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))
   cc_dark <- scales::seq_gradient_pal("orange","black")(seq(0,1,length.out=15))
 
-  plot_drive_map <- function(intersection, point_user, points_around) {
-    ggplot2::ggplot(intersection) +
-      geom_sf(aes(fill = CODE_REG)) +
-      geom_sf(data = points_around, color = "black", size = 1) +
+  # Creating a function to plot the map of the whole country
+  plot_map <- function(map, point_user) {
+    ggplot(region_map) +
+      geom_sf(fill = "white") +
       geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user
-      coord_sf(crs = sf::st_crs(dpt_map)) +
-      scale_fill_manual(values = cc) + # Applying the palette we have built further up
-      # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
+      geom_text(data = map, aes(x = X, y = Y, label = mean_price, colour = as.factor(mean_price))) + # Adding label with prices
+      scale_color_manual(values = cc_dark) + # Applying the palette we have built further up
+      coord_sf(crs = st_crs(region_map)) +
+      #All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
       theme(axis.line=element_blank(),
             axis.text.x=element_blank(),
             axis.text.y=element_blank(),
@@ -142,13 +145,13 @@ mod_map_area <- function(input, output, session, dataframe) {
             legend.position="none",
             panel.background=element_blank(),
             panel.border=element_blank(),
+            panel.grid.major=element_line(colour = "white"),
             panel.grid.minor=element_blank(),
-            plot.background=element_blank(),
-            panel.grid.major = element_line(colour = "white"))
+            plot.background=element_blank())
   }
 
-  output$drive_map <- renderPlot({
-    plot_drive_map(intersection = intersection(), point_user = point_user(), points_around = data_filtered_advanced_100km())
+  output$map <- renderPlot({
+    plot_map(map = prices_per_region(), point_user = point_user())
   })
 
 }
