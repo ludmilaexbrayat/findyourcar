@@ -21,6 +21,7 @@
 #'
 #' @import dplyr
 #' @import magrittr
+#' @import shiny
 #' @export
 #' @examples
 #' library(shiny)
@@ -64,10 +65,22 @@ mod_basic_filteringUI <- function(id) {
 #' @param session internal
 #'
 #' @importFrom utils data
+#' @import dplyr
+#' @import magrittr
+#' @import shiny
 #' @export
 #' @rdname mod_basic_filteringUI
 mod_basic_filtering <- function(input, output, session) {
 
-  #data("cardata")
+  # #data("cardata")
+  # data_filtered_basic_country <- eventReactive(input$go, {
+  #   dataframe %>%
+  #     filter(
+  #       !is.na(prix_euros),
+  #       carrosserie == input$carrosserie
+  #     )
+  # })
+  #
+  # return(data_filtered_basic_country)
 
 }

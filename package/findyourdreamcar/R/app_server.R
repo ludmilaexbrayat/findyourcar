@@ -11,5 +11,14 @@ app_server <- function(input, output,session) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
   })
 
+  # basic_filtering <- callModule(mod_basic_filtering, "fichier1", cardata)
+  #
+  # advanced_filtering <- callModule(mod_advanced_filtering, "fichier2", cardata)
+  #
+  # callModule(mod_country_stats, "fichier3", advanced_filtering)
+
+  callModule(mod_area_stats, "fichier", cardata)
+
+  callModule(mod_country_stats, "fichier", cardata)
 
 }

@@ -19,7 +19,8 @@ Imports:
     sf,
     ggplot2,
     raster,
-    rasterVis
+    rasterVis,
+    units
 Suggests:
     testthat,
     knitr,

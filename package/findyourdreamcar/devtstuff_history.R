@@ -69,6 +69,7 @@ usethis::use_package("sf")
 usethis::use_package("ggplot2")
 usethis::use_package("raster")
 usethis::use_package("rasterVis")
+usethis::use_package("units")
 
 # Reorder your DESC
 

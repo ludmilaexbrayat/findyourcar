@@ -3,6 +3,7 @@
 #'
 #' @import dplyr
 #' @import magrittr
+#' @import shiny
 #' @export
 #' @examples
 #' library(shiny)
@@ -45,8 +46,33 @@ mod_advanced_filteringUI <- function(id) {
 #' @param session internal
 #'
 #' @importFrom utils data
+#' @import shiny
+#' @import dplyr
+#' @import magrittr
 #' @export
 #' @rdname mod_advanced_filteringUI
 mod_advanced_filtering <- function(input, output, session) {
+
+  # data_filtered_advanced_country <- reactive({
+  #   dataframe %>%
+  #     filter(
+  #       !is.na(prix_euros),
+  #       carrosserie == input$carrosserie
+  #     ) %>%
+  #     mutate(
+  #       year = substr(date, 0, 4)
+  #     ) %>%
+  #     filter(
+  #       (transmission %in% input$transmission) | (input$transmission == "No Preference"),
+  #       (brand %in% input$brand) | (input$brand == "No Preference"),
+  #       #year >= input$year_built[1] & year <= input$year_built[2],
+  #       kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
+  #       (energie %in% input$fuel) | (input$fuel == "No Preference"),
+  #       (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
+  #       (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
+  #     )
+  # })
+  #
+  # return(data_filtered_advanced_country)
 
 }
