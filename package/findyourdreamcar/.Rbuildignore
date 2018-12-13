@@ -1,0 +1,7 @@
+^devstuff_history\.R$
+^.*\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+^devtools_history\.R$
+devtstuff_history.R
+^devtstuff_history\.R$

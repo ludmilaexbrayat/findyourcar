@@ -23,10 +23,10 @@ library(rasterVis)
 
 
 # For the time being, we work with dataset1
-dataset1 <- read_csv("datasets/final_dataset_full.csv")
+dataset1 <- read_csv("archive/datasets/final_dataset_full.csv")
 
 # Loading "Mapping_villes" csv file for Postal Codes matches
-mapping_villes <- read_csv2("datasets/mapping_villes.csv")
+mapping_villes <- read_csv2("archive/datasets/mapping_villes.csv")
 
 # Loading the department shapes
 dept_193 <- st_read("cartography/DEPARTEMENT.shp")

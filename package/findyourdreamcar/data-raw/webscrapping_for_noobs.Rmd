@@ -1,0 +1,647 @@
+---
+title: "Web scrapping for Noobs"
+author: "Ludmila"
+date: "10/14/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+<br>
+The purpose of this notebook is to understand <b>how to scrap Paru Vendu's cars listings</b>.<br>
+<br>
+This involves understanding:<br>
+
+1. **How to gather data from a specific listing**: brand, price, zipcode, km, etc.<br>
+2. **How to repeat this operation on every listing** (i.e. how to automate web scrapping).
+
+
+Litterature that we used:<br>
+
+* <a href= "https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">Beginner’s Guide on Web Scraping in R</a> by Saurav Kaushik 
+* <a href= "http://www.endmemo.com/program/R/regexpr.php">R regexpr Function</a> by EndMemo 
+* <a href = "https://www.r-bloggers.com/using-rvest-to-scrape-an-html-table/">Using rvest to Scrape an HTML Table</a> by Cory Nissen
+<br>
+<br>
+<br>
+
+## Part 1: Gathering data from a specific listing ☑️
+<br>
+
+#### A. Preparing our environment
+
+```{r prerequisites, message=FALSE, warning=FALSE}
+# Let's prepare our environment
+library(rvest)
+library(magrittr)
+library(dplyr)
+library(plyr)
+library(tidyr)
+Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # To see the currencies
+```
+<br>
+<br>
+
+#### B. Downloading the webpage
+
+```{r Downloading webpage}
+# Specifying the url of the listing to be scrapped
+url <- "https://www.paruvendu.fr/a/voiture-occasion/audi/a1/1229829590A1KVVOAUA1"
+
+# Reading the HTML code from the website
+webpage <- read_html(url)
+```
+<br>
+<br>
+
+#### C. Extracting data from the HTML file
+
+Note that we will have some NAs, as some information is not always available.
+
+```{r Finding paths}
+# Defining the xpath of every element we want to extract
+xpath_brand <- '(//*[@itemprop="name"])[2]'
+xpath_modele <- '(//*[@itemprop="name"])[3]'
+xpath_address <- '(//*[contains(concat( " ", @class, " " ), concat( " ", "parttel_coordagence", " " ))])[2]'
+node_tableinfo <- 'table.tabcar15'
+```
+
+```{r Extracting raw data}
+# Extracting the raw info
+brand <- webpage %>% 
+  html_nodes(xpath = xpath_brand)  %>% 
+  html_text()
+
+modele <- webpage %>% 
+  html_node(xpath = xpath_modele) %>% 
+  html_text()
+
+address <- webpage %>% 
+  html_nodes(xpath = xpath_address) %>% 
+  html_text()
+
+tableinfo <- webpage %>%
+  html_node(node_tableinfo) %>%
+  html_table(header = FALSE)
+```
+<br>
+**Conclusion: we've managed to scrap the information we needed from one specific listing.**<br>
+
+<br>
+<br>
+
+## Part 2: Automating scraping
+<br>
+To automate scraping (ie scrap all listings on Paru Vendu), we need to:<br>
+
+1. Get the list of the URLs of all listings on Paru Vendu ...
+2. ... and for that the list of the URLs of all the results of the search engine (e.g. <a href= "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p=1"> this one</a>)
+<br>
+<br>
+
+####A. Scrapping the results of the search engine
+
+```{r Preparing search engine scrapping}
+# Building a list of URLs of the engine search
+searchengine_url <- "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=&km1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p="
+list_searchengine_urls <- paste0(searchengine_url, c(1:10900)) # Let's just focus on the first 1000 pages for now
+
+
+# Specifying where to find the links of the listings on the page
+xpath_url <- "//*[@class='ergov3-voirann']"
+
+
+# Building a function that scraps the links from the search engine results
+scrap_searchengine <- function(url) {
+  # Extracting a raw list of URL
+  list_links <- url %>% 
+    read_html() %>% 
+    html_nodes(xpath = xpath_url) %>% 
+    html_nodes("a") %>% 
+    html_attr("href")
+  
+  # Cleaning the list
+  list_links <- list_links[which(regexpr('https',list_links) >= 1)]        # Removing all elements that don't contain "https"
+  list_links <- list_links[-which(regexpr('pubcommunfo',list_links) >= 1)] # Removing all elements that contain "pubcommunfo"
+  
+  # Setting some random waiting time before each read_html to look more human
+  #Sys.sleep(sample(10,1)*0.1)
+  
+  return(list_links)
+}
+```
+
+```{r Scrapping search engine, eval=FALSE, include=FALSE}
+# Scrapping the links from the list of URLs
+## We can't scrap in one shot the 10,900 listings. We need to split the work.
+
+# Loop 1: 1 to 1,000
+list_links_1 <- list_searchengine_urls[1:1000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_1 %>% write.csv("datasets/list_links_searchengine_1.csv")
+
+
+# Loop 2: 1,001 to 3,000
+list_links_2 <- list_searchengine_urls[1001:3000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_2 %>% write.csv("datasets/list_links_searchengine_2.csv")
+
+
+# Loop 3: 3,001 to 5,000
+list_links_3 <- list_searchengine_urls[3001:5000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_3 %>% write.csv("datasets/list_links_searchengine_3.csv")
+
+
+# Loop 4: 5,001 to 7,000
+list_links_4 <- list_searchengine_urls[5001/7000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_4 %>% write.csv("datasets/list_links_searchengine_4.csv")
+
+
+# Loop 5: 7,001 to 9,000
+list_links_5 <- list_searchengine_urls[7001/9000] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_5 %>% write.csv("datasets/list_links_searchengine_5.csv")
+
+
+# Loop 6: 9,001 to 10,900
+list_links_6 <- list_searchengine_urls[9001/10900] %>% 
+  lapply(scrap_searchengine) %>% 
+  unlist(use.names = FALSE)
+
+list_links_6 %>% write.csv("datasets/list_links_searchengine_6.csv")
+```
+
+
+**Conclusion: we've managed to scrap and store the links of the URLs of the listings on the search engine.**
+<br>
+<br>
+
+```{r Preparing scrapping of multiple listings}
+# Defining the variables we'll need for scrapping the webpages
+xpath_brand <- '(//*[@itemprop="name"])[2]'
+xpath_modele <- '(//*[@itemprop="name"])[3]'
+node_address_particulier <- '.contact_infospart' # Depending on the type of seller (pro or particulier), the address is not located in the same position
+xpath_name_pro <- '(//*[@class="parttel_coordagence"])[1]'
+xpath_address_pro <- '(//*[@class="parttel_coordagence"])[2]'
+node_tableinfo <- 'table.tabcar15'
+pattern_when_error <- 'annonces achat, vente de voitures'
+
+
+# Defining a function that scraps an URL
+scrap_listing <- function(url) {
+
+  webpage <- read_html(url)
+  
+  ## Setting some random waiting time before each read_html to look more human
+  Sys.sleep(sample(10,1)*0.5)
+  
+  ## Checking that the listing was not deleted
+  is_page_available <- webpage %>% 
+    html_nodes('title') %>% 
+    html_text() %>% 
+    regexpr(pattern_when_error, .) == -1
+  
+  if (is_page_available) { ### If the listing was not deleted, let's scrap it
+  
+  brand <- webpage %>% 
+    html_nodes(xpath = xpath_brand)  %>% 
+    html_text()
+
+  modele <- webpage %>% 
+    html_nodes(xpath = xpath_modele) %>% 
+    html_text()
+
+  address_particulier <- webpage %>%
+    html_nodes(node_address_particulier) %>% 
+    html_text()
+  
+  address_pro <- webpage %>% 
+    html_nodes(xpath = xpath_address_pro) %>% 
+    html_text()
+  
+  name_pro <- webpage %>% 
+    html_nodes(xpath = xpath_name_pro) %>% 
+    html_text()
+
+  tableinfo <- webpage %>% 
+    html_nodes(node_tableinfo) %>%
+    html_table(header = FALSE) %>% 
+    data.frame() %>% 
+    spread(X1, X2) %>% 
+    mutate(url = url)
+
+  ## Why did we add "paste0" everywhere below?
+  ##  If the variable is NA (for instance, if there wasn't an address in the listing), paste0(., "") converts the NA into an empty character. This way, we avoid errors due to NAs when building the table.
+  return(data.frame("url" = paste0(url, ""),
+                    "is_listing_deleted" = 0,
+                    "brand" = paste0(brand, ""),
+                    "modele" = paste0(modele, ""), 
+                    "address_particulier" = paste0(address_particulier, ""),
+                    "address_pro" = paste0(address_pro, ""),
+                    "name_pro" = paste0(name_pro, "")) %>% 
+    merge(tableinfo, by = "url"))
+  
+  } else { ### If the listing was  deleted, let's scrap it
+    
+    return(data.frame("url" = paste0(url, ""),
+                      "is_listing_deleted" = 1))
+    
+  }
+}
+```
+
+```{r}
+# Scrapping multiple listings
+## Loading the list of URLs to scarp
+list_searchengine_urls_3 <- read.csv("Datasets/list_links_searchengine_3.csv", stringsAsFactors = FALSE)
+
+## Scrapping the list
+scrapped_listings_3_251_500 <- rbind.fill(lapply(list_searchengine_urls_3$x[251:500], scrap_listing))
+
+scrapped_listings_3_251_500 %>% write.csv("datasets/scrapped_listings_3_251_500.csv")
+```
+
+
+**Conclusions: we now have two functions, one that creates a list of URLs to scrap (from the search engine results), and one that scraps these URLs.**<br>
+<br>
+Next steps include:<br>
+
+* Imbricate these two functions
+* Test if the imbrication works for a high number of listings (~ let's do first 50 pages of the search engine)
+* Even if it works, anticipate the cases when we will have "Nos systèmes ont détecté un trafic inhabituel depuis votre accès internet" (error message in RStudio: "Error in UseMethod("html_table") : no applicable method for 'html_table' applied to an object of class "xml_missing"")
+* Clean the resulting dataframe
+
+<br>
+And then... we're done! We'll have a clean dataset.
+
+
+## Graveyard
+<br>
+To be included later on in the analysis
+```{r Security check, eval=FALSE, include=FALSE}
+# Lets make a test of what woudl happend if one of the url we were to scrap wasnt right
+listingpageURL[3] <- "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&ray=15&r=VVO00000&r1=&trub=&nrj=&pa=1=&npo=0&a0=&a1=&fulltext=&tr=&pf0=&pf1=&p=3"
+#Lets run the function
+urldata <- lapply( listingpageURL, listingurlscrapper) %>% 
+  unlist() %>%
+```
+
+
+
+
+
+
+
+
+```{r Cleaning raw data}
+# Cleaning raw data
+brand <- brand %>%
+  gsub(" occasion", "", .) # ! Verify that every listing has "occasion" (not "new" for instance)
+
+address <- address %>%
+  gsub("\r", "", .) %>% 
+  gsub("\n", "", .)
+
+zipcode <- address %>% 
+  substr(regexpr("\\d{5}", address), regexpr("\\d{5}", address)+4) # Finding position of the five-digit number in the string (i.e. of the zipcode) and extracting it
+
+street <- address %>% 
+  substr(0,regexpr(zipcode, address)-1) # Finding position of the zipcode, and extracting everything that is *before*
+
+city <- address %>% 
+  substr(regexpr(zipcode, address)+6,nchar(address)) # Finding position of the zipcode, and extracting everything that is *after*
+```
+
+
+```{r Storing results}
+table <- data.frame(id = 1, 
+                    
+                    brand = brand,
+                    
+                    modele = modele,
+                    
+                    year = tableinfo %>% 
+                      filter(X1 == "Année") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(regexpr("\\d{4}", .), regexpr("\\d{4}", .)+4) %>% 
+                      as.integer(),
+                    
+                    mileage = tableinfo %>% 
+                      filter(X1 == "Kilométrage") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>% 
+                      gsub("km", "", .) %>% 
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
+                    
+                    energy = tableinfo %>% 
+                      filter(X1 == "Energie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    transmission = tableinfo %>% 
+                      filter(X1 == "Transmission") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    n_doors = tableinfo %>% 
+                      filter(X1 == "Nb de portes") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(1,1) %>% 
+                      as.integer(),
+                    
+                    zipcode = zipcode,
+                    
+                    city = city,
+                    
+                    street = street,
+                    
+                    tax_horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance fiscale") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("CV", "", .) %>% 
+                      as.integer(),
+                    
+                    horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance réelle") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("Ch", "", .) %>% 
+                      as.integer(),
+                    
+                    body_work = tableinfo %>% 
+                      filter(X1 == "Carrosserie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                   n_seats = tableinfo %>% 
+                      filter(X1 == "Nombre de places") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                     substr(1,1) %>% 
+                     as.integer(),
+                    
+                    price = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("€", "", .) %>% 
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
+                    
+                    currency = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(nchar(.), nchar(.)),
+                   
+                   website = "ParuVendu",
+                   
+                   url = url
+                    )
+```
+
+What happens with another listing?
+```{r}
+table
+
+```
+
+
+
+
+#### D. Automating the process from a given URL
+
+
+```{r Function creation }
+
+idvlistingscrap <- function(url){
+  # Reading the HTML code from the website
+webpage <- read_html(url)
+# Defining the xpath of every element we want to extract
+xpath_brand <- '(//*[@itemprop="name"])[2]'
+xpath_modele <- '(//*[@itemprop="name"])[3]'
+xpath_address <- '(//*[contains(concat( " ", @class, " " ), concat( " ", "parttel_coordagence", " " ))])[2]'
+node_tableinfo <- 'table.tabcar15'
+
+# Extracting the raw info
+brand <- webpage %>% 
+  html_nodes(xpath = xpath_brand)  %>% 
+  html_text()
+
+modele <- webpage %>% 
+  html_node(xpath = xpath_modele) %>% 
+  html_text()
+
+address <- webpage %>% 
+  html_nodes(xpath = xpath_address) %>% 
+  html_text()
+
+tableinfo <- webpage %>%
+  html_node(node_tableinfo) %>%
+  html_table(header = FALSE)
+
+
+# Cleaning raw data
+brand <- brand %>%
+  gsub(" occasion", "", .) # ! Verify that every listing has "occasion" (not "new" for instance)
+
+address <- address %>%
+  gsub("\r", "", .) %>% 
+ gsub("\n", "", .)
+
+zipcode <- address %>% 
+ substr(regexpr("\\d{5}", address), regexpr("\\d{5}", address)+4) # Finding position of the five-digit number in the string (i.e. of the zipcode) and extracting it
+
+#street <- address %>% 
+ # substr(0,regexpr(zipcode, address)-1) # Finding position of the zipcode, and extracting everything that is *before*
+
+#city <- address %>% 
+  #substr(regexpr(zipcode, address)+6,nchar(address)) # Finding position of the zipcode, and extracting everything that is *after*
+
+
+table <- data.frame(id = 1,  #id set to one everytime as we use l apply
+                    
+                    brand = brand,
+                    
+                    modele = modele,
+                    
+                    year = tableinfo %>% 
+                      filter(X1 == "Année") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(regexpr("\\d{4}", .), regexpr("\\d{4}", .)+4) %>% 
+                      as.integer(),
+                    
+                    mileage = tableinfo %>% 
+                      filter(X1 == "Kilométrage") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>% 
+                      gsub("km", "", .) %>% 
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
+                    
+                    energy = tableinfo %>% 
+                      filter(X1 == "Energie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    transmission = tableinfo %>% 
+                      filter(X1 == "Transmission") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                    n_doors = tableinfo %>% 
+                      filter(X1 == "Nb de portes") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(1,1) %>% 
+                      as.integer(),
+                    
+                    #zipcode = zipcode,
+                    
+                    #city = city,
+                    
+                    #street = street,
+                    
+                    tax_horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance fiscale") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("CV", "", .) %>% 
+                      as.integer(),
+                    
+                    horsepower = tableinfo %>% 
+                      filter(X1 == "Puissance réelle") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("\n", "", .) %>%
+                      gsub("Ch", "", .) %>% 
+                      as.integer(),
+                    
+                    body_work = tableinfo %>% 
+                      filter(X1 == "Carrosserie") %>% 
+                      select(X2) %>% 
+                      as.character(),
+                    
+                   n_seats = tableinfo %>% 
+                      filter(X1 == "Nombre de places") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                     substr(1,1) %>% 
+                     as.integer(),
+                    
+                    price = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      gsub("€", "", .) %>% 
+                      gsub(" ", "", .) %>% 
+                      as.integer(),
+                    
+                    currency = tableinfo %>% 
+                      filter(X1 == "Prix") %>% 
+                      select(X2) %>% 
+                      as.character() %>% 
+                      substr(nchar(.), nchar(.)),
+                   
+                   website = "ParuVendu",
+                   
+                   url = url
+                    )
+
+Sys.sleep(sample(10,1)*0.1) #lets try to look more human 
+
+return(table)
+
+
+}
+
+
+
+
+```
+
+```{r Function Test, eval=FALSE}
+#Lets Test the function we have just created
+urltest <- list("https://www.paruvendu.fr/a/voiture-occasion/bmw/x5/1229965754A1KVVOBMX5",
+"https://www.paruvendu.fr/a/voiture-occasion/bmw/x5/1228374123A1KVVOBMX5", "https://www.paruvendu.fr/a/voiture-occasion/audi/q3/1230053461A1KVVOAUQ3", "https://www.paruvendu.fr/a/voiture-occasion/volkswagen/passat/1229883997A1KVVOVWPAS", 
+ "https://www.paruvendu.fr/a/voiture-occasion/porsche/macan/1229893439A1KVVOPOMAC"
+)
+url
+idvlistingscrap(urltest)
+
+urldata[1:7]
+#maybe we have an issue of timing of queries ?
+formatingprocess <- lapply(urldata, idvlistingscrap)
+#So we don't get the right format - Need to get a proper data frame as the function returns a list
+ldply(formatingprocess, data.frame)
+
+```
+
+
+
+```{r Scrapping multiple listings}
+# Scrapping multiple listings
+scrapped_listings <- rbind.fill(lapply(list_links, scrap_listing))
+
+scrapped_listings %>% dim()
+scrapped_listings %>% write.csv("datasets/scrapped_listings_1.csv")
+```
+
+```{r}
+# Re-scrapping listings that were blocked by "I am not a robot"
+
+#   Step 1: Count the number of listings that were not scrapped
+scrapped_listings %>%
+  filter(iamnotarobot = 1) %>% 
+  count() %>% 
+  paste0(., " listings were not correctly scrapped") %>% 
+  print()
+
+
+#   Step 2: Unlock the "I am not a robot" page
+print(list_links[1]) # Open this link in your browser, and click the box "I am not a robot".
+
+
+#   Step 3: Re-scrapp the listings
+list_links_to_rescrap_1 <- scrapped_listings %>% 
+  filter(iamnotarobot = 1) %>% # Taking listings that were blocked
+  select(url) %>% 
+  list()
+
+rescrapped_listings_1 <- rbind.fill(lapply(list_links_to_rescrap_1, scrap_listing))
+rescrapped_listings_1 %>% write.csv("rescrapped_listings_1.csv")
+
+
+#   Step 4: Count the numbe of listings that were not scrapped
+rescrapped_listings_1 %>%
+  filter(iamnotarobot = 1) %>% 
+  count() %>% 
+  paste0(., " listings were not correctly scrapped") %>% 
+  print()
+## -> Do we need to scrap them again?
+```
