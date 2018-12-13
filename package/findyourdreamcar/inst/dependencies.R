@@ -19,7 +19,8 @@ to_install <- c("DT",
                 "rasterVis",
                 "stats",
                 "glue",
-                "units")
+                "units",
+                "scales")
 for (i in to_install) {
   message(paste("looking for ", i))
   if (!requireNamespace(i)) {

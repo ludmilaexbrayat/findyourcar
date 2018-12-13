@@ -16,7 +16,7 @@
 
 # A minimalist example is mandatory
 
-#' @title   mod_map_areaUI and mod_map_area
+#' @title   mod_map_countryUI and mod_map_country
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
 #' @import dplyr
@@ -40,11 +40,11 @@
 #' shinyApp(ui, server)
 #' }
 #'
-mod_map_areaUI <- function(id) {
+mod_map_countryUI <- function(id) {
 
   ns <- NS(id)
 
-  plotOutput(ns("drive_map"))
+  plotOutput(ns("map"))
 
 }
 
@@ -62,6 +62,7 @@ mod_map_areaUI <- function(id) {
 #' @import sf
 #' @import units
 #' @import readr
+#' @import scales
 #' @import ggplot2
 #' @importFrom utils data
 #' @export
@@ -76,17 +77,17 @@ mod_map_country <- function(input, output, session, dataframe) {
     sf::st_transform(crs = crs_lambert)
 
   region_map <- dpt_map %>%
-    group_by(NOM_REG, CODE_REG) %>%
+    dplyr::group_by(NOM_REG, CODE_REG) %>%
     summarize()
 
   # Adding the coordinates of the centroids of each region
   coord <- region_map %>%
-    st_centroid() %>%
-    arrange(CODE_REG) %>%
-    st_coordinates() %>%
+    sf::st_centroid() %>%
+    dplyr::arrange(CODE_REG) %>%
+    sf::st_coordinates() %>%
     as.data.frame()
 
-  list_regions <- region_map %>% arrange(CODE_REG)
+  list_regions <- region_map %>% dplyr::arrange(CODE_REG)
 
   coord$CODE_REG <- list_regions$CODE_REG
 
@@ -110,9 +111,12 @@ mod_map_country <- function(input, output, session, dataframe) {
   })
 
   # Computing the average price per region
-  prices_per_region <- eventReactive(input$go, {dataset_map %>%
-      st_join(dpt_map) %>%
-      filter(carrosserie == input$carrosserie,
+  prices_per_region <- reactive({dataset_map %>%
+      sf::st_join(dpt_map) %>%
+      dplyr::mutate(
+        year = substr(date, 0, 4)
+      ) %>%
+      dplyr::filter(carrosserie == input$carrosserie,
              (transmission %in% input$transmission) | (input$transmission == "No Preference"),
              (brand %in% input$brand) | (input$brand == "No Preference"),
              year >= input$year_built[1] & year <= input$year_built[2],
@@ -120,8 +124,8 @@ mod_map_country <- function(input, output, session, dataframe) {
              (energie %in% input$fuel) | (input$fuel == "No Preference"),
              (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
              (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")) %>%
-      group_by(CODE_REG) %>%
-      summarize(mean_price = as.integer(mean(prix_euros))) %>%
+      dplyr::group_by(CODE_REG) %>%
+      dplyr::summarize(mean_price = as.integer(mean(prix_euros))) %>%
       merge(coord, by = c("CODE_REG" = "CODE_REG"))})
 
   cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))

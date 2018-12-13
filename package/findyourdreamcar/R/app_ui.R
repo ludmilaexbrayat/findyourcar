@@ -35,6 +35,7 @@ app_ui <- function() {
                    # Map Title
                    div(h3("Available cars")),
                    # Plotting the Map
+                   mod_map_countryUI("fichier"),
 
                    # Table Title
                    div(h3("Summary Results")),
