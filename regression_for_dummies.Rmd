@@ -16,11 +16,273 @@ library(tidyverse)
 library(MASS)
 library(glmnet)
 library(stringr)
+library(data.table)
 Sys.setlocale(locale="en_US.UTF-8")
 ```
 
 ```{r Load Data}
 reg_data <- read_csv("first_dataset_full.csv")
+```
+
+
+
+```{r, function shiny}
+
+reg_shiny_function <- function(carrosserie, df){
+  
+  carrosserie <- enquo(carrosserie) #enquo the variable
+ 
+#Lets create the table we'll use later   
+df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(reg_data, !!carrosserie)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
+
+
+df_significant_coef <- df_significant_coef %>% 
+        filter(coef!="(Intercept)") # Take out intercept as it doesnt matter for our study
+
+
+#Long step, we change individually the name of oef for interpretation (couldn't do it in 1 mutatet as regression don't all have the same coefficients)
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieElectrique") %>% 
+                      mutate(coef="electric car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieElectrique") 
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "kilometrage_km") %>% 
+                      mutate(Estimate=Estimate*10000, coef="car with + 10'000 km") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "kilometrage_km")
+                      
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieEssence") %>% 
+                      mutate(coef="gasoline car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieEssence")
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieHybride") %>% 
+                      mutate(coef="hybrid car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieHybride")      
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieGPL ou GNL") %>% 
+                      mutate(coef="GPL car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieGPL ou GNL") 
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "transmissionAutres") %>% 
+                      mutate(coef="unvonventional transmission type car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionAutres")
+  
+df_significant_coef  <- df_significant_coef %>%                       
+                      filter(coef== "transmissionManuelle") %>% 
+                      mutate(coef= "manual transmission car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionManuelle")
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "transmissionSemi automatique") %>% 
+                      mutate(coef= "semi-atomatic transmission car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionSemi automatique") 
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "is_pro") %>% 
+                      mutate(coef= "car from a profresional seller") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "is_pro")
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "nb_portes4") %>% 
+                      mutate(coef= "car with 4 doors") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "nb_portes4") 
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "nb_portes5") %>% 
+                      mutate(coef= "car with 5 doors") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "nb_portes5") 
+
+
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+                      dplyr::select(coef, Estimate)
+
+
+
+#Split the significant coef into 2 separate table, the positive and the negative
+#So that we can have different interpretation
+positiv_coef <- df_significant_coef %>% filter(Estimate>0)
+negativ_coef <- df_significant_coef %>% filter(Estimate<0)
+
+
+negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("Buying a",coef,"you could save about", -signif(Estimate,2), "€")})
+
+positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("With a", coef, "you would pay an extra", signif(Estimate,2), "€")})
+
+return(c(negativ_coef,positiv_coef)) #Returns the two
+
+}
+
+
+
+regression_function <- function(data_reg, carrosserie){
+
+  type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
+  
+  data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
+  
+  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
+  return(summary(reg_sol))
+}
+
+```
+
+
+
+
+
+###### Trash
+
+```{r, function}
+
+
+#Lets create the table we'll use later
+df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(reg_data, "Break")$coef), "coef") 
+
+
+#Create a data frame with no row naes as it is easier to work without
+df_significant_coef <- df_significant_coef %>% 
+        filter(coef!="(Intercept)")
+
+
+
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieElectrique") %>% 
+                      mutate(coef="electric car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieElectrique") 
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "kilometrage_km") %>% 
+                      mutate(Estimate=Estimate*10000, coef="car with + 10'000 km") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "kilometrage_km")
+                      
+
+
+
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieEssence") %>% 
+                      mutate(coef="gasoline car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieEssence")
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieHybride") %>% 
+                      mutate(coef="hybrid car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieHybride")      
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "energieGPL ou GNL") %>% 
+                      mutate(coef="GPL car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "energieGPL ou GNL") 
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "transmissionAutres") %>% 
+                      mutate(coef="unvonventional transmission type car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionAutres")
+  
+df_significant_coef  <- df_significant_coef %>%                       
+                      filter(coef== "transmissionManuelle") %>% 
+                      mutate(coef= "manual transmission car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionManuelle")
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "transmissionSemi automatique") %>% 
+                      mutate(coef= "semi-atomatic transmission car") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "transmissionSemi automatique") 
+  
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(coef== "is_pro") %>% 
+                      mutate(coef= "car from a profresional seller") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "is_pro")
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "nb_portes4") %>% 
+                      mutate(coef= "car with 4 doors") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "nb_portes4") 
+
+df_significant_coef  <- df_significant_coef %>%   
+                      filter(coef== "nb_portes5") %>% 
+                      mutate(coef= "car with 5 doors") %>% 
+                      bind_rows(df_significant_coef) %>% 
+                      filter(coef != "nb_portes5") 
+
+
+df_significant_coef  <- df_significant_coef %>% 
+                      filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+                      dplyr::select(coef, Estimate)
+
+
+
+
+
+#Split the significant coef into 2 separate table, the positive and the negative
+positiv_coef <- df_significant_coef %>% filter(Estimate>0)
+negativ_coef <- df_significant_coef %>% filter(Estimate<0)
+
+
+
+# Printing out the info for the shiny tab
+paste("Want to save some money ? There are", length(negatif_coef$coef), "features that could help you")
+
+
+
+
+
+negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("Buying a",coef,"you could save about", -signif(Estimate,2), "€")})
+
+positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("With a",coef, "you would pay an extra", signif(Estimate,2))})
+
+
+
+
+
+
+
+
+
+
+
+class(df_significant_coef)
+regression_function(reg_data, "Break")$coefficient 
+
+coef_function("Monospace", reg_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 #data clearing
@@ -56,30 +318,7 @@ carrosserie_name(reg_data)
 
 ```
 
-
-```{r, function}
-
-regression_function <- function(data_reg, carrosserie){
-
-  type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
-  
-  data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
-  
-  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
-  return(summary(reg_sol))
-}
-
-
-
-regression_function(reg_data, "Break")
-
-coef_function("Monospace", reg_data)
-
-
-
-
-
-
+```{r}
 
 coef_function <- function(carrosserie, df){
   carrosserie <- as.character(carrosserie)
@@ -98,17 +337,13 @@ coef_function <- function(carrosserie, df){
 }
 
 
+?coef
+output_fonction <- function(){
+  
 
-
-
-
-
-
-
-
-
-
-
+  
+  
+}
 
 
 
@@ -120,27 +355,9 @@ ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_smooth()
 
 ?summary
 ?lm
-```
-
-
-
-
-
-```{r}
-
-
-ggplot(reg_data)+aes(y=prix_euros,x=kilometrage_km)+geom_smooth()
-
-
 
 
 ```
-
-
-###### Trash
-
-
-
 
 
 
