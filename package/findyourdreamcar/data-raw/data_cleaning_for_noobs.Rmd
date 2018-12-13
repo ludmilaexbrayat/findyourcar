@@ -33,9 +33,9 @@ Sys.setlocale(locale="en_US.UTF-8")
 Read the data:
 
 ```{r}
-mapping_villes <- data.frame(read_delim("datasets/mapping_villes.csv", delim = ";"))
+mapping_villes <- data.frame(read_delim("mapping_villes.csv", delim = ";"))
 
-data <- read_csv("datasets/original_scrapped_data_full.csv")
+data <- read_csv("original_scrapped_data_full.csv")
 ```
 
 Remove the deleted listings, and the useless columns that are X1 and V1:
@@ -171,17 +171,17 @@ create_postal_code_city <- function(pc, city) {
 ```{r}
 french_months <- c(
                    "janvier", 
-                   "février", 
+                   "f??vrier", 
                    "mars", 
                    "avril",
                    "mai",
                    "juin",
                    "juillet",
-                   "août",
+                   "ao??t",
                    "septembre",
                    "octobre",
                    "novembre",
-                   "décembre"
+                   "d??cembre"
                    )
 
 clean_month_year <- function(my) {
@@ -235,7 +235,7 @@ data %>%
   filter(is.na(str_match(data$modele,"euro"))) %>% 
   # Actual cleaning using parsing and above functions
   mutate(
-         brand = str_remove(brand, " occasion")[1],
+         brand = map(brand, ~str_remove(.x, " occasion")[1]),
          name_pro = str_trim(name_pro),
          all_address = coalesce(address_particulier, address_pro),
          postal_codes = map(all_address, get_postal_code),
@@ -244,40 +244,40 @@ data %>%
          all_city = coalesce(city_particulier, city_pro),
          postal_code_city = map2(postal_codes, all_city, create_postal_code_city) ,
          is_pro = map(name_pro, function(x) 1 - is.na(x)),
-         date = map(Année, clean_month_year),
+         date = map(Ann??e, clean_month_year),
          pneus_hiver = str_detect(Autres.informations, "Pneus hiver")*1,
          barres_de_toit = str_detect(Autres.informations, "Barres de toit")*1,
-         premiere_main = str_detect(Autres.informations, "Première main")*1,
-         non_fumeur = str_detect(Autres.informations, "Véhicule non fumeur")*1,
+         premiere_main = str_detect(Autres.informations, "Premi??re main")*1,
+         non_fumeur = str_detect(Autres.informations, "V??hicule non fumeur")*1,
          stationne_dans_garage = str_detect(Autres.informations, "Stationne dans un garage")*1,
          sous_garantie_constructeur = str_detect(Autres.informations, "Sous garantie constructeur")*1,
          attelage = str_detect(Autres.informations, "Attelage")*1,
          sous_garantie_autre_que_constructeur = str_detect(Autres.informations, "(autre que constructeur)")*1,
          cons_mixte_l_by_100km = str_remove(Consommation.mixte, "\nlitres / 100 km"),
          emissions_co2_g_by_km = str_remove(Emissions.de.CO2, "\ng/km"),
-         kilometrage_km = str_remove(str_remove(Kilométrage, "\nkm")," "),
+         kilometrage_km = str_remove(str_remove(Kilom??trage, "\nkm")," "),
          nb_portes = str_remove(str_remove(Nb.de.portes, " avec hayon"),c(" portes")),
          hayon = str_detect(Nb.de.portes, "hayon")*1,
          nb_places = str_remove(Nombre.de.places, "\nplaces"),
-         prix_euros = str_remove(str_remove(Prix, " €"), " "),
+         prix_euros = str_remove(str_remove(Prix, " ???"), " "),
          puissance_fiscale_cv = str_remove(Puissance.fiscale, "\nCV"),
-         puissance_reelle_ch = str_remove(Puissance.réelle, "\nCh"),
-         garantie_mecanique_mois = str_remove(Garantie.mécanique, " mois"),
-         abs = str_detect(Option.equipement.Sécurité, "ABS")*1,
-         esp = str_detect(Option.equipement.Sécurité, "ESP")*1,
-         regulateur_vitesse = str_detect(Option.equipement.Sécurité, "Régulateur de vitesse")*1,
-         asr = str_detect(Option.equipement.Sécurité, "ASR")*1,
-         alarme_antivol = str_detect(Option.equipement.Sécurité, "Alarme antivol")*1,
-         direction_assistee = str_detect(Option.Equipement.Confort.intérieur, "Direction assistée")*1,
-         banquette_ar = str_detect(Option.Equipement.Confort.intérieur, "Banquette AR 1/3 - 2/3")*1,
-         radio_cd = str_detect(Option.Equipement.Confort.intérieur, "Radio/CD")*1,
-         fermeture_centralisee = str_detect(Option.Equipement.Confort.intérieur, "Fermeture centralisée")*1,
-         vitres_electriques = str_detect(Option.Equipement.Confort.intérieur, "Vitres électriques")*1,
-         allumage_auto_feux = str_detect(Option.equipement.extérieurs, "Allumage automatique des feux")*1,
-         peinture_metallisee = str_detect(Option.equipement.extérieurs, "Peinture métallisée")*1,
-         retroviseurs_electriques = str_detect(Option.equipement.extérieurs, "Rétroviseurs électriques")*1,
-         roues_alliage_léger = str_detect(Option.equipement.extérieurs, "Roues alliage léger")*1,
-         fap = str_detect(Option.equipement.extérieurs, "FAP")*1
+         puissance_reelle_ch = str_remove(Puissance.r??elle, "\nCh"),
+         garantie_mecanique_mois = str_remove(Garantie.m??canique, " mois"),
+         abs = str_detect(Option.equipement.S??curit??, "ABS")*1,
+         esp = str_detect(Option.equipement.S??curit??, "ESP")*1,
+         regulateur_vitesse = str_detect(Option.equipement.S??curit??, "R??gulateur de vitesse")*1,
+         asr = str_detect(Option.equipement.S??curit??, "ASR")*1,
+         alarme_antivol = str_detect(Option.equipement.S??curit??, "Alarme antivol")*1,
+         direction_assistee = str_detect(Option.Equipement.Confort.int??rieur, "Direction assist??e")*1,
+         banquette_ar = str_detect(Option.Equipement.Confort.int??rieur, "Banquette AR 1/3 - 2/3")*1,
+         radio_cd = str_detect(Option.Equipement.Confort.int??rieur, "Radio/CD")*1,
+         fermeture_centralisee = str_detect(Option.Equipement.Confort.int??rieur, "Fermeture centralis??e")*1,
+         vitres_electriques = str_detect(Option.Equipement.Confort.int??rieur, "Vitres ??lectriques")*1,
+         allumage_auto_feux = str_detect(Option.equipement.ext??rieurs, "Allumage automatique des feux")*1,
+         peinture_metallisee = str_detect(Option.equipement.ext??rieurs, "Peinture m??tallis??e")*1,
+         retroviseurs_electriques = str_detect(Option.equipement.ext??rieurs, "R??troviseurs ??lectriques")*1,
+         roues_alliage_l??ger = str_detect(Option.equipement.ext??rieurs, "Roues alliage l??ger")*1,
+         fap = str_detect(Option.equipement.ext??rieurs, "FAP")*1
          ) %>% 
   mutate_if(is.list, as.character) %>% 
   # Format the date
@@ -285,10 +285,10 @@ data %>%
   # Rename columns with the usual rule
   rename(carrosserie = Carrosserie,
          energie = Energie,
-         etat_vehicule = Etat.du.véhicule,
+         etat_vehicule = Etat.du.v??hicule,
          transmission = Transmission,
-         controle_technique = Contrôle.technique,
-         couleur_interieur = Couleur.intérieur,
+         controle_technique = Contr??le.technique,
+         couleur_interieur = Couleur.int??rieur,
          type_peinture_carrosserie = Type.de.peinture.carrosserie,
          marque = Marque
          ) %>% 
@@ -296,20 +296,20 @@ data %>%
   left_join(relevant_mapping_villes,  by= c("postal_code_city" = "codes_postaux_commune")) %>% 
   distinct() %>% 
   # Select only relevant columns
-  dplyr::select(-Kilométrage,
+  dplyr::select(-Kilom??trage,
          -Puissance.fiscale,
-         -Puissance.réelle,
-         -Garantie.mécanique,
-         -Option.equipement.Sécurité,
-         -Option.Equipement.Confort.intérieur,
-         -Option.equipement.extérieurs,
+         -Puissance.r??elle,
+         -Garantie.m??canique,
+         -Option.equipement.S??curit??,
+         -Option.Equipement.Confort.int??rieur,
+         -Option.equipement.ext??rieurs,
          -Nb.de.portes,
          -Nombre.de.places,
          -Consommation.mixte,
          -Emissions.de.CO2,
          -Prix,
          -Autres.informations,
-         -Année,
+         -Ann??e,
          -address_particulier,
          -address_pro,
          -city_particulier,
@@ -337,8 +337,5 @@ new_data <- new_data %>%
 #### Writing the final csv
 
 ```{r}
-write_csv(new_data, path = "datasets/final_dataset_full.csv")
+write_csv(new_data, path = "cardata.csv")
 ```
-
-
-
