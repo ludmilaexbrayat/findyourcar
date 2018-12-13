@@ -62,6 +62,7 @@ mod_map_areaUI <- function(id) {
 #' @import sf
 #' @import units
 #' @import readr
+#' @import ggplot2
 #' @importFrom utils data
 #' @export
 #' @rdname mod_map_areaUI
@@ -69,16 +70,16 @@ mod_map_area <- function(input, output, session, dataframe) {
 
   crs_lambert <- 2154
 
-  dept_193 <- st_read(system.file("extdata", "DEPARTEMENT.shp", package = "findyourdreamcar"))
+  dept_193 <- sf::st_read(system.file("extdata", "DEPARTEMENT.shp", package = "findyourdreamcar"))
 
   dpt_map <- dept_193 %>%
-    st_transform(crs = crs_lambert)
+    sf::st_transform(crs = crs_lambert)
 
   dataset_map <- dataframe %>%
     dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
-    st_as_sf(coords = c("longitude", "latitude"),
+    sf::st_as_sf(coords = c("longitude", "latitude"),
              crs = 4326) %>%
-    st_transform(crs = crs_lambert)
+    sf::st_transform(crs = crs_lambert)
 
   point_user <- eventReactive(input$go, {dataset_map %>%
       dplyr::filter(nom_commune == input$city) %>%
@@ -86,12 +87,12 @@ mod_map_area <- function(input, output, session, dataframe) {
   })
 
   area_around <- function(geometry) {
-    st_buffer(geometry, dist = units::set_units(100, km)) %>%
-      st_transform(crs = st_crs(dpt_map))
+    sf::st_buffer(geometry, dist = units::set_units(100, km)) %>%
+      sf::st_transform(crs = sf::st_crs(dpt_map))
   }
 
   intersection <- reactive({
-    st_intersection(dpt_map, area_around(point_user()))
+    sf::st_intersection(dpt_map, area_around(point_user()))
   })
 
   data_filtered_basic_country <- eventReactive(input$go, {
@@ -107,7 +108,7 @@ mod_map_area <- function(input, output, session, dataframe) {
     data_filtered_basic_country() %>%
       dplyr::mutate(
         #year = substr(date, 0, 4),
-        distance = as.vector(st_distance(geometry, point_user()))
+        distance = as.vector(sf::st_distance(geometry, point_user()))
       ) %>%
       dplyr::filter(
         distance <= 100000,
@@ -125,11 +126,11 @@ mod_map_area <- function(input, output, session, dataframe) {
   cc_dark <- scales::seq_gradient_pal("orange","black")(seq(0,1,length.out=15))
 
   plot_drive_map <- function(intersection, point_user, points_around) {
-    ggplot(intersection) +
+    ggplot2::ggplot(intersection) +
       geom_sf(aes(fill = CODE_REG)) +
       geom_sf(data = points_around, color = "black", size = 1) +
       geom_sf(data = point_user, color = "orange", size = 5) + # Plotting a point at the position of the user
-      coord_sf(crs = st_crs(dpt_map)) +
+      coord_sf(crs = sf::st_crs(dpt_map)) +
       scale_fill_manual(values = cc) + # Applying the palette we have built further up
       # All the lines below have as sole purpose to erase all the grids, axis, etc. of the plot
       theme(axis.line=element_blank(),

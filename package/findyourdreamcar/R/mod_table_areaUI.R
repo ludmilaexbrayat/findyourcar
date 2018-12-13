@@ -70,9 +70,9 @@ mod_table_area <- function(input, output, session, dataframe) {
 
   dataset_map <- dataframe %>%
     dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
-    st_as_sf(coords = c("longitude", "latitude"),
+    sf::st_as_sf(coords = c("longitude", "latitude"),
              crs = 4326) %>%
-    st_transform(crs = crs_lambert)
+    sf::st_transform(crs = crs_lambert)
 
   point_user <- eventReactive(input$go, {dataset_map %>%
       dplyr::filter(nom_commune == input$city) %>%
@@ -92,7 +92,7 @@ mod_table_area <- function(input, output, session, dataframe) {
     data_filtered_basic_country() %>%
       dplyr::mutate(
         #year = substr(date, 0, 4),
-        distance = as.vector(st_distance(geometry, point_user()))
+        distance = as.vector(sf::st_distance(geometry, point_user()))
       ) %>%
       dplyr::filter(
         distance <= 100000,
