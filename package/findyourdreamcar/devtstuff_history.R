@@ -70,6 +70,7 @@ usethis::use_package("ggplot2")
 usethis::use_package("raster")
 usethis::use_package("rasterVis")
 usethis::use_package("units")
+usethis::use_package("scales")
 
 # Reorder your DESC
 

@@ -20,7 +20,8 @@ Imports:
     ggplot2,
     raster,
     rasterVis,
-    units
+    units,
+    scales
 Suggests:
     testthat,
     knitr,
