@@ -276,7 +276,7 @@ data %>%
          allumage_auto_feux = str_detect(Option.equipement.extérieurs, "Allumage automatique des feux")*1,
          peinture_metallisee = str_detect(Option.equipement.extérieurs, "Peinture métallisée")*1,
          retroviseurs_electriques = str_detect(Option.equipement.extérieurs, "Rétroviseurs électriques")*1,
-         roues_alliage_léger = str_detect(Option.equipement.extérieurs, "Roues alliage léger")*1,
+         roues_alliage_leger = str_detect(Option.equipement.extérieurs, "Roues alliage léger")*1,
          fap = str_detect(Option.equipement.extérieurs, "FAP")*1
          ) %>% 
   mutate_if(is.list, as.character) %>% 
