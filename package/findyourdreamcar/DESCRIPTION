@@ -1,5 +1,5 @@
 Package: findyourdreamcar
-Title: RStudio Project Templates for Prod-ready Shinyapps
+Title: Find Your Dream Car
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Skander",
@@ -22,14 +22,14 @@ Authors@R:
              family = "Guillou",
              role = c("cre", "aut"),
              email = "gaelle.guillou@polytechnique.edu"))
-Description: Create a prod-ready shiny app with this RStudio
-    project template.
+Description: Find your dream car with our production-ready app
+    based on scrapped Paru Vendu listings from oct-nov 2018.
 License: MIT + file LICENSE
 URL: https://github.com/ThinkR-open/findyourdreamcar
 BugReports: 
     https://github.com/ThinkR-open/findyourdreamcar/issues
 Depends:
-    R (>= 3.4.3)
+    R (>= 3.4.0)
 Imports:
     dplyr,
     DT,

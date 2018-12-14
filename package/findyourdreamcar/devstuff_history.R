@@ -28,9 +28,9 @@ my_desc$del("Maintainer")
 my_desc$set_version("0.0.0.9000")
 
 # The title of your package
-my_desc$set(Title = "RStudio Project Templates for Prod-ready Shinyapps")
+my_desc$set(Title = "Find Your Dream Car")
 # The description of your package
-my_desc$set(Description = "Create a prod-ready shiny app with this RStudio project template.")
+my_desc$set(Description = "Find your dream car with our production-ready app based on scrapped Paru Vendu listings from oct-nov 2018.")
 
 # The urls
 my_desc$set("URL", "https://github.com/ThinkR-open/findyourdreamcar")
@@ -49,7 +49,7 @@ usethis::use_news_md()
 #library(readr)
 #Sys.setlocale(locale="en_US.UTF-8")
 #cardata <- data.frame(read_csv("data-raw/cardata.csv"))
-usethis::use_data(cardata, overwrite = T)
+#usethis::use_data(cardata, overwrite = T)
 
 # For tests
 usethis::use_testthat()
@@ -73,6 +73,8 @@ usethis::use_package("units")
 usethis::use_package("scales")
 usethis::use_package("tibble")
 usethis::use_package("purrr")
+
+# R : set version with a patchlevel (z in x.y.z) = 0
 
 # Reorder your DESC
 
