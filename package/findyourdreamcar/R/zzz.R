@@ -28,6 +28,7 @@ globalVariables(
     "Pr(>|t|)",
     "modele",
     "longitude",
-    "coef"
+    "coef",
+    "name_i"
   )
 )

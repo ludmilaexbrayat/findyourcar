@@ -107,9 +107,9 @@ mod_regression <- function(input, output, session, dataframe) {
     negativ_coef <- df_significant_coef %>% dplyr::filter(Estimate<0)
 
 
-    negativ_coef <- negativ_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "€")})
+    negativ_coef <- negativ_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "euros")})
 
-    positiv_coef <- positiv_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "€")})
+    positiv_coef <- positiv_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "euros")})
 
     return(c(negativ_coef,positiv_coef)) #Returns the two
 
