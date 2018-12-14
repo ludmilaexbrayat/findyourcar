@@ -19,7 +19,7 @@ my_desc <- description$new("DESCRIPTION")
 my_desc$set("Package", "findyourdreamcar")
 
 #Set your name
-my_desc$set("Authors@R", "person('Vincent', 'Guyader', email = 'vincent@thinkr.fr', role = c('cre', 'aut'))")
+my_desc$set("Authors@R", "c(person('Skander', 'Kamoun', email = 'skander.kamoun@polytechnique.edu', role = c('cre', 'aut')), person('Ines', 'VanAgt', email = 'ines.vanagt@polytechnique.edu', role = c('cre', 'aut')), person('Arnaud', 'Fournier', email = 'arnaud.fournier@polytechnique.edu', role = c('cre', 'aut')), person('Ludmila', 'Exbrayat', email = 'ludmila.exbrayat@polytechnique.edu', role = c('cre', 'aut')), person('Gaelle', 'Guillou', email = 'gaelle.guillou@polytechnique.edu', role = c('cre', 'aut')))")
 
 # Remove some author fields
 my_desc$del("Maintainer")
@@ -39,7 +39,7 @@ my_desc$set("BugReports", "https://github.com/ThinkR-open/findyourdreamcar/issue
 my_desc$write(file = "DESCRIPTION")
 
 # If you want to use the MIT licence, code of conduct, lifecycle badge, and README
-usethis::use_mit_license(name = "ThinkR")
+usethis::use_mit_license(name = "findyourdreamcar")
 usethis::use_readme_rmd()
 usethis::use_code_of_conduct()
 usethis::use_lifecycle_badge("Experimental")
