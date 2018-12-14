@@ -1,45 +1,13 @@
-# Naming convention :
-# all Shinymodule have to begin with `mod_`, in lowercase Except for `UI` , `Input` and `Output`
-# use `Input` as sufix if your module is an Input
-# use `Output` as sufix if your module is an Output
-# use `UI` as sufix if your module is both Input and Output
-#
-# examples :
-# ui side : mod_truc_bidulUI
-# server side : mod_truc_bidul
-#
-# ui side : mod_machin_chouetteInput
-# server side : mod_machin_chouette
-
-# all shinyModule must have a documentation page
-# one unique page for both ui and server side ( you can use `#' @rdname` to link both function)
-
-# A minimalist example is mandatory
-
 #' @title   mod_table_areaUI and mod_table_area
-#' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
+#' @description  A shiny module that displays a table of the results for a 100km radius around the user's chosen city
 #'
-#' @param id id for proper interaction with shiny
+#' @param id shiny id
 #'
 #' @import shiny
 #' @importFrom DT DTOutput
 #' @export
 #' @examples
-#' library(shiny)
-#' library(DT)
-#' if (interactive()){
-#' ui <- fluidPage(
-#'   mod_csv_fileInput("fichier"),
-#' DTOutput("tableau")
-#' )
-#'
-#' server <- function(input, output, session) {
-#'   data <- callModule(mod_csv_file,"fichier")
-#'   output$tableau <- renderDT({data()})
-#' }
-#'
-#' shinyApp(ui, server)
-#' }
+#' "No example to display"
 #'
 mod_table_areaUI <- function(id) {
 
@@ -55,7 +23,7 @@ mod_table_areaUI <- function(id) {
 #' @param input internal
 #' @param output internal
 #' @param session internal
-#' @param dataframe dataframe with at one column named "prix-euros" containing the price
+#' @param dataframe dataframe with columns named "prix-euros", "latitude", "longitude", "nom_commune", "carrosserie", "transmission", "brand", "date", "energie", "nb_places", "kilometrage_km" and "nb_portes"
 #'
 #' @import dplyr
 #' @import magrittr

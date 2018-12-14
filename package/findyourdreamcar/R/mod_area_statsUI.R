@@ -6,7 +6,7 @@
 #' @import shiny
 #' @export
 #' @examples
-#' No example to display
+#' "No example to display"
 #'
 mod_area_statsUI <- function(id) {
 

@@ -24,20 +24,6 @@ mod_country_stats(input, output, session, dataframe)
 A shiny module that displays principal statistics for the basic and advanced filters selected by the user in the whole country
 }
 \examples{
-library(shiny)
-library(DT)
-if (interactive()){
-ui <- fluidPage(
-  mod_csv_fileInput("fichier"),
-DTOutput("tableau")
-)
-
-server <- function(input, output, session) {
-  data <- callModule(mod_csv_file,"fichier")
-  output$tableau <- renderDT({data()})
-}
-
-shinyApp(ui, server)
-}
+"No example to display"
 
 }
