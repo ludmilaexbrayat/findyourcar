@@ -74,6 +74,7 @@ mod_area_statsUI <- function(id) {
 #' @import readr
 #' @import units
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_area_statsUI
 mod_area_stats <- function(input, output, session, dataframe) {

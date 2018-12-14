@@ -62,6 +62,7 @@ mod_table_areaUI <- function(id) {
 #' @import shiny
 #' @import sf
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_table_areaUI
 mod_table_area <- function(input, output, session, dataframe) {

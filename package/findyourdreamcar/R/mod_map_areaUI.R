@@ -64,6 +64,7 @@ mod_map_areaUI <- function(id) {
 #' @import units
 #' @import readr
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_map_areaUI
 mod_map_area <- function(input, output, session, dataframe) {

@@ -65,6 +65,7 @@ mod_map_countryUI <- function(id) {
 #' @import scales
 #' @import ggplot2
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_map_countryUI
 mod_map_country <- function(input, output, session, dataframe) {
