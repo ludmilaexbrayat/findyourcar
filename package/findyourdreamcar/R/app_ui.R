@@ -80,7 +80,7 @@ app_ui <- function() {
                     tabPanel("3. Find your dream car near you...",
                              # Map Title
                              div(h3("Available cars around you")),
-                             HTML("This map displays the cars around you that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>"),
+                             HTML("This map displays the cars around you that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>."),
                              # Plotting the Map
                              mod_map_areaUI("fichier"),
 
@@ -92,7 +92,7 @@ app_ui <- function() {
                     tabPanel("4. ... or in France",
                              # Map Title
                              div(h3("Available cars")),
-                             HTML("This map displays the average price per region of the cars that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>"),
+                             HTML("This map displays the average price per region of the cars that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>."),
                              # Plotting the Map
                              mod_map_countryUI("fichier"),
 

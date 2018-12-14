@@ -37,6 +37,7 @@ mod_regressionUI <- function(id) {
 #' @import tibble
 #' @importFrom purrr pmap_chr
 #' @importFrom utils data
+#' @import kable
 #' @export
 #' @rdname mod_regressionUI
 mod_regression <- function(input, output, session, dataframe) {
@@ -52,13 +53,12 @@ mod_regression <- function(input, output, session, dataframe) {
 
   reg_shiny_function <- function(df, choice){
 
-    #Lets create the table we'll use later
-    #Lets create the table we'll use later
+    # Creating the basis table
     df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, choice)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
     keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("Diesel car","Electric car","Car with + 10'000 km","Gasoline car","Hybrid car","GPL car","Unvonventional transmission type car","Manual transmission car","Semi-atomatic transmission car","Car from a profresional seller","Car with 4 doors","Car with 5 doors","Car with one more door"))
 
-    # Take out intercept as it doesnt matter for our study
+    # Taking out the intercept (as it doesnt matter for our study)
     df_significant_coef <- df_significant_coef %>%
       filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
       mutate(Estimate=Estimate*10000, coef="kilometrage") %>%
@@ -72,30 +72,43 @@ mod_regression <- function(input, output, session, dataframe) {
       dplyr::select(coef, Estimate)
 
 
-    #Long step, we change individually the name of oef for interpretation (couldn't do it in 1 mutatet as regression don't all have the same coefficients)
+    # Building the object that will display the results as sentences
+    table_regression <- df_significant_coef %>%
+        mutate(if_you = "If you switch to a",
+               coef = paste0(str_to_lower(coef), ","),
+               you_could = case_when(Estimate > 0 ~ "you would pay an extra",
+                                     Estimate <= 0 ~ "you could save about"),
+               Estimate_formated = paste0(abs(round(Estimate,0)), " euros")) %>%
+        dplyr::select(if_you, coef, you_could, Estimate_formated) %>%
+        kable(col.names = c()) %>%
+        kable_styling() %>%
+        column_spec(c(2,4), bold = T)
 
 
-    #Split the significant coef into 2 separate table, the positive and the negative
-    #So that we can have different interpretation
-    positiv_coef <- df_significant_coef %>% filter(Estimate>0)
-    negativ_coef <- df_significant_coef %>% filter(Estimate<0)
-
-
-    negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef),"you could save about", -signif(Estimate,2), "euros")})
-
-
-    positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef), "you would pay an extra", signif(Estimate,2), "euros")})
-    plot <- ggplot(df_significant_coef)+
-      aes(x=reorder(coef, Estimate), y=Estimate, title="Save money on:")+
-      labs(x = "Factor", y="Amount saved in euros")+
-      geom_col(fill="#E69F20")+
-      theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1))
+   # Building the object that will display the results as a plot
+    plot <- ggplot(df_significant_coef %>%
+                     mutate(causes_an_increase = as.factor( case_when(Estimate > 0 ~ "red",
+                                                                      TRUE ~ "green")))) +
+      aes(x = reorder(coef, Estimate),
+          y = Estimate,
+          fill = causes_an_increase,
+          title = "Which features can make you to save money?") +
+      geom_col() +
+      geom_text(aes(label = case_when(Estimate > 0 ~ paste0("+",round(Estimate,0)),
+                                      Estimate <= 0 ~ as.character(round(Estimate,0)))),
+                position = position_dodge(0.9), vjust = 0) +
+      labs(x = "Feature", y="Change in the price (in euros)") +
+      theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+            plot.title = element_text(size = 15, hjust = 0.5, face = "bold"),
+            legend.position = "none",
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank()) +
+      scale_fill_manual("legend", values = c("green" = "#007f00", "red" = "#cc0000"))
 
     return(list(
-      c(negativ_coef, positiv_coef),
-      plot
-    )) #Returns the two
-
+      table_regression,
+      plot))
   }
 
   carro <- eventReactive(input$go, {
@@ -103,9 +116,9 @@ mod_regression <- function(input, output, session, dataframe) {
   })
 
 
-  output$regression_table <- renderTable({
+  output$regression_table <- renderText({
     carro()[[1]]
-  }, colnames = FALSE)
+  })
 
   output$regression_plot <- renderPlot({
     carro()[[2]]
