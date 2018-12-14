@@ -74,6 +74,7 @@ usethis::use_package("scales")
 usethis::use_package("tibble")
 usethis::use_package("purrr")
 usethis::use_package("stringr")
+usethis::use_package("kableExtra")
 
 # R : set version with a patchlevel (z in x.y.z) = 0
 

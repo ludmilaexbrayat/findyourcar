@@ -37,7 +37,9 @@ mod_regressionUI <- function(id) {
 #' @import tibble
 #' @importFrom purrr pmap_chr
 #' @importFrom utils data
-#' @import kable
+#' @importFrom kableExtra kable
+#' @importFrom kableExtra kable_styling
+#' @importFrom kableExtra column_spec
 #' @export
 #' @rdname mod_regressionUI
 mod_regression <- function(input, output, session, dataframe) {
@@ -56,7 +58,33 @@ mod_regression <- function(input, output, session, dataframe) {
     # Creating the basis table
     df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, choice)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
-    keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("Diesel car","Electric car","Car with + 10'000 km","Gasoline car","Hybrid car","GPL car","Unvonventional transmission type car","Manual transmission car","Semi-atomatic transmission car","Car from a profresional seller","Car with 4 doors","Car with 5 doors","Car with one more door"))
+    keys <- data.frame(coef=c("energieDiesel",
+                              "energieElectrique",
+                              "kilometrage",
+                              "energieEssence",
+                              "energieHybride",
+                              "energieGPL ou GNL",
+                              "transmissionAutres",
+                              "transmissionManuelle",
+                              "transmissionSemi automatique",
+                              "is_pro",
+                              "nb_portes4",
+                              "nb_portes5",
+                              "nb_portes"),
+                       name_i=c("Diesel car",
+                                "Electric car",
+                                "Car with + 10'000 km",
+                                "Gasoline car",
+                                "Hybrid car",
+                                "GPL car",
+                                "Unvonventional transmission type car",
+                                "Manual transmission car",
+                                "Semi-atomatic transmission car",
+                                "Car from a profresional seller",
+                                "Car with 4 doors",
+                                "Car with 5 doors",
+                                "Car with one more door")) %>%
+      dplyr::mutate(coef = as.character(coef))
 
     # Taking out the intercept (as it doesnt matter for our study)
     df_significant_coef <- df_significant_coef %>%
@@ -80,9 +108,9 @@ mod_regression <- function(input, output, session, dataframe) {
                                      Estimate <= 0 ~ "you could save about"),
                Estimate_formated = paste0(abs(round(Estimate,0)), " euros")) %>%
         dplyr::select(if_you, coef, you_could, Estimate_formated) %>%
-        kable(col.names = c()) %>%
-        kable_styling() %>%
-        column_spec(c(2,4), bold = T)
+        kableExtra::kable(col.names = c()) %>%
+        kableExtra::kable_styling() %>%
+        kableExtra::column_spec(c(2,4), bold = T)
 
 
    # Building the object that will display the results as a plot
@@ -92,7 +120,7 @@ mod_regression <- function(input, output, session, dataframe) {
       aes(x = reorder(coef, Estimate),
           y = Estimate,
           fill = causes_an_increase,
-          title = "Which features can make you to save money?") +
+          title = "Which features can make you save money?") +
       geom_col() +
       geom_text(aes(label = case_when(Estimate > 0 ~ paste0("+",round(Estimate,0)),
                                       Estimate <= 0 ~ as.character(round(Estimate,0)))),

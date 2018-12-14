@@ -29,6 +29,10 @@ globalVariables(
     "modele",
     "longitude",
     "coef",
-    "name_i"
+    "name_i",
+    "if_you",
+    "you_could",
+    "Estimate_formated",
+    "causes_an_increase"
   )
 )

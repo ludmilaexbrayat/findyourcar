@@ -23,7 +23,8 @@ to_install <- c("DT",
                 "scales",
                 "tibble",
                 "purrr",
-                "stringr")
+                "stringr",
+                "kableExtra")
 for (i in to_install) {
   message(paste("looking for ", i))
   if (!requireNamespace(i)) {

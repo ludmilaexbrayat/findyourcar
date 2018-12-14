@@ -48,7 +48,8 @@ Imports:
     stats,
     tibble,
     units,
-    stringr
+    stringr,
+    kableExtra
 Suggests:
     knitr,
     rmarkdown,
