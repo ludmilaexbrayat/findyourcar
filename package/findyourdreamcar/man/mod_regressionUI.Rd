@@ -10,7 +10,7 @@ mod_regressionUI(id)
 mod_regression(input, output, session, dataframe)
 }
 \arguments{
-\item{id}{id for proper interaction with shiny}
+\item{id}{shiny id}
 
 \item{input}{internal}
 
@@ -18,26 +18,12 @@ mod_regression(input, output, session, dataframe)
 
 \item{session}{internal}
 
-\item{dataframe}{dataframe with at one column named "prix-euros" containing the price}
+\item{dataframe}{dataframe with columns named "prix-euros", "nom_commune", "carrosserie", "transmission", "brand", "date", "energie", "nb_places", "kilometrage_km" and "nb_portes"}
 }
 \description{
-A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
+A shiny Module that performs a regression of the price with respect to other parameters and displays the results for a specific type of car
 }
 \examples{
-library(shiny)
-library(DT)
-if (interactive()){
-ui <- fluidPage(
-  mod_csv_fileInput("fichier"),
-DTOutput("tableau")
-)
-
-server <- function(input, output, session) {
-  data <- callModule(mod_csv_file,"fichier")
-  output$tableau <- renderDT({data()})
-}
-
-shinyApp(ui, server)
-}
+"No example to display"
 
 }

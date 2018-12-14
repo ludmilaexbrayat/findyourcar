@@ -8,21 +8,7 @@
 #' @import shiny
 #' @export
 #' @examples
-#' library(shiny)
-#' library(DT)
-#' if (interactive()){
-#' ui <- fluidPage(
-#'   mod_csv_fileInput("fichier"),
-#' DTOutput("tableau")
-#' )
-#'
-#' server <- function(input, output, session) {
-#'   data <- callModule(mod_csv_file,"fichier")
-#'   output$tableau <- renderDT({data()})
-#' }
-#'
-#' shinyApp(ui, server)
-#' }
+#' "No example to display"
 #'
 mod_country_statsUI <- function(id) {
 
