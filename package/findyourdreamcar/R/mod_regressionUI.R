@@ -51,6 +51,10 @@ mod_regressionUI <- function(id) {
 #' @rdname mod_regressionUI
 mod_regression <- function(input, output, session, dataframe) {
 
+  # Creating a function to get the first element of the first column
+  get_first_col <- function(col) {
+    col %>% unique() %>% sort() %>% head(1)
+  }
 
   # Creating a function that takes a dataset and a value for the type of "carrosserie"
   # and returning the summary of the regression and the base case
