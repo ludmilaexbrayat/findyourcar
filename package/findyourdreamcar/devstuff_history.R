@@ -19,7 +19,7 @@ my_desc <- description$new("DESCRIPTION")
 my_desc$set("Package", "findyourdreamcar")
 
 #Set your name
-my_desc$set("Authors@R", "c(person('Skander', 'Kamoun', email = 'skander.kamoun@polytechnique.edu', role = c('cre', 'aut')), person('Ines', 'VanAgt', email = 'ines.vanagt@polytechnique.edu', role = c('cre', 'aut')), person('Arnaud', 'Fournier', email = 'arnaud.fournier@polytechnique.edu', role = c('cre', 'aut')), person('Ludmila', 'Exbrayat', email = 'ludmila.exbrayat@polytechnique.edu', role = c('cre', 'aut')), person('Gaelle', 'Guillou', email = 'gaelle.guillou@polytechnique.edu', role = c('cre', 'aut')))")
+my_desc$set("Authors@R", "c(person('Skander', 'Kamoun', email = 'skander.kamoun@polytechnique.edu', role = c('cre', 'aut')), person('Ines', 'VanAgt', email = 'ines.vanagt@polytechnique.edu', role = c('aut')), person('Arnaud', 'Fournier', email = 'arnaud.fournier@polytechnique.edu', role = c('aut')), person('Ludmila', 'Exbrayat', email = 'ludmila.exbrayat@polytechnique.edu', role = c('aut')), person('Gaelle', 'Guillou', email = 'gaelle.guillou@polytechnique.edu', role = c('aut')))")
 
 # Remove some author fields
 my_desc$del("Maintainer")

@@ -8,19 +8,19 @@ Authors@R:
              email = "skander.kamoun@polytechnique.edu"),
       person(given = "Ines",
              family = "VanAgt",
-             role = c("cre", "aut"),
+             role = "aut",
              email = "ines.vanagt@polytechnique.edu"),
       person(given = "Arnaud",
              family = "Fournier",
-             role = c("cre", "aut"),
+             role = "aut",
              email = "arnaud.fournier@polytechnique.edu"),
       person(given = "Ludmila",
              family = "Exbrayat",
-             role = c("cre", "aut"),
+             role = "aut",
              email = "ludmila.exbrayat@polytechnique.edu"),
       person(given = "Gaelle",
              family = "Guillou",
-             role = c("cre", "aut"),
+             role = "aut",
              email = "gaelle.guillou@polytechnique.edu"))
 Description: Find your dream car with our production-ready app
     based on scrapped Paru Vendu listings from oct-nov 2018.
