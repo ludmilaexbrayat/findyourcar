@@ -33,6 +33,7 @@ mod_regressionUI <- function(id) {
 #' @importFrom stringr str_to_lower
 #' @importFrom stats lm
 #' @importFrom stats coef
+#' @importFrom stats reorder
 #' @import tibble
 #' @importFrom purrr pmap_chr
 #' @importFrom utils data
@@ -80,10 +81,10 @@ mod_regression <- function(input, output, session, dataframe) {
     negativ_coef <- df_significant_coef %>% filter(Estimate<0)
 
 
-    negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef),"you could save about", -signif(Estimate,2), "€")})
+    negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef),"you could save about", -signif(Estimate,2), "euros")})
 
 
-    positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef), "you would pay an extra", signif(Estimate,2), "€")})
+    positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef), "you would pay an extra", signif(Estimate,2), "euros")})
     plot <- ggplot(df_significant_coef)+
       aes(x=reorder(coef, Estimate), y=Estimate, title="Save money on:")+
       labs(x = "Factor", y="Amount saved in euros")+
