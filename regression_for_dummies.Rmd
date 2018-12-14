@@ -22,7 +22,7 @@ Sys.setlocale(locale="en_US.UTF-8")
 ```
 
 ```{r Load Data}
-reg_data <- read_csv("archive/datasets/first_dataset_full.csv")
+reg_data <- read_csv("package/findyourdreamcar/data-raw/cardata.csv")
 ```
 
 
@@ -30,6 +30,15 @@ reg_data <- read_csv("archive/datasets/first_dataset_full.csv")
 ```{r, function shiny}
 
 
+regression_function <- function(data_reg, carrosserie){
+
+  type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
+  
+  data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
+  
+  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
+  return(summary(reg_sol))
+}
 
 reg_shiny_function <- function(carrosserie, df){
   
@@ -70,20 +79,8 @@ positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If 
 return(c(negativ_coef,positiv_coef)) #Returns the two
 
 }
+
 reg_shiny_function("Berline", reg_data)
-
-
-
-
-regression_function <- function(data_reg, carrosserie){
-
-  type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
-  
-  data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
-  
-  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
-  return(summary(reg_sol))
-}
 
 ```
 
