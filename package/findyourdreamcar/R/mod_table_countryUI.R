@@ -13,6 +13,7 @@ mod_table_countryUI <- function(id) {
 
   ns <- NS(id)
 
+  # Displaying the result table
   DT::DTOutput(ns("table"))
 
 }
@@ -34,7 +35,8 @@ mod_table_countryUI <- function(id) {
 #' @rdname mod_table_countryUI
 mod_table_country <- function(input, output, session, dataframe) {
 
-  # Creating an eventreactive for the basic filters on the condition of the "Go" button
+  # Creating an eventReactive for the results corresponding to the basic filtering
+  # of the user at the country level
   data_filtered_basic_country <- eventReactive(input$go, {
     dataframe %>%
       filter(
@@ -43,11 +45,12 @@ mod_table_country <- function(input, output, session, dataframe) {
       )
   })
 
-  # Creating a reactive for the advanced filters at the country level
+  # Creating a reactive for the results corresponding to the advanced filters
+  # of the user at the country level
   data_filtered_advanced_country <- reactive({
     data_filtered_basic_country() %>%
       dplyr::mutate(
-        year = substr(date, 0, 4)
+        year = substr(date, 0, 4) # Extracting year from date column
       ) %>%
       dplyr::filter(
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
@@ -60,6 +63,7 @@ mod_table_country <- function(input, output, session, dataframe) {
       )
   })
 
+  # Creating a function to output the dataframe with appropriate colnames
   result_table <- function(data) {
     table <- as.data.frame(data) %>%
       dplyr::select(prix_euros, brand, modele, nom_commune, kilometrage_km, transmission) %>%

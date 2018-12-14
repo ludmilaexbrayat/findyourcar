@@ -2,13 +2,20 @@
 #' @import shiny
 app_ui <- function() {
   fluidPage(
+
+    # Displaying the logo
     titlePanel(title=div(img(src="www/logo.png"))),
+
     sidebarLayout(
+
       sidebarPanel(
+        # Displaying basic filtering panel on the left
         mod_basic_filteringUI("fichier")
       ),
+
       mainPanel(
         tabsetPanel(type = "tabs",
+
                     tabPanel("Welcome",
                              h3(" "),
                              h3(" "),
@@ -46,15 +53,16 @@ app_ui <- function() {
                              ),
 
                     tabPanel("1. Learn where to save money",
-                             # Left column with adjustment inputs
                              h3("Prices of the main features"),
                              HTML('<b><p style="color:#e59400">How much could you save if you purchased a car with a greater mileage? Or with a manual transmission?</p></b>
                                   You can find the answers to these questions here. We performed a regression on the cars around you that meet your "type of car" criteria, and shared the findings below.'),
                              h3(" "),
+                             # Displaying the three regression output: text of default case, result table and result plot
                              mod_regressionUI("fichier")
                              ),
 
                     tabPanel("2. Choose your options",
+
                              # Left column with adjustment inputs
                              HTML('<br>
                                   <br>
@@ -63,17 +71,23 @@ app_ui <- function() {
                              column(5,
                                     HTML("<h3>Pick your favorite features...</h3>
                                          <br>"),
+                                    # Displaying advanced filtering panel
                                     mod_advanced_filteringUI("fichier")
                                     ),
+                             # Spacing both columns
                              column(1.5),
+
+                             # Right column with result outputs
                              column(5,
                                     HTML("<h3>... and get a price estimate</h3>
                                        <br>"),
                                     h3(" "),
                                     h3(" "),
+                                    # Area output
                                     mod_area_statsUI("fichier"),
                                     h3(" "),
                                     h3(" "),
+                                    # Country output
                                     mod_country_statsUI("fichier")
                                     )),
 

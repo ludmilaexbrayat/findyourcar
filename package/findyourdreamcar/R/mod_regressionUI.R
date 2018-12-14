@@ -13,7 +13,14 @@ mod_regressionUI <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Displaying the default case text
+    textOutput(ns("regression_default_case")),
+    h3(""),
+
+    # Displaying the output table of the regression
     tableOutput(ns("regression_table")),
+
+    # Displaying the plot output of the regression
     plotOutput(ns("regression_plot"))
   )
 
@@ -45,19 +52,30 @@ mod_regressionUI <- function(id) {
 mod_regression <- function(input, output, session, dataframe) {
 
 
+  # Creating a function that takes a dataset and a value for the type of "carrosserie"
+  # and returning the summary of the regression and the base case
   regression_function <- function(data_reg, choix){
 
-    data_reg <- data_reg %>% dplyr::filter(carrosserie == choix) #Filter the dataset for this type of car
+    data_reg <- data_reg %>% filter(carrosserie == choix) #Filter the dataset for this type of car
 
-    reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg)
-    return(summary(reg_sol))
+    # List min configuration
+    min_config_table <- data_reg %>% dplyr::select(energie, transmission, is_pro, kilometrage_km, nb_portes) %>%
+      dplyr::mutate_all(get_first_col) %>% utils::head(1)
+
+    reg_sol <- lm(prix_euros  ~ energie + transmission + is_pro + kilometrage_km + nb_portes, data_reg)
+
+    return(c(summary(reg_sol), min_config_table))
   }
 
+  # Creating a function taking a dataset and a value for the type of "carrosserie"
+  # and returning a list with the resulting dataframe, the plot and the text with the
+  # default case
   reg_shiny_function <- function(df, choice){
 
     # Creating the basis table
     df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, choice)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
+    # Translating coefficients into real terms
     keys <- data.frame(coef=c("energieDiesel",
                               "energieElectrique",
                               "kilometrage",
@@ -73,14 +91,14 @@ mod_regression <- function(input, output, session, dataframe) {
                               "nb_portes"),
                        name_i=c("Diesel car",
                                 "Electric car",
-                                "Car with + 10'000 km",
+                                "Car with + 10,000 km",
                                 "Gasoline car",
                                 "Hybrid car",
                                 "GPL car",
-                                "Unvonventional transmission type car",
+                                "Unconventional transmission type car",
                                 "Manual transmission car",
-                                "Semi-atomatic transmission car",
-                                "Car from a profresional seller",
+                                "Semi-automatic transmission car",
+                                "Car from a professional seller",
                                 "Car with 4 doors",
                                 "Car with 5 doors",
                                 "Car with one more door")) %>%
@@ -88,19 +106,24 @@ mod_regression <- function(input, output, session, dataframe) {
 
     # Taking out the intercept (as it doesnt matter for our study)
     df_significant_coef <- df_significant_coef %>%
-      filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
+      filter(coef== "kilometrage_km") %>%  #N eed to change kilometrage to have compute change for 10k
       mutate(Estimate=Estimate*10000, coef="kilometrage") %>%
       bind_rows(df_significant_coef) %>%
       filter(coef != "kilometrage_km") %>%
-
       filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
-      left_join(keys, by="coef") %>% #join on coef to have interpretable name
+      left_join(keys, by="coef") %>% # Join on coef to have interpretable name
       mutate(coef=as.character(name_i)) %>%
-      filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+      filter(`Pr(>|t|)`<0.05) %>% # Filter for significant features only
       dplyr::select(coef, Estimate)
 
+    # Creating the text with the default configuration
+    min_config <- paste("Default configuration for this regression is a car with: power regime",
+                        str_to_lower(regression_function(df, choice)$energie),
+                        ", transmission", str_to_lower(regression_function(df, choice)$transmission),
+                        ", ", regression_function(df, choice)$nb_portes, "doors and sold by an individual seller.")
 
-    # Building the object that will display the results as sentences
+
+    # Building the object that will display the results as a table
     table_regression <- df_significant_coef %>%
         mutate(if_you = "If you switch to a",
                coef = paste0(str_to_lower(coef), ","),
@@ -136,13 +159,13 @@ mod_regression <- function(input, output, session, dataframe) {
 
     return(list(
       table_regression,
-      plot))
+      plot,
+      min_config))
   }
 
   carro <- eventReactive(input$go, {
     reg_shiny_function(dataframe, input$carrosserie)
   })
-
 
   output$regression_table <- renderText({
     carro()[[1]]
@@ -150,6 +173,10 @@ mod_regression <- function(input, output, session, dataframe) {
 
   output$regression_plot <- renderPlot({
     carro()[[2]]
+  })
+
+  output$regression_default_case <- renderText({
+    carro()[[3]]
   })
 
 }

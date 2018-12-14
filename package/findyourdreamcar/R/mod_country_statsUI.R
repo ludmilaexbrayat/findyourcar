@@ -56,7 +56,7 @@ mod_country_stats <- function(input, output, session, dataframe) {
   data_filtered_advanced_country <- reactive({
     data_filtered_basic_country() %>%
       dplyr::mutate(
-        year = substr(date, 0, 4)
+        year = substr(date, 0, 4) # Extracting year from date column
       ) %>%
       dplyr::filter(
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
@@ -69,6 +69,7 @@ mod_country_stats <- function(input, output, session, dataframe) {
       )
   })
 
+  # Creating a vector with the 3 stats
   result_price <- reactive({
     c(
       mean(data_filtered_advanced_country()$prix_euros),

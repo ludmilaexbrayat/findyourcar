@@ -26,6 +26,7 @@ mod_advanced_filteringUI <- function(id) {
 
   ns <- NS(id)
 
+  # Displaying a list of advanced selectors for the user
   tagList(
     selectInput(ns("transmission"), "Choose the type of transmission:", choices = c("No Preference", cardata$transmission[!is.na(cardata$transmission)] %>% unique())),
     selectInput(ns("brand"), "Brand:", choices = c("No Preference", cardata$brand[!is.na(cardata$brand)] %>% unique() %>% sort())),

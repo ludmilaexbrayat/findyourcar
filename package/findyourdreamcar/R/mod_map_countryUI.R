@@ -14,6 +14,7 @@ mod_map_countryUI <- function(id) {
 
   ns <- NS(id)
 
+  # Plotting the country map
   plotOutput(ns("map"))
 
 }
@@ -40,39 +41,50 @@ mod_map_countryUI <- function(id) {
 #' @rdname mod_map_countryUI
 mod_map_country <- function(input, output, session, dataframe) {
 
+  # Assigning the crs to a specific variable to align all sf objects on the same crs
   crs_lambert <- 2154
 
+  # Laoding department map shapes
   dept_193 <- sf::st_read(system.file("extdata", "DEPARTEMENT.shp", package = "findyourdreamcar"))
 
+  # Aligning crs of department map
   dpt_map <- dept_193 %>%
     sf::st_transform(crs = crs_lambert)
 
+  # Transforming the department map into a region map
   region_map <- dpt_map %>%
     dplyr::group_by(NOM_REG, CODE_REG) %>%
     summarize()
 
-  # Adding the coordinates of the centroids of each region
+  # Creating an sf object with the coordinates of the centroids of each region for
+  # plotting the label on each region
   coord <- region_map %>%
     sf::st_centroid() %>%
     dplyr::arrange(CODE_REG) %>%
     sf::st_coordinates() %>%
     as.data.frame()
 
+  # Creating an sf object of the list of regions arranged according to the code of the region
   list_regions <- region_map %>% dplyr::arrange(CODE_REG)
 
+  # Adding the corresponding region code to the centroids
   coord$CODE_REG <- list_regions$CODE_REG
 
+  # Transforming the dataset into an sf object from latitude and longitude columns
   dataset_map <- dataframe %>%
     dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
     sf::st_as_sf(coords = c("longitude", "latitude"),
              crs = 4326) %>%
     sf::st_transform(crs = crs_lambert)
 
+  # Creating an eventReactive for the user input location
   point_user <- eventReactive(input$go, {dataset_map %>%
       dplyr::filter(nom_commune == input$city) %>%
       head(n = 1)
   })
 
+  # Creating an eventReactive for the results corresponding to the basic filtering
+  # of the user at the country level
   data_filtered_basic_country <- eventReactive(input$go, {
     dataset_map %>%
       dplyr::filter(
@@ -85,7 +97,7 @@ mod_map_country <- function(input, output, session, dataframe) {
   prices_per_region <- reactive({dataset_map %>%
       sf::st_join(dpt_map) %>%
       dplyr::mutate(
-        year = substr(date, 0, 4)
+        year = substr(date, 0, 4) # Extracting the year from the date column
       ) %>%
       dplyr::filter(carrosserie == input$carrosserie,
              (transmission %in% input$transmission) | (input$transmission == "No Preference"),
@@ -99,6 +111,8 @@ mod_map_country <- function(input, output, session, dataframe) {
       dplyr::summarize(mean_price = as.integer(mean(prix_euros))) %>%
       merge(coord, by = c("CODE_REG" = "CODE_REG"))})
 
+  # Creating a reactive for the results corresponding to the advanced filters
+  # of the user at his area level
   cc <- scales::seq_gradient_pal("white","orange")(seq(0,1,length.out=15))
   cc_dark <- scales::seq_gradient_pal("orange","black")(seq(0,1,length.out=15))
 

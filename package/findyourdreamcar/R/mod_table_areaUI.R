@@ -13,6 +13,7 @@ mod_table_areaUI <- function(id) {
 
   ns <- NS(id)
 
+  # Displaying the result table
   DT::DTOutput(ns("table_area"))
 
 }
@@ -36,19 +37,24 @@ mod_table_areaUI <- function(id) {
 #' @rdname mod_table_areaUI
 mod_table_area <- function(input, output, session, dataframe) {
 
+  # Assigning the crs to a specific variable to align all sf objects on the same crs
   crs_lambert <- 2154
 
+  # Transforming the dataset into an sf object from latitude and longitude columns
   dataset_map <- dataframe %>%
     dplyr::filter(!is.na(longitude) & !is.na(latitude)) %>%
     sf::st_as_sf(coords = c("longitude", "latitude"),
              crs = 4326) %>%
     sf::st_transform(crs = crs_lambert)
 
+  # Creating an eventReactive for the user input location
   point_user <- eventReactive(input$go, {dataset_map %>%
       dplyr::filter(nom_commune == input$city) %>%
       head(n = 1)
   })
 
+  # Creating an eventReactive for the results corresponding to the basic filtering
+  # of the user at the country level
   data_filtered_basic_country <- eventReactive(input$go, {
     dataset_map %>%
       dplyr::filter(
@@ -57,12 +63,13 @@ mod_table_area <- function(input, output, session, dataframe) {
       )
   })
 
-  # Creating a reactive for the advanced filters at the country level
+  # Creating a reactive for the results corresponding to the advanced filters
+  # of the user at his area level
   data_filtered_advanced_100km <- reactive({
     data_filtered_basic_country() %>%
       dplyr::mutate(
-        year = substr(date, 0, 4),
-        distance = as.vector(sf::st_distance(geometry, point_user()))
+        year = substr(date, 0, 4), # Extracting year from date column
+        distance = as.vector(sf::st_distance(geometry, point_user())) # Calculating the distance between the user and each point
       ) %>%
       dplyr::filter(
         distance <= 100000,
@@ -76,6 +83,7 @@ mod_table_area <- function(input, output, session, dataframe) {
       )
   })
 
+  # Creating a function to output the dataframe with appropriate colnames
   result_table <- function(data) {
     table <- as.data.frame(data) %>%
       dplyr::select(prix_euros, brand, modele, nom_commune, kilometrage_km, transmission) %>%

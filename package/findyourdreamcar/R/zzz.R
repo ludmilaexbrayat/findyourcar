@@ -33,6 +33,8 @@ globalVariables(
     "if_you",
     "you_could",
     "Estimate_formated",
-    "causes_an_increase"
+    "causes_an_increase",
+    "is_pro",
+    "get_first_col"
   )
 )
