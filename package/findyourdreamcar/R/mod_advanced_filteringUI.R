@@ -1,7 +1,7 @@
 #' @title   mod_advanced_fileringUI and mod_advanced_filtering
-#' @description  A shiny Module that allows the user to select the advanced filters
+#' @description  A shiny module that allows the user to select advanced filters
 #'
-#' @param id id for proper interaction with shiny
+#' @param id shiny id
 #'
 #' @import dplyr
 #' @import magrittr
@@ -9,19 +9,17 @@
 #' @export
 #' @examples
 #' library(shiny)
-#' library(DT)
+#' library(dplyr)
+#' library(magrittr)
 #' if (interactive()){
-#' ui <- fluidPage(
-#'   mod_csv_fileInput("fichier"),
-#' DTOutput("tableau")
-#' )
+#'   ui <- fluidPage(
+#'     mod_advanced_filteringUI("fichier")
+#'   )
 #'
-#' server <- function(input, output, session) {
-#'   data <- callModule(mod_csv_file,"fichier")
-#'   output$tableau <- renderDT({data()})
-#' }
+#'   server <- function(input, output, session) {
+#'   }
 #'
-#' shinyApp(ui, server)
+#'   shinyApp(ui, server)
 #' }
 #'
 mod_advanced_filteringUI <- function(id) {
@@ -41,7 +39,7 @@ mod_advanced_filteringUI <- function(id) {
 }
 
 
-#' mod_basic_filtering server function
+#' mod_advanced_filtering server function
 #'
 #' @param input internal
 #' @param output internal
@@ -50,27 +48,4 @@ mod_advanced_filteringUI <- function(id) {
 #' @export
 #' @rdname mod_advanced_filteringUI
 mod_advanced_filtering <- function(input, output, session) {
-
-  # data_filtered_advanced_country <- reactive({
-  #   dataframe %>%
-  #     filter(
-  #       !is.na(prix_euros),
-  #       carrosserie == input$carrosserie
-  #     ) %>%
-  #     mutate(
-  #       year = substr(date, 0, 4)
-  #     ) %>%
-  #     filter(
-  #       (transmission %in% input$transmission) | (input$transmission == "No Preference"),
-  #       (brand %in% input$brand) | (input$brand == "No Preference"),
-  #       #year >= input$year_built[1] & year <= input$year_built[2],
-  #       kilometrage_km >= input$mileage[1] & kilometrage_km <= input$mileage[2],
-  #       (energie %in% input$fuel) | (input$fuel == "No Preference"),
-  #       (nb_places %in% input$nb_seats) | (input$nb_seats == "No Preference"),
-  #       (nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")
-  #     )
-  # })
-  #
-  # return(data_filtered_advanced_country)
-
 }

@@ -64,7 +64,7 @@ mod_map_countryUI <- function(id) {
 #' @import sf
 #' @import units
 #' @import readr
-#' @import scales
+#' @importFrom scales seq_gradient_pal
 #' @import ggplot2
 #' @importFrom utils data
 #' @importFrom utils head

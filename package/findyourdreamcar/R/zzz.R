@@ -27,6 +27,7 @@ globalVariables(
     "Estimate",
     "Pr(>|t|)",
     "modele",
-    "longitude"
+    "longitude",
+    "coef"
   )
 )

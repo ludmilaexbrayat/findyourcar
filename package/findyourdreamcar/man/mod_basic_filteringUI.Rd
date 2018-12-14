@@ -10,7 +10,7 @@ mod_basic_filteringUI(id)
 mod_basic_filtering(input, output, session)
 }
 \arguments{
-\item{id}{id for proper interaction with shiny}
+\item{id}{shiny id}
 
 \item{input}{internal}
 
@@ -19,23 +19,22 @@ mod_basic_filtering(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module that allows the user to select basic filters
+A shiny module that allows the user to select basic filters
 }
 \examples{
 library(shiny)
-library(DT)
+library(dplyr)
+library(magrittr)
+library(utils)
 if (interactive()){
-ui <- fluidPage(
-  mod_csv_fileInput("fichier"),
-DTOutput("tableau")
-)
+  ui <- fluidPage(
+    mod_basic_filteringUI("fichier")
+  )
 
-server <- function(input, output, session) {
-  data <- callModule(mod_csv_file,"fichier")
-  output$tableau <- renderDT({data()})
-}
+  server <- function(input, output, session) {
+  }
 
-shinyApp(ui, server)
+  shinyApp(ui, server)
 }
 
 }

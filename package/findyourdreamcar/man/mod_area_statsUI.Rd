@@ -10,7 +10,7 @@ mod_area_statsUI(id)
 mod_area_stats(input, output, session, dataframe)
 }
 \arguments{
-\item{id}{id for proper interaction with shiny}
+\item{id}{shiny id}
 
 \item{input}{internal}
 
@@ -18,26 +18,28 @@ mod_area_stats(input, output, session, dataframe)
 
 \item{session}{internal}
 
-\item{dataframe}{dataframe with at one column named "prix-euros" containing the price}
+\item{dataframe}{dataframe with columns named "prix-euros", "latitude", "longitude", "nom_commune", "carrosserie", "transmission", "brand", "date", "energie", "nb_places", "kilometrage_km" and "nb_portes"}
 }
 \description{
-A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
+A shiny module that displays principal statistics for the basic and advanced filters selected by the user in a 100km radius
 }
 \examples{
 library(shiny)
-library(DT)
+library(dplyr)
+library(magrittr)
+library(readr)
+library(units)
+library(utils)
 if (interactive()){
-ui <- fluidPage(
-  mod_csv_fileInput("fichier"),
-DTOutput("tableau")
-)
+  ui <- fluidPage(
+    mod_area_statsUI("fichier")
+  )
 
-server <- function(input, output, session) {
-  data <- callModule(mod_csv_file,"fichier")
-  output$tableau <- renderDT({data()})
-}
+  server <- function(input, output, session) {
+    callModule(mod_area_stats, "fichier", cardata)
+  }
 
-shinyApp(ui, server)
+  shinyApp(ui, server)
 }
 
 }

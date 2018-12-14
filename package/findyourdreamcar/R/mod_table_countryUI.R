@@ -21,9 +21,7 @@
 #'
 #' @param id id for proper interaction with shiny
 #'
-#' @import dplyr
 #' @importFrom DT DTOutput
-#' @import magrittr
 #' @import shiny
 #' @export
 #' @examples

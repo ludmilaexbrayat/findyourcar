@@ -21,10 +21,7 @@
 #'
 #' @param id id for proper interaction with shiny
 #'
-#' @import dplyr
-#' @import magrittr
 #' @import shiny
-#' @import DT
 #' @export
 #' @examples
 #' library(shiny)
@@ -60,11 +57,12 @@ mod_regressionUI <- function(id) {
 #' @param dataframe dataframe with at one column named "prix-euros" containing the price
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr %>%
 #' @import shiny
-#' @import stats
+#' @importFrom stats lm
+#' @importFrom stats coef
 #' @import tibble
-#' @import purrr
+#' @importFrom purrr pmap_chr
 #' @importFrom utils data
 #' @export
 #' @rdname mod_regressionUI

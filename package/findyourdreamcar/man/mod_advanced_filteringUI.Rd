@@ -10,7 +10,7 @@ mod_advanced_filteringUI(id)
 mod_advanced_filtering(input, output, session)
 }
 \arguments{
-\item{id}{id for proper interaction with shiny}
+\item{id}{shiny id}
 
 \item{input}{internal}
 
@@ -19,23 +19,21 @@ mod_advanced_filtering(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module that allows the user to select the advanced filters
+A shiny module that allows the user to select advanced filters
 }
 \examples{
 library(shiny)
-library(DT)
+library(dplyr)
+library(magrittr)
 if (interactive()){
-ui <- fluidPage(
-  mod_csv_fileInput("fichier"),
-DTOutput("tableau")
-)
+  ui <- fluidPage(
+    mod_advanced_filteringUI("fichier")
+  )
 
-server <- function(input, output, session) {
-  data <- callModule(mod_csv_file,"fichier")
-  output$tableau <- renderDT({data()})
-}
+  server <- function(input, output, session) {
+  }
 
-shinyApp(ui, server)
+  shinyApp(ui, server)
 }
 
 }

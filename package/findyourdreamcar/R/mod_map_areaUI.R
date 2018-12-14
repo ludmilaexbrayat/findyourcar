@@ -62,6 +62,7 @@ mod_map_areaUI <- function(id) {
 #' @import magrittr
 #' @import shiny
 #' @import sf
+#' @importFrom scales seq_gradient_pal
 #' @import ggplot2
 #' @import units
 #' @import readr
