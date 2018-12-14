@@ -19,6 +19,8 @@
 #' @title   mod_area_statsUI and mod_area_stats
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny

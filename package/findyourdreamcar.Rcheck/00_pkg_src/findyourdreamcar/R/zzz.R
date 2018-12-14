@@ -1,2 +1,32 @@
 # list all global variables
-globalVariables(".")
+globalVariables(
+  c(
+    "cardata",
+    "loongitude",
+    "latitude",
+    "nom_commune",
+    "prix_euros",
+    "carrosserie",
+    "geometry",
+    "distance",
+    "transmission",
+    "brand",
+    "year",
+    "kilometrage_km",
+    "energie",
+    "nb_places",
+    "nb_portes",
+    "km",
+    "geometry",
+    "CODE_REG",
+    "NOM_REG",
+    "nom_commune",
+    "X",
+    "Y",
+    "mean_price",
+    "Estimate",
+    "Pr(>|t|)",
+    "modele",
+    "longitude"
+  )
+)

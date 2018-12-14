@@ -10,6 +10,8 @@ mod_table_countryUI(id)
 mod_table_country(input, output, session, dataframe)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}

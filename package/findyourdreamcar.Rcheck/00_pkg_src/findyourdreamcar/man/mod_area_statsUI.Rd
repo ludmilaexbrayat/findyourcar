@@ -10,6 +10,8 @@ mod_area_statsUI(id)
 mod_area_stats(input, output, session, dataframe)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}

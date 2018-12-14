@@ -10,6 +10,8 @@ mod_map_areaUI(id)
 mod_map_area(input, output, session, dataframe)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}

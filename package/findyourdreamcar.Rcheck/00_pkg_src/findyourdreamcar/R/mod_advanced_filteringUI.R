@@ -1,6 +1,8 @@
 #' @title   mod_advanced_fileringUI and mod_advanced_filtering
 #' @description  A shiny Module that allows the user to select the advanced filters
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny

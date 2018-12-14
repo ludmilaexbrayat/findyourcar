@@ -1,19 +1,46 @@
 Package: findyourdreamcar
-Title: A shiny template
-Version: 0.1.2
-Authors@R: person("Vincent", "Guyader", email = "vincent@thinkr.fr", role = c("aut", "cre"))
-Description: A template for prod-ready Shiny App.
-License: GPL-3
-Depends: R (>= 3.4.3)
-Imports: DT, glue, graphics, shiny, stats, dplyr, magrittr,
-        RColorBrewer, readr, sf, ggplot2, raster, rasterVis, units,
-        scales, purrr, tibble
-Suggests: testthat, knitr, rmarkdown
+Title: Find Your Dream Car
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Skander",
+             family = "Kamoun",
+             role = c("cre", "aut"),
+             email = "skander.kamoun@polytechnique.edu"),
+      person(given = "Ines",
+             family = "VanAgt",
+             role = "aut",
+             email = "ines.vanagt@polytechnique.edu"),
+      person(given = "Arnaud",
+             family = "Fournier",
+             role = "aut",
+             email = "arnaud.fournier@polytechnique.edu"),
+      person(given = "Ludmila",
+             family = "Exbrayat",
+             role = "aut",
+             email = "ludmila.exbrayat@polytechnique.edu"),
+      person(given = "Gaelle",
+             family = "Guillou",
+             role = "aut",
+             email = "gaelle.guillou@polytechnique.edu"))
+Description: Find your dream car with our production-ready app
+    based on scrapped Paru Vendu listings from oct-nov 2018.
+License: MIT + file LICENSE
+URL: https://github.com/ThinkR-open/findyourdreamcar
+BugReports: https://github.com/ThinkR-open/findyourdreamcar/issues
+Depends: R (>= 3.4.0)
+Imports: dplyr, DT, ggplot2, glue, graphics, magrittr, purrr, raster,
+        rasterVis, RColorBrewer, readr, scales, sf, shiny, stats,
+        tibble, units
+Suggests: knitr, rmarkdown, testthat
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-12-14 00:16:33 UTC; gaelleguillou
-Author: Vincent Guyader [aut, cre]
-Maintainer: Vincent Guyader <vincent@thinkr.fr>
+Packaged: 2018-12-14 08:54:31 UTC; macbookpro
+Author: Skander Kamoun [cre, aut],
+  Ines VanAgt [aut],
+  Arnaud Fournier [aut],
+  Ludmila Exbrayat [aut],
+  Gaelle Guillou [aut]
+Maintainer: Skander Kamoun <skander.kamoun@polytechnique.edu>

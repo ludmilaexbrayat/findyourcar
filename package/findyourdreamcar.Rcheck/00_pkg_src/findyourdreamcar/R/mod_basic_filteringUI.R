@@ -19,6 +19,8 @@
 #' @title   mod_basic_fileringUI and mod_basic_filtering
 #' @description  A shiny Module that allows the user to select basic filters
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
