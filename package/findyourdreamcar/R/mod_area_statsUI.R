@@ -9,16 +9,13 @@
 #' library(shiny)
 #' library(dplyr)
 #' library(magrittr)
-#' library(readr)
-#' library(units)
-#' library(utils)
 #' if (interactive()){
 #'   ui <- fluidPage(
-#'     mod_area_statsUI("fichier")
+#'     mod_country_statsUI("fichier")
 #'   )
 #'
 #'   server <- function(input, output, session) {
-#'     callModule(mod_area_stats, "fichier", cardata)
+#'     callModule(mod_country_stats, "fichier", cardata)
 #'   }
 #'
 #'   shinyApp(ui, server)

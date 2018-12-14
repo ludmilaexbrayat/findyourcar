@@ -1,23 +1,5 @@
-# Naming convention :
-# all Shinymodule have to begin with `mod_`, in lowercase Except for `UI` , `Input` and `Output`
-# use `Input` as sufix if your module is an Input
-# use `Output` as sufix if your module is an Output
-# use `UI` as sufix if your module is both Input and Output
-#
-# examples :
-# ui side : mod_truc_bidulUI
-# server side : mod_truc_bidul
-#
-# ui side : mod_machin_chouetteInput
-# server side : mod_machin_chouette
-
-# all shinyModule must have a documentation page
-# one unique page for both ui and server side ( you can use `#' @rdname` to link both function)
-
-# A minimalist example is mandatory
-
 #' @title   mod_map_areaUI and mod_map_area
-#' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
+#' @description  A shiny module that displays principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
 #' @param id id for proper interaction with shiny
 #'

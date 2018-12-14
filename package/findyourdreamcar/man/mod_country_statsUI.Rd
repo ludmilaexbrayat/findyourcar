@@ -10,7 +10,7 @@ mod_country_statsUI(id)
 mod_country_stats(input, output, session, dataframe)
 }
 \arguments{
-\item{id}{id for proper interaction with shiny}
+\item{id}{shiny id}
 
 \item{input}{internal}
 
@@ -18,10 +18,10 @@ mod_country_stats(input, output, session, dataframe)
 
 \item{session}{internal}
 
-\item{dataframe}{dataframe with at one column named "prix-euros" containing the price}
+\item{dataframe}{dataframe with columns named "prix-euros", "nom_commune", "carrosserie", "transmission", "brand", "date", "energie", "nb_places", "kilometrage_km" and "nb_portes"}
 }
 \description{
-A shiny Module that shows principal statistics for the selected basic and advanced filters of the user
+A shiny module that displays principal statistics for the basic and advanced filters selected by the user in the whole country
 }
 \examples{
 library(shiny)
