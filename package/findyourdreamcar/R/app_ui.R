@@ -27,6 +27,8 @@ app_ui <- function() {
                                   <li>Based on your learnings and whishes, select your features in the tab <i>2. Choose your options</i></li>
                                   <li>Find the localization of the cars that meet your criteria in the tabs <i>3. Find your dream car near your ...</i> and <i>4. ... or in France</i></li>
                                   </ol>
+                                  Dont forget to press "Go" before reading the other tabs.
+                                  <br>
                                   <br>
                                   <h3>Meet the team!</h3>
                                   <br>
@@ -42,6 +44,7 @@ app_ui <- function() {
                                   We scrapped the car listings on ParuVendu that were active between October and November 2018.
                                   ')
                              ),
+
                     tabPanel("1. Learn where to save money",
                              # Left column with adjustment inputs
                              h3("Prices of the main features"),
@@ -50,6 +53,7 @@ app_ui <- function() {
                              h3(" "),
                              mod_regressionUI("fichier")
                              ),
+
                     tabPanel("2. Choose your options",
                              # Left column with adjustment inputs
                              HTML('<br>
@@ -76,6 +80,7 @@ app_ui <- function() {
                     tabPanel("3. Find your dream car near you...",
                              # Map Title
                              div(h3("Available cars around you")),
+                             HTML("This map displays the cars around you that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>"),
                              # Plotting the Map
                              mod_map_areaUI("fichier"),
 
@@ -83,9 +88,11 @@ app_ui <- function() {
                              div(h3("Summary Results")),
                              # Drawing the Table
                              mod_table_areaUI("fichier")),
+
                     tabPanel("4. ... or in France",
                              # Map Title
                              div(h3("Available cars")),
+                             HTML("This map displays the average price per region of the cars that are meeting all the criteria that you've defined in the tab <i>2. Choose your options</i>"),
                              # Plotting the Map
                              mod_map_countryUI("fichier"),
 
