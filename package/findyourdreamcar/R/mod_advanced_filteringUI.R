@@ -47,10 +47,6 @@ mod_advanced_filteringUI <- function(id) {
 #' @param output internal
 #' @param session internal
 #'
-#' @importFrom utils data
-#' @import shiny
-#' @import dplyr
-#' @import magrittr
 #' @export
 #' @rdname mod_advanced_filteringUI
 mod_advanced_filtering <- function(input, output, session) {

@@ -24,7 +24,7 @@
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
-#' @import DT
+#' @importFrom DT DTOutput
 #' @export
 #' @examples
 #' library(shiny)
@@ -62,6 +62,7 @@ mod_table_areaUI <- function(id) {
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
+#' @importFrom DT renderDT
 #' @import sf
 #' @importFrom utils data
 #' @importFrom utils head

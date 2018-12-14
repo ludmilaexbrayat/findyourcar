@@ -22,6 +22,7 @@
 #' @param id id for proper interaction with shiny
 #'
 #' @import dplyr
+#' @importFrom DT DTOutput
 #' @import magrittr
 #' @import shiny
 #' @export
@@ -60,6 +61,7 @@ mod_table_countryUI <- function(id) {
 #'
 #' @import dplyr
 #' @import magrittr
+#' @importFrom DT renderDT
 #' @import shiny
 #' @importFrom utils data
 #' @export
