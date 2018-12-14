@@ -73,6 +73,7 @@ usethis::use_package("units")
 usethis::use_package("scales")
 usethis::use_package("tibble")
 usethis::use_package("purrr")
+usethis::use_package("stringr")
 
 # R : set version with a patchlevel (z in x.y.z) = 0
 

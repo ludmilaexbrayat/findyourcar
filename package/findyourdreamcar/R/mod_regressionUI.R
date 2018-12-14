@@ -30,6 +30,7 @@ mod_regressionUI <- function(id) {
 #' @import dplyr
 #' @importFrom magrittr %>%
 #' @import shiny
+#' @importFrom stringr str_to_lower
 #' @importFrom stats lm
 #' @importFrom stats coef
 #' @import tibble
@@ -51,21 +52,22 @@ mod_regression <- function(input, output, session, dataframe) {
   reg_shiny_function <- function(df, choice){
 
     #Lets create the table we'll use later
+    #Lets create the table we'll use later
     df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, choice)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
-    keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("diesel car","electric car","car with + 10'000 km","gasoline car","hybrid car","GPL car","unvonventional transmission type car","manual transmission car","semi-atomatic transmission car","car from a profresional seller","car with 4 doors","car with 5 doors","nb_portes"))
+    keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("Diesel car","Electric car","Car with + 10'000 km","Gasoline car","Hybrid car","GPL car","Unvonventional transmission type car","Manual transmission car","Semi-atomatic transmission car","Car from a profresional seller","Car with 4 doors","Car with 5 doors","Car with one more door"))
 
     # Take out intercept as it doesnt matter for our study
     df_significant_coef <- df_significant_coef %>%
-      dplyr::filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
-      dplyr::mutate(Estimate=Estimate*10000, coef="kilometrage") %>%
-      dplyr::bind_rows(df_significant_coef) %>%
-      dplyr::filter(coef != "kilometrage_km") %>%
+      filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
+      mutate(Estimate=Estimate*10000, coef="kilometrage") %>%
+      bind_rows(df_significant_coef) %>%
+      filter(coef != "kilometrage_km") %>%
 
-      dplyr::filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
-      dplyr::left_join(keys, by="coef") %>% #join on coef to have interpretable name
-      dplyr::mutate(coef=as.character(name_i)) %>%
-      dplyr::filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+      filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
+      left_join(keys, by="coef") %>% #join on coef to have interpretable name
+      mutate(coef=as.character(name_i)) %>%
+      filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
       dplyr::select(coef, Estimate)
 
 
@@ -74,15 +76,24 @@ mod_regression <- function(input, output, session, dataframe) {
 
     #Split the significant coef into 2 separate table, the positive and the negative
     #So that we can have different interpretation
-    positiv_coef <- df_significant_coef %>% dplyr::filter(Estimate>0)
-    negativ_coef <- df_significant_coef %>% dplyr::filter(Estimate<0)
+    positiv_coef <- df_significant_coef %>% filter(Estimate>0)
+    negativ_coef <- df_significant_coef %>% filter(Estimate<0)
 
 
-    negativ_coef <- negativ_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "euros")})
+    negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef),"you could save about", -signif(Estimate,2), "€")})
 
-    positiv_coef <- positiv_coef %>% purrr::pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "euros")})
 
-    return(c(negativ_coef,positiv_coef)) #Returns the two
+    positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", str_to_lower(coef), "you would pay an extra", signif(Estimate,2), "€")})
+    plot <- ggplot(df_significant_coef)+
+      aes(x=reorder(coef, Estimate), y=Estimate, title="Save money on:")+
+      labs(x = "Factor", y="Amount saved in euros")+
+      geom_col(fill="#E69F20")+
+      theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1))
+
+    return(list(
+      c(negativ_coef, positiv_coef),
+      plot
+    )) #Returns the two
 
   }
 
@@ -90,8 +101,13 @@ mod_regression <- function(input, output, session, dataframe) {
     reg_shiny_function(dataframe, input$carrosserie)
   })
 
+
   output$regression_table <- renderTable({
-    carro()
+    carro()[[1]]
   }, colnames = FALSE)
+
+  output$regression_plot <- renderPlot({
+    carro()[[2]]
+  })
 
 }
