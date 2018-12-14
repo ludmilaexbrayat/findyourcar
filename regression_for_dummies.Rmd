@@ -30,53 +30,74 @@ reg_data <- read_csv("package/findyourdreamcar/data-raw/cardata.csv")
 ```{r, function shiny}
 
 
+get_first_col <- function(col) {
+  col %>% unique() %>% sort() %>% head(1)
+}
+
+
+
 regression_function <- function(data_reg, carrosserie){
 
   type_car <- enquo(carrosserie) #enquo the name of the type of car we wnt tu use in the reg
   
   data_reg <- data_reg %>% filter(carrosserie == !!type_car) #Filter the dataset for this type of car
   
-  reg_sol <- lm(prix_euros  ~ energie + transmission+is_pro+kilometrage_km+nb_portes, data_reg) 
-  return(summary(reg_sol))
+  # List min configuration
+  min_config_table <- data_reg %>% dplyr::select(energie, transmission, is_pro, kilometrage_km, nb_portes) %>%
+    dplyr::mutate_all(get_first_col) %>% utils::head(1)
+  
+  reg_sol <- lm(prix_euros  ~ energie + transmission + is_pro + kilometrage_km + nb_portes, data_reg) 
+  
+  return(c(summary(reg_sol), min_config_table))
 }
 
 reg_shiny_function <- function(carrosserie, df){
   
   carrosserie <- enquo(carrosserie) #enquo the variable
+  
+  reg_result <- regression_function(df, !!carrosserie)
  
-#Lets create the table we'll use later   
-df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, !!carrosserie)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
-
-keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("diesel car","electric car","car with + 10'000 km","gasoline car","hybrid car","GPL car","unvonventional transmission type car","manual transmission car","semi-atomatic transmission car","car from a profresional seller","car with 4 doors","car with 5 doors","nb_portes"))
-
- # Take out intercept as it doesnt matter for our study
-df_significant_coef <- df_significant_coef %>% 
-                              filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
-                              mutate(Estimate=Estimate*10000, coef="kilometrage") %>% 
-                              bind_rows(df_significant_coef) %>% 
-                              filter(coef != "kilometrage_km") %>% 
-       
-        filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
-        left_join(keys, by="coef") %>% #join on coef to have interpretable name
-        mutate(coef=as.character(name_i)) %>% 
-        filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
-        dplyr::select(coef, Estimate)
-
-
-#Long step, we change individually the name of oef for interpretation (couldn't do it in 1 mutatet as regression don't all have the same coefficients)
-
-
-#Split the significant coef into 2 separate table, the positive and the negative
-#So that we can have different interpretation
-positiv_coef <- df_significant_coef %>% filter(Estimate>0)
-negativ_coef <- df_significant_coef %>% filter(Estimate<0)
-
-
-negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "€")})
-
-positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "€")})
-
-return(c(negativ_coef,positiv_coef)) #Returns the two
+  #Lets create the table we'll use later   
+  df_significant_coef <- tibble::rownames_to_column(as.data.frame(reg_result$coef), "coef")#Create a data frame with no row names as it is easier to work without
+  
+  keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("diesel car","electric car","car with + 10'000 km","gasoline car","hybrid car","GPL car","unvonventional transmission type car","manual transmission car","semi-atomatic transmission car","car from a profresional seller","car with 4 doors","car with 5 doors","nb_portes"))
+  
+   # Take out intercept as it doesnt matter for our study
+  df_significant_coef <- df_significant_coef %>% 
+                                filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
+                                mutate(Estimate=Estimate*10000, coef="kilometrage") %>% 
+                                bind_rows(df_significant_coef) %>% 
+                                filter(coef != "kilometrage_km") %>% 
+         
+          filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
+          left_join(keys, by="coef") %>% #join on coef to have interpretable name
+          mutate(coef=as.character(name_i)) %>% 
+          filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+          dplyr::select(coef, Estimate)
+  
+  
+  #Long step, we change individually the name of oef for interpretation (couldn't do it in 1 mutatet as regression don't all have the same coefficients)
+  
+  
+  #Split the significant coef into 2 separate table, the positive and the negative
+  #So that we can have different interpretation
+  positiv_coef <- df_significant_coef %>% filter(Estimate>0)
+  negativ_coef <- df_significant_coef %>% filter(Estimate<0)
+  
+  
+  negativ_coef <- negativ_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a",coef,"you could save about", -signif(Estimate,2), "€")})
+  
+  positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If you switch to a", coef, "you would pay an extra", signif(Estimate,2), "€")})
+  
+  #min_config_table <- data.frame(energie = reg_result$energie,
+  #                               transmission = reg_result$transmission,
+  #                               nombre_de_portes = reg_result$nb_portes)
+  
+  min_config <- paste("La configuration de base pour cette régression est: énergie", str_to_lower(reg_result$energie), "- transmission", str_to_lower(reg_result$transmission), "-", reg_result$nb_portes, "portes.")
+  
+  # Kilometrage c'est 0 et is_pro c'est 0 aussi mais ça va assez de soi
+  
+  return(c(min_config, negativ_coef,positiv_coef)) #Returns the two
 
 }
 
