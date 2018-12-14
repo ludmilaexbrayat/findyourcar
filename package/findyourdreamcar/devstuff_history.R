@@ -81,8 +81,8 @@ usethis::use_package("purrr")
 usethis::use_tidy_description()
 
 # Vignette
-usethis::use_vignette("findyourdreamcar")
-devtools::build_vignettes()
+# usethis::use_vignette("findyourdreamcar")
+# devtools::build_vignettes()
 
 # Codecov
 usethis::use_travis()

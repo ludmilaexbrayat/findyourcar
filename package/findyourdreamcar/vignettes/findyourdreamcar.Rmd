@@ -1,0 +1,56 @@
+---
+title: "Introduction to findyourdreamcar"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{findyourdreamcar}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+When looking for a second-hand car, you encounter many problems: 
+
++ you have no idea what people value in setting their price, as they often don't have a professional opinion, 
++ looking for cars around you is costly and often overlooked by listings websites.
+
+That's where the findyourdreamcar package will be useful.
+
+It consists mainly of :
+
++ a dataset, cardata,
++ a prod-ready, Shiny app.
+
+## A simple example
+
+```{r cars}
+#devtools::install_github("ludmilaexbrayat/findyourcar/package/findyourdreamcar")
+library(findyourdreamcar)
+
+# By loading the library, the cardata dataset is loaded - feel free to explore it!
+head(cardata)
+
+# Launch the Shiny app - feel free to interact with it!
+run_app()
+```
+
+## How to use the app
+
+*Use the sidebar to set your first filters*
+
+Let's say you're looking for a car. Input your location first. You know overall what kind of car you want: a break, a small car, a fancy one? We divided it into categories for you: you can choose from the list.
+
+*See the first diagnostics for the cars you like*
+
+Are you on a budget? Do you want to figure out how much more it would cost you to have 5 doors? Our regression tab helps you make preliminary decisions about what you want, considering your budget, using data for your type of car over the whole country.
+
+*Complementary adjustments*
+
+Now that you have some insights, modify the filters in the next tabs to make more precise choices. Your complementary choices will update automatically the diagnostic tools in these three last tabs to help you make the best possible decision.
+
+*In a 100km radius*
+
+Now is the time to see which cars exactly are around you, in a 100 km radius. You'll see both their location on a map and the detail of the listing.
+
+*In the whole country*
+
+If you're interested in moving around to get your car, take a look at the last tab. You will see the mean price of the car you're interested in for each region of France, and the total listings below.
+
