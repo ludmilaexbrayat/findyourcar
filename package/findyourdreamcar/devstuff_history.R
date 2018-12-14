@@ -93,3 +93,4 @@ usethis::use_coverage()
 # Test with rhub
 rhub::check_for_cran()
 
+# devtools::install(build_vignettes = T)
