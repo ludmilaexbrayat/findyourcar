@@ -71,8 +71,8 @@ usethis::use_package("raster")
 usethis::use_package("rasterVis")
 usethis::use_package("units")
 usethis::use_package("scales")
-usethis::use_package("purrr")
 usethis::use_package("tibble")
+usethis::use_package("purrr")
 
 # Reorder your DESC
 

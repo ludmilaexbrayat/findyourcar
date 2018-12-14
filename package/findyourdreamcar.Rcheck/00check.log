@@ -1,0 +1,50 @@
+* using log directory '/Users/gaelleguillou/Desktop/RProject/package/findyourdreamcar.Rcheck'
+* using R version 3.5.1 (2018-07-02)
+* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using session charset: ASCII
+* using options '--no-manual --as-cran'
+* checking for file 'findyourdreamcar/DESCRIPTION' ... OK
+* this is package 'findyourdreamcar' version '0.1.2'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
+* checking whether package 'findyourdreamcar' can be installed ... WARNING
+Found the following significant warnings:
+  Note: possible error in 'filter((transmission %in% ': unused argument ((nb_portes %in% input$nb_doors) | (input$nb_doors == "No Preference")) 
+  Warning: replacing previous import 'magrittr::set_names' by 'purrr::set_names' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'readr::col_factor' by 'scales::col_factor' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'purrr::discard' by 'scales::discard' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'DT::dataTableOutput' by 'shiny::dataTableOutput' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'DT::renderDataTable' by 'shiny::renderDataTable' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when loading 'findyourdreamcar'
+  Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading 'findyourdreamcar'
+See '/Users/gaelleguillou/Desktop/RProject/package/findyourdreamcar.Rcheck/00install.out' for details.
+Information on the location(s) of code generating the 'Note's can be
+obtained by re-running with environment variable R_KEEP_PKG_SOURCE set
+to 'yes'.
+* checking installed package size ... NOTE
+  installed size is  7.5Mb
+  sub-directories of 1Mb or more:
+    extdata   6.6Mb
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... WARNING
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_TIME failed, using "C" 
+3: Setting LC_MESSAGES failed, using "C" 
+4: Setting LC_MONETARY failed, using "C" 
+ ERROR
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_TIME failed, using "C" 
+3: Setting LC_MESSAGES failed, using "C" 
+4: Setting LC_MONETARY failed, using "C" 
+* DONE
+Status: 1 ERROR, 2 WARNINGs, 1 NOTE

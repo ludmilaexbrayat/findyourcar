@@ -1,0 +1,54 @@
+
+#' @import shiny
+app_ui <- function() {
+  fluidPage(
+    titlePanel("Find Your Dream Car"),
+    sidebarLayout(
+      sidebarPanel(
+        mod_basic_filteringUI("fichier")
+      ),
+      mainPanel(
+        tabsetPanel(type = "tabs",
+          tabPanel("For your information",
+                    # Left column with adjustment inputs
+                                    h3("Regression"),
+                                    h3(" "),
+                                    mod_regressionUI("fichier")
+                             ),
+          tabPanel("Complementary Adjustments",
+                   # Left column with adjustment inputs
+                   column(6,
+                          mod_advanced_filteringUI("fichier")
+                          ),
+                   column(6,
+                          h3("Adjusted Price"),
+                          h3(" "),
+                          mod_area_statsUI("fichier"),
+                          mod_country_statsUI("fichier")
+                          )),
+
+          tabPanel("In a 100km radius",
+                   # Map Title
+                   div(h3("Available cars around you")),
+                   # Plotting the Map
+                   mod_map_areaUI("fichier"),
+
+                   # Table Title
+                   div(h3("Summary Results")),
+                   # Drawing the Table
+                   mod_table_areaUI("fichier")),
+          tabPanel("In the whole country",
+                   # Map Title
+                   div(h3("Available cars")),
+                   # Plotting the Map
+                   mod_map_countryUI("fichier"),
+
+                   # Table Title
+                   div(h3("Summary Results")),
+                   # Drawing the Table
+                   mod_table_countryUI("fichier"))
+        )
+      )
+    )
+  )
+}

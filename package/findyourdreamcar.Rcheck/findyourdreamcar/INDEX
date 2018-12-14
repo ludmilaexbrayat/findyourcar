@@ -1,0 +1,14 @@
+app_prod                return 'TRUE' if in 'production mode'
+mod_advanced_filteringUI
+                        mod_advanced_fileringUI and
+                        mod_advanced_filtering
+mod_area_statsUI        mod_area_statsUI and mod_area_stats
+mod_basic_filteringUI   mod_basic_fileringUI and mod_basic_filtering
+mod_country_statsUI     mod_country_statsUI and mod_country_stats
+mod_csv_fileInput       mod_csv_fileInput and mod_csv_file
+mod_map_areaUI          mod_map_areaUI and mod_map_area
+mod_map_countryUI       mod_map_countryUI and mod_map_country
+mod_regressionUI        mod_regressionUI and mod_regression
+mod_table_areaUI        mod_table_areaUI and mod_table_area
+mod_table_countryUI     mod_table_countryUI and mod_table_country
+run_app                 run the Shiny Application
