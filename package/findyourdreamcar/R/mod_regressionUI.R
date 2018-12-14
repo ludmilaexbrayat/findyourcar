@@ -37,7 +37,9 @@ mod_regressionUI <- function(id) {
 #' @import tibble
 #' @importFrom purrr pmap_chr
 #' @importFrom utils data
-#' @import kable
+#' @importFrom kableExtra kable
+#' @importFrom kableExtra kable_styling
+#' @importFrom kableExtra column_spec
 #' @export
 #' @rdname mod_regressionUI
 mod_regression <- function(input, output, session, dataframe) {
@@ -80,9 +82,9 @@ mod_regression <- function(input, output, session, dataframe) {
                                      Estimate <= 0 ~ "you could save about"),
                Estimate_formated = paste0(abs(round(Estimate,0)), " euros")) %>%
         dplyr::select(if_you, coef, you_could, Estimate_formated) %>%
-        kable(col.names = c()) %>%
-        kable_styling() %>%
-        column_spec(c(2,4), bold = T)
+        kableExtra::kable(col.names = c()) %>%
+        kableExtra::kable_styling() %>%
+        kableExtra::column_spec(c(2,4), bold = T)
 
 
    # Building the object that will display the results as a plot
