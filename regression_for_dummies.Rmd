@@ -29,7 +29,7 @@ reg_data <- read_csv("archive/datasets/first_dataset_full.csv")
 
 ```{r, function shiny}
 
-reg_shiny_function("Berline", reg_data)
+
 
 reg_shiny_function <- function(carrosserie, df){
   
@@ -38,89 +38,23 @@ reg_shiny_function <- function(carrosserie, df){
 #Lets create the table we'll use later   
 df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(df, !!carrosserie)$coef), "coef")#Create a data frame with no row naes as it is easier to work without
 
+keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), name_i=c("diesel car","electric car","car with + 10'000 km","gasoline car","hybrid car","GPL car","unvonventional transmission type car","manual transmission car","semi-atomatic transmission car","car from a profresional seller","car with 4 doors","car with 5 doors","nb_portes"))
 
+ # Take out intercept as it doesnt matter for our study
 df_significant_coef <- df_significant_coef %>% 
-        filter(coef!="(Intercept)") # Take out intercept as it doesnt matter for our study
+                              filter(coef== "kilometrage_km") %>%  #Need to change kilometrage to have compute change for 10k
+                              mutate(Estimate=Estimate*10000, coef="kilometrage") %>% 
+                              bind_rows(df_significant_coef) %>% 
+                              filter(coef != "kilometrage_km") %>% 
+       
+        filter(coef!="(Intercept)") %>% # Take out intercept for interpretability
+        left_join(keys, by="coef") %>% #join on coef to have interpretable name
+        mutate(coef=as.character(name_i)) %>% 
+        filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
+        dplyr::select(coef, Estimate)
 
 
 #Long step, we change individually the name of oef for interpretation (couldn't do it in 1 mutatet as regression don't all have the same coefficients)
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "energieElectrique") %>% 
-                      mutate(coef="electric car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "energieElectrique") 
-  
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "kilometrage_km") %>% 
-                      mutate(Estimate=Estimate*10000, coef="car with + 10'000 km") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "kilometrage_km")
-                      
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "energieEssence") %>% 
-                      mutate(coef="gasoline car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "energieEssence")
-  
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "energieHybride") %>% 
-                      mutate(coef="hybrid car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "energieHybride")      
-  
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "energieGPL ou GNL") %>% 
-                      mutate(coef="GPL car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "energieGPL ou GNL") 
-
-df_significant_coef  <- df_significant_coef %>%   
-                      filter(coef== "transmissionAutres") %>% 
-                      mutate(coef="unvonventional transmission type car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "transmissionAutres")
-  
-df_significant_coef  <- df_significant_coef %>%                       
-                      filter(coef== "transmissionManuelle") %>% 
-                      mutate(coef= "manual transmission car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "transmissionManuelle")
-  
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "transmissionSemi automatique") %>% 
-                      mutate(coef= "semi-automatic transmission car") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "transmissionSemi automatique") 
-  
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(coef== "is_pro") %>% 
-                      mutate(coef= "car from a profresional seller") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "is_pro")
-
-df_significant_coef  <- df_significant_coef %>%   
-                      filter(coef== "nb_portes4") %>% 
-                      mutate(coef= "car with 4 doors") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "nb_portes4") 
-
-df_significant_coef  <- df_significant_coef %>%   
-                      filter(coef== "nb_portes5") %>% 
-                      mutate(coef= "car with 5 doors") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "nb_portes5") 
-
-df_significant_coef  <- df_significant_coef %>%   
-                      filter(coef== "nb_portes") %>% 
-                      mutate(coef= "car with one more door") %>% 
-                      bind_rows(df_significant_coef) %>% 
-                      filter(coef != "nb_portes") 
-
-
-df_significant_coef  <- df_significant_coef %>% 
-                      filter(`Pr(>|t|)`<0.05) %>% #Filter for significant features only
-                      dplyr::select(coef, Estimate)
-
 
 
 #Split the significant coef into 2 separate table, the positive and the negative
@@ -136,6 +70,8 @@ positiv_coef <- positiv_coef %>% pmap_chr(.f= function(Estimate,coef){paste("If 
 return(c(negativ_coef,positiv_coef)) #Returns the two
 
 }
+reg_shiny_function("Berline", reg_data)
+
 
 
 
@@ -159,14 +95,25 @@ regression_function <- function(data_reg, carrosserie){
 
 ```{r, function}
 
+keys <- data.frame(coef=c("energieDiesel","energieElectrique","kilometrage_km","energieEssence","energieHybride","energieGPL ou GNL","transmissionAutres","transmissionManuelle","transmissionSemi automatique","is_pro","nb_portes4","nb_portes5","nb_portes"), x=c("diesel car","electric car","car with + 10'000 km","gasoline car","hybrid car","GPL car","unvonventional transmission type car","manual transmission car","semi-atomatic transmission car","car from a profresional seller","car with 4 doors","car with 5 doors","nb_portes"))
+
+
 
 #Lets create the table we'll use later
 df_significant_coef <- tibble::rownames_to_column(as.data.frame(regression_function(reg_data, "Break")$coef), "coef") 
 
 
+class(df_significant_coef$coef)
+df_significant_coef %>% left_join(keys, by="coef")
+
 #Create a data frame with no row naes as it is easier to work without
 df_significant_coef <- df_significant_coef %>% 
-        filter(coef!="(Intercept)")
+        filter(coef!="(Intercept)") %>% 
+        left_join(keys, by="coef") %>%
+        mutate(coef=x)
+
+#%>% 
+        select(-x)
 
 
 
