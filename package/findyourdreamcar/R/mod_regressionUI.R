@@ -51,7 +51,7 @@ mod_regressionUI <- function(id) {
 #' @rdname mod_regressionUI
 mod_regression <- function(input, output, session, dataframe) {
 
-  # Creating a function to get the first element of the first column
+  # Creating a function to get the first element (in alphabetic order) of the column in argument
   get_first_col <- function(col) {
     col %>% unique() %>% sort() %>% head(1)
   }
