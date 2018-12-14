@@ -7,7 +7,7 @@
 \usage{
 mod_area_statsUI(id)
 
-mod_area_stats(input, output, session, dataframe)
+mod_area_stats(input, output, session, dataframe, city, tcarrosserie)
 }
 \arguments{
 \item{id}{shiny id}
@@ -27,16 +27,13 @@ A shiny module that displays principal statistics for the basic and advanced fil
 library(shiny)
 library(dplyr)
 library(magrittr)
-library(readr)
-library(units)
-library(utils)
 if (interactive()){
   ui <- fluidPage(
-    mod_area_statsUI("fichier")
+    mod_country_statsUI("fichier")
   )
 
   server <- function(input, output, session) {
-    callModule(mod_area_stats, "fichier", cardata)
+    callModule(mod_country_stats, "fichier", cardata)
   }
 
   shinyApp(ui, server)

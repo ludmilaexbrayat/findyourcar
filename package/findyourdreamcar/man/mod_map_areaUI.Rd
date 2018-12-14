@@ -21,7 +21,7 @@ mod_map_area(input, output, session, dataframe)
 \item{dataframe}{dataframe with at one column named "prix-euros" containing the price}
 }
 \description{
-A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
+A shiny module that displays principal statistics for the selected basic and advanced filters of the user in a 100km area
 }
 \examples{
 library(shiny)

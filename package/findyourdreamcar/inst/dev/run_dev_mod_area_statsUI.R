@@ -18,7 +18,7 @@ if (interactive()){
   )
 
   server <- function(input, output, session) {
-    callModule(mod_area_stats, "fichier", cardata)
+    callModule(mod_area_stats, "fichier", cardata, "Montpellier", "Berline")
   }
 
   shinyApp(ui, server)

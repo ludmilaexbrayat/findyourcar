@@ -6,20 +6,7 @@
 #' @import shiny
 #' @export
 #' @examples
-#' library(shiny)
-#' library(dplyr)
-#' library(magrittr)
-#' if (interactive()){
-#'   ui <- fluidPage(
-#'     mod_country_statsUI("fichier")
-#'   )
-#'
-#'   server <- function(input, output, session) {
-#'     callModule(mod_country_stats, "fichier", cardata)
-#'   }
-#'
-#'   shinyApp(ui, server)
-#' }
+#' No example to display
 #'
 mod_area_statsUI <- function(id) {
 

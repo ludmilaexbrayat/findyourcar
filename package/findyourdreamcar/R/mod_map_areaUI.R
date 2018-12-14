@@ -1,28 +1,12 @@
 #' @title   mod_map_areaUI and mod_map_area
-#' @description  A shiny module that displays principal statistics for the selected basic and advanced filters of the user in a 100km area
+#' @description  A shiny module that displays a map of the results for a 100km radius around the user's chosen city
 #'
-#' @param id id for proper interaction with shiny
+#' @param id shiny id
 #'
-#' @import dplyr
-#' @import magrittr
 #' @import shiny
 #' @export
 #' @examples
-#' library(shiny)
-#' library(DT)
-#' if (interactive()){
-#' ui <- fluidPage(
-#'   mod_csv_fileInput("fichier"),
-#' DTOutput("tableau")
-#' )
-#'
-#' server <- function(input, output, session) {
-#'   data <- callModule(mod_csv_file,"fichier")
-#'   output$tableau <- renderDT({data()})
-#' }
-#'
-#' shinyApp(ui, server)
-#' }
+#' No example to display
 #'
 mod_map_areaUI <- function(id) {
 
@@ -33,12 +17,12 @@ mod_map_areaUI <- function(id) {
 }
 
 
-#' mod_table_area server function
+#' mod_map_area server function
 #'
 #' @param input internal
 #' @param output internal
 #' @param session internal
-#' @param dataframe dataframe with at one column named "prix-euros" containing the price
+#' @param dataframe dataframe with columns named "prix-euros", "latitude", "longitude", "nom_commune", "carrosserie", "transmission", "brand", "date", "energie", "nb_places", "kilometrage_km" and "nb_portes"
 #'
 #' @import dplyr
 #' @import magrittr
