@@ -10,6 +10,8 @@ mod_advanced_filteringUI(id)
 mod_advanced_filtering(input, output, session)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}

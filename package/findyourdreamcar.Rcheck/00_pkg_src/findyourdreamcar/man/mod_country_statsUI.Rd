@@ -10,6 +10,8 @@ mod_country_statsUI(id)
 mod_country_stats(input, output, session, dataframe)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}

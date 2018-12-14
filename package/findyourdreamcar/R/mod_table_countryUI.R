@@ -19,6 +19,8 @@
 #' @title   mod_table_countryUI and mod_table_country
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
@@ -76,10 +78,10 @@ mod_table_country <- function(input, output, session, dataframe) {
   # Creating a reactive for the advanced filters at the country level
   data_filtered_advanced_country <- reactive({
     data_filtered_basic_country() %>%
-      mutate(
+      dplyr::mutate(
         year = substr(date, 0, 4)
       ) %>%
-      filter(
+      dplyr::filter(
         (transmission %in% input$transmission) | (input$transmission == "No Preference"),
         (brand %in% input$brand) | (input$brand == "No Preference"),
         year >= input$year_built[1] & year <= input$year_built[2],

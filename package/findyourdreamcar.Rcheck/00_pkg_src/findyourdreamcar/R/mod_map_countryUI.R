@@ -19,6 +19,8 @@
 #' @title   mod_map_countryUI and mod_map_country
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
@@ -65,6 +67,7 @@ mod_map_countryUI <- function(id) {
 #' @import scales
 #' @import ggplot2
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_map_countryUI
 mod_map_country <- function(input, output, session, dataframe) {

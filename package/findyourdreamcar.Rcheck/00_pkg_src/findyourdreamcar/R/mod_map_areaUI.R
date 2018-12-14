@@ -19,6 +19,8 @@
 #' @title   mod_map_areaUI and mod_map_area
 #' @description  A shiny Module that shows principal statistics for the selected basic and advanced filters of the user in a 100km area
 #'
+#' @param id id for proper interaction with shiny
+#'
 #' @import dplyr
 #' @import magrittr
 #' @import shiny
@@ -64,6 +66,7 @@ mod_map_areaUI <- function(id) {
 #' @import units
 #' @import readr
 #' @importFrom utils data
+#' @importFrom utils head
 #' @export
 #' @rdname mod_map_areaUI
 mod_map_area <- function(input, output, session, dataframe) {

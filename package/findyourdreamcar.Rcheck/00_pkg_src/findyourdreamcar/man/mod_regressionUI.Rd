@@ -10,6 +10,8 @@ mod_regressionUI(id)
 mod_regression(input, output, session, dataframe)
 }
 \arguments{
+\item{id}{id for proper interaction with shiny}
+
 \item{input}{internal}
 
 \item{output}{internal}
